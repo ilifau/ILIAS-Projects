@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SenApp Test</title>
+    <script type="text/javascript" src="./Services/jQuery/js/1_11_1/jquery-min.js"></script>
+    <script language="JavaScript">
+
+        function callService(command) {
+            var url = 'appservice.php';
+            var data = {
+                command: command,
+                username: $('#username').val(),
+                password: $('#password').val(),
+                id: $('#id').val()
+            };
+            $.ajax({
+                type: 'POST',		// alwasy use POST for the api
+                url: url,			// api url
+                data: data,			// request data as object
+                dataType: 'json'	// expected response data type
+            })
+            .fail(function(jqXHR) {
+                if (jqXHR.status != 0)
+                {
+                    alert('Command Failed: (' + jqXHR.status + ') ' + jqXHR.statusText);
+                }
+                $('#output').html(jqXHR.responseText);
+            })
+            .done(function(data) {
+                $('#output').html(JSON.stringify(data, null, 4));
+            });
+        }
+    </script>
+</head>
+<body>
+
+<h1>Testing the SenApp Service</h1>
+<form>
+    <p><label for="username">username:</label><input type="text" id="username" /> (always required)</p>
+    <p><label for="password">password:</label><input type="text" id="password" /> (always required)</p>
+    <p><label for="id">id:</label><input type="text" id="id" /> (only for getModuleContents)</p>
+
+    <p>
+        <button onclick="callService('getModules'); return false;">getModules</button>
+        <button onclick="callService('getModuleContents'); return false;">getModuleContents</button>
+        <button onclick="callService('getForums'); return false;">getForums</button>
+    </p>
+</form>
+
+<pre id="output">
+</pre>
+
+</body>
+</html>

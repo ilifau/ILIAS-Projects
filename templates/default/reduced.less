@@ -1,0 +1,30 @@
+@import "delos.less";
+
+div.ilTopBar {
+  background-color: #762282!important;
+}
+
+.ilFixedTopSpacer {
+  margin-top: 40px;
+  padding-top: 0;
+}
+
+.ilTopTitle {
+  display:block!important;
+}
+
+
+/* prvented stacking of toolbar */
+@media only screen and (max-width: 768px) {
+
+  .navbar-form {
+      border: 0;
+  }
+  .navbar-nav > li {
+    float: left!important;
+  }
+}
+
+.btn {
+  margin:1px;
+}

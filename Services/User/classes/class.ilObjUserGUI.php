@@ -897,6 +897,11 @@ class ilObjUserGUI extends ilObjectGUI
 				$this->object->setPref('bs_allow_to_contact_me', $_POST['bs_allow_to_contact_me'] ? 'y' : 'n');
 			}
 
+// fim: update prsonal starting point
+			require_once('Services/User/classes/class.ilUserUtil.php');
+			ilUserUtil::setPersonalStartingPoint($_POST['usr_start'], $_POST['usr_start_ref_id'], $this->object);
+// fim.
+
 			// set a timestamp for last_password_change
 			// this ts is needed by ilSecuritySettings
 			$this->object->setLastPasswordChangeTS( time() );
@@ -1087,6 +1092,12 @@ class ilObjUserGUI extends ilObjectGUI
 		$data["hide_own_online_status"] = $this->object->prefs["hide_own_online_status"] == 'y';
 		$data['bs_allow_to_contact_me'] = $this->object->prefs['bs_allow_to_contact_me'] == 'y';
 		$data["session_reminder_enabled"] = (int)$this->object->prefs["session_reminder_enabled"];
+
+// fim: read personal starting point
+		require_once('Services/User/classes/class.ilUserUtil.php');
+		$data["usr_start"] = ilUserUtil::getPersonalStartingPoint($this->object);
+		$data["usr_start_ref_id"] = ilUserUtil::getPersonalStartingObject($this->object);
+// fim.
 
 		$this->form_gui->setValuesByArray($data);
 	}
@@ -1796,7 +1807,47 @@ class ilObjUserGUI extends ilObjectGUI
 			$cb->setValue(1);
 			$this->form_gui->addItem($cb);
 		}
-		
+
+		// fim: starting point
+		include_once "Services/User/classes/class.ilUserUtil.php";
+		if(ilUserUtil::hasPersonalStartingPoint())
+		{
+			$this->lng->loadLanguageModule("administration");
+			$si = new ilRadioGroupInputGUI($this->lng->txt("adm_user_starting_point"), "usr_start");
+			$si->setRequired(true);
+			$si->setInfo($this->lng->txt("adm_user_starting_point_info"));
+			foreach(ilUserUtil::getPossibleStartingPoints() as $value => $caption)
+			{
+				$si->addOption(new ilRadioOption($caption, $value));
+			}
+			$si->setValue(ilUserUtil::getPersonalStartingPoint($a_mode=='edit'? $this->object : null));
+			$this->form_gui->addItem($si);
+
+			// starting point: repository object
+			$repobj = new ilRadioOption($lng->txt("adm_user_starting_point_object"), ilUserUtil::START_REPOSITORY_OBJ);
+			$repobj_id = new ilTextInputGUI($lng->txt("adm_user_starting_point_ref_id"), "usr_start_ref_id");
+			$repobj_id->setRequired(true);
+			$repobj_id->setSize(5);
+			if($si->getValue() == ilUserUtil::START_REPOSITORY_OBJ)
+			{
+				$start_ref_id = ilUserUtil::getPersonalStartingObject($a_mode=='edit'? $this->object : null);
+				$repobj_id->setValue($start_ref_id);
+				if($start_ref_id)
+				{
+					$start_obj_id = ilObject::_lookupObjId($start_ref_id);
+					if($start_obj_id)
+					{
+						$repobj_id->setInfo($lng->txt("obj_".ilObject::_lookupType($start_obj_id)).
+							": ".ilObject::_lookupTitle($start_obj_id));
+					}
+				}
+			}
+			$repobj->addSubItem($repobj_id);
+			$si->addOption($repobj);
+		}
+		// fim.
+
+
 		// Options
 		if($this->isSettingChangeable('send_mail'))
 		{

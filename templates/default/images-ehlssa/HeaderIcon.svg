@@ -13,9 +13,9 @@
    id="Ebene_1"
    x="0px"
    y="0px"
-   width="802.21997"
-   height="802.21997"
-   viewBox="0 0 802.21995 802.21994"
+   width="839.9502"
+   height="370.78885"
+   viewBox="0 0 839.95017 370.78883"
    enable-background="new 0 0 841.89 595.28"
    xml:space="preserve"
    inkscape:version="0.48.4 r9939"
@@ -30,26 +30,37 @@
    objecttolerance="10"
    gridtolerance="10"
    guidetolerance="10"
-   inkscape:pageopacity="0"
+   inkscape:pageopacity="1"
    inkscape:pageshadow="2"
-   inkscape:window-width="1011"
-   inkscape:window-height="669"
+   inkscape:window-width="1412"
+   inkscape:window-height="994"
    id="namedview39"
    showgrid="false"
    inkscape:zoom="0.39645207"
-   inkscape:cx="111.27335"
-   inkscape:cy="144.50757"
+   inkscape:cx="123.87243"
+   inkscape:cy="64.413688"
    inkscape:window-x="0"
    inkscape:window-y="0"
    inkscape:window-maximized="0"
-   inkscape:current-layer="Ebene_1"
+   inkscape:current-layer="layer1"
    fit-margin-top="0"
    fit-margin-left="0"
    fit-margin-right="0"
    fit-margin-bottom="0" />
 <g
+   inkscape:groupmode="layer"
+   id="layer1"
+   inkscape:label="Hintergrund"
+   transform="translate(12.611892,23.87435)"><rect
+     style="fill:#ffffff;fill-opacity:1;stroke:none"
+     id="rect3770"
+     width="839.9502"
+     height="370.78885"
+     x="-12.611892"
+     y="-23.874353"
+     ry="0" /></g><g
    id="g3"
-   transform="translate(-8.2480873,252.22171)">
+   transform="translate(4.3509917,-99.1155)">
 	<path
    d="m 360.744,312.373 c 3.693,0 6.581,0.775 8.653,2.322 2.078,1.545 3.115,3.627 3.115,6.256 0,2.788 -1.022,4.988 -3.072,6.609 -2.054,1.62 -4.9,2.431 -8.546,2.431 h -37.515 v 13.517 h 35.767 c 3.699,0 6.596,0.782 8.696,2.355 2.102,1.563 3.152,3.692 3.152,6.375 0,2.783 -1.013,4.954 -3.038,6.501 -2.027,1.54 -4.862,2.307 -8.504,2.307 h -36.073 v 38.426 h 37.365 c 3.646,0 6.52,0.822 8.616,2.473 2.101,1.643 3.152,3.882 3.152,6.714 0,2.933 -1.022,5.233 -3.072,6.878 -2.054,1.648 -4.9,2.463 -8.546,2.463 h -43.743 c -5.164,0 -8.707,-0.909 -10.633,-2.732 -1.921,-1.824 -2.883,-5.116 -2.883,-9.875 V 324.83 c 0,-4.711 0.948,-7.956 2.847,-9.751 1.902,-1.806 5.458,-2.704 10.67,-2.704 h 43.592 z"
    id="path5"
@@ -83,7 +94,7 @@
 </g>
 <g
    id="g17"
-   transform="translate(-8.2480873,252.22171)">
+   transform="translate(4.3509917,-99.1155)">
 	<g
    id="g19">
 		<path

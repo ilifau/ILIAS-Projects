@@ -211,7 +211,9 @@ class ilForumAuthorInformation
 
 				if($this->getAuthor()->getPref('public_upload') == 'y')
 				{
-					$this->profilePicture = $this->getAuthor()->getPersonalPicturePath('xsmall');
+// fim: prevent caching of profile picture path
+					$this->profilePicture = $this->getAuthor()->getPersonalPicturePath('xsmall', true);
+// fim.
 				}
 				else
 				{
