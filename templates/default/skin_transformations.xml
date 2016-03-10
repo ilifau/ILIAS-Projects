@@ -106,7 +106,7 @@
 <transformations keep="true" debug="">
 
     <!-- module/service specific transformations at final output -->
-    <!--  the 'next' cascade ends with the general transformations for the main output -->
+    <!--  the 'next' cascade ends with the general transformations for the main output   -->
      
     <trans style="reduced" at="output" of="tpl.main.html" for="Modules/Forum" with="reduced_forum.xsl" next="true" debug=""/>
     <trans style="reduced" at="output" of="tpl.main.html" for="Modules/Glossary" with="reduced_glossary.xsl" next="true" debug=""/>
