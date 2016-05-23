@@ -12,6 +12,7 @@
 -->
 
 <!-- Rewriting of links -->
+<!-- fim #cf links always open in same tab -->
 <xsl:template match="a" >
 
     <xsl:copy>

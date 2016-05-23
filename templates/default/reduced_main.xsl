@@ -116,12 +116,13 @@
                 </xsl:when>
 
                 <!--  Prevent switching to safari in webapp mode -->
+                <!-- fim: #cf not necessary, but destroys external links
                 <xsl:when test="@href">
                     <xsl:attribute name="onclick">
                         window.location=this.getAttribute("href");return false;
                     </xsl:attribute>
                     <xsl:copy-of select="node()" />
-                </xsl:when>
+                </xsl:when> -->
 
                 <!-- links without href are just anchors -->
                 <xsl:otherwise>
@@ -131,6 +132,5 @@
 
         </xsl:copy>
     </xsl:template>
-
 
 </xsl:stylesheet>
