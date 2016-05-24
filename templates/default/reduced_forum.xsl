@@ -80,13 +80,18 @@
             </xsl:when>
         </xsl:choose>
 
-          <li>
-              <div class="navbar-form">
-                  <button class="btn btn-default" type="button" onclick="location.href='{$back_link/@href}'">
-                      <xsl:value-of select ="$back_link/text()" />
-                  </button>
-              </div>
-          </li>
+        <!-- show only thread level, caution: checks the chreathread_link! -->
+        <xsl:choose>
+            <xsl:when test="not($createthread_link)">
+                <li>
+                    <div class="navbar-form">
+                        <button class="btn btn-default" type="button" onclick="location.href='{$back_link/@href}'">
+                            <xsl:value-of select ="$back_link/text()" />
+                        </button>
+                    </div>
+                </li>
+            </xsl:when>
+        </xsl:choose>
 
           <xsl:if test="$reply_link and not(//textarea)">
               <li>
