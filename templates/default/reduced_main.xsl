@@ -2,8 +2,6 @@
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:php="http://php.net/xsl">
 <xsl:output method="html" version="4.0" encoding="UTF-8"/>
 
-   <!-- commit comment, delete next time -->
-
 <!-- Variables -->
 <xsl:variable name="skinDirectory" select="php:function('ilSkinTransformer::getSkinDirectory','')" />
 

@@ -23,16 +23,16 @@
     <!-- Hide post related actions -->
 <xsl:template match="div[@class='ilFrmPostCommands']" />
 
-    <!-- Hide table navogation settings (e.g. changing of displayed rows) -->
+    <!-- Hide table navigation settings (e.g. changing of displayed rows) -->
 <xsl:template match="div[contains(@class,'ilTableNav')]//td[contains(@class,'ilRight')]" />
 
-<!-- Hiden thread commands -->
+<!-- Hide thread commands -->
    <xsl:template match="div[contains(@class,'ilTableCommandRow')]" />
    <xsl:template match="div[contains(@class,'ilTableSelectAll')]" />
    <xsl:template match="input[contains(@id,'thread_ids')]" />
 
     <!-- Hide the quote button in the reply form -->
-    <xsl:template match="input[@name='cmd[quotePost]']" />
+    <xsl:template match="input[@name='cmd[quoteTopLevelPost]']" />
     <xsl:template match="div[@id='il_prop_cont_userfile']" />
 
     <!-- make subject invisible in reply form -->
