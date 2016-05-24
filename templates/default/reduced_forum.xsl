@@ -18,10 +18,12 @@
 <xsl:template match="ul[@id='ilTab']" />
 
     <!-- Hide the right column -->
-<xsl:template match="div[@id='il_right_col']" />
+     <xsl:template match="div[@id='il_right_col']" />
 
     <!-- Hide post related actions -->
-<xsl:template match="div[@class='ilFrmPostCommands']" />
+    <!-- <xsl:template match="div[@class='ilFrmPostCommands']" /> -->
+    <xsl:template match="div[@class='ilFrmPostCommands']//span[@class='split-btn-default']" />
+    <xsl:template match="div[@class='ilFrmPostCommands']//a[contains(@href, 'ilforumexportgui')]" />
 
     <!-- Hide table navigation settings (e.g. changing of displayed rows) -->
 <xsl:template match="div[contains(@class,'ilTableNav')]//td[contains(@class,'ilRight')]" />
@@ -58,12 +60,20 @@
     <!-- Adjust the thread toolbar -->
 <xsl:template match="ul[contains(@class,'ilToolbarStickyItems')]" />
 <xsl:template match="ul[contains(@class,'ilToolbarItems')]" >
-             <xsl:variable name="reply_link" select="//a[contains(@href,'action=showreply')][last()]" />
-           <xsl:variable name="back_link" select="//ul[@id='ilTab']/li[1]/a" />
+        <xsl:variable name="reply_link" select="//a[contains(@href,'action=showreply')][last()]" />
+        <xsl:variable name="back_link" select="//ul[@id='ilTab']/li[1]/a" />
+        <xsl:variable name="createthread_link" select="//a[contains(@href, 'cmd=createThread')]" />
 
     <xsl:copy>
         <xsl:copy-of select="@*" />
 
+          <li>
+              <div class="navbar-form">
+                  <button class="btn btn-default" type="button" onclick="location.href='{$createthread_link/@href}'">
+                      <xsl:value-of select ="$createthread_link/text()" />
+                  </button>
+              </div>
+          </li>
 
           <li>
               <div class="navbar-form">
@@ -87,6 +97,9 @@
     </xsl:copy>
     </xsl:template>
 
+    <!-- hide buggy presentation of createthread of "adjust the thread toolbar"
+    <xsl:template match="div[@id='tb-collapse-2']" />
+    -->
 
 <!-- Reduce the visit card -->
     <xsl:template match="div[./div/@class='ilProfile']">
