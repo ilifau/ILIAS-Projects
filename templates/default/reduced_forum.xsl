@@ -67,13 +67,17 @@
     <xsl:copy>
         <xsl:copy-of select="@*" />
 
-          <li>
-              <div class="navbar-form">
-                  <button class="btn btn-default" type="button" onclick="location.href='{$createthread_link/@href}'">
-                      <xsl:value-of select ="$createthread_link/text()" />
-                  </button>
-              </div>
-          </li>
+        <xsl:choose>
+            <xsl:when test="$createthread_link">
+              <li>
+                  <div class="navbar-form">
+                      <button class="btn btn-default" type="button" onclick="location.href='{$createthread_link}/@href'">
+                          <xsl:value-of select ="$createthread_link/text()" />
+                      </button>
+                  </div>
+              </li>
+            </xsl:when>
+        </xsl:choose>
 
           <li>
               <div class="navbar-form">
