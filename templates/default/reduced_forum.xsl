@@ -67,11 +67,12 @@
     <xsl:copy>
         <xsl:copy-of select="@*" />
 
+        <!-- show create thread only on forums level -->
         <xsl:choose>
             <xsl:when test="$createthread_link">
               <li>
                   <div class="navbar-form">
-                      <button class="btn btn-default" type="button" onclick="location.href='{$createthread_link}/@href'">
+                      <button class="btn btn-default" type="button" onclick="location.href='{$createthread_link/@href}'">
                           <xsl:value-of select ="$createthread_link/text()" />
                       </button>
                   </div>
@@ -100,10 +101,6 @@
         <xsl:copy-of select="li" />
     </xsl:copy>
     </xsl:template>
-
-    <!-- hide buggy presentation of createthread of "adjust the thread toolbar"
-    <xsl:template match="div[@id='tb-collapse-2']" />
-    -->
 
 <!-- Reduce the visit card -->
     <xsl:template match="div[./div/@class='ilProfile']">
