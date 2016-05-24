@@ -58,18 +58,24 @@
    <xsl:template match="input[contains(@id,'thread_ids')]" />
 
     <!--<xsl:template match="nav[contains(@id, '1')]" />
+ -->
 
+
+    <!-- Hide "new reply" splitbutton and separator -->
+    <xsl:template match="button[contains(@class, 'btn-primary')]" />
     <xsl:template match="a[contains(@class, 'btn-primary')]" />
-      -->
-   <!-- <xsl:template match="button[contains(@class, 'btn-primary')]" /> -->
-    <!--<xsl:template match="span[@class='split-btn-default']" />
+    <xsl:template match="li[contains(@class, 'ilToolbarSeparator')]" />
+
+   <!-- <xsl:template match="span[@class='split-btn-default']" />
 -->
    <!-- <xsl:template match="a[@class='btn btn-default']" />
-    --><xsl:template match="li[@id='tab_order_by_date']" />
+    -->
+    <!-- Show only link back to forum -->
+    <xsl:template match="li[@id='tab_order_by_date']" />
     <xsl:template match="li[@id='tab_sort_by_posts']" />
-    <xsl:template match="div[@class='ilFrmPostCommands']//span[contains(@class, 'split-btn-default')]" />
-
-    <xsl:template match="input[@value='Zitieren']" />
+   <!-- <xsl:template match="div[@class='ilFrmPostCommands']//span[contains(@class, 'split-btn-default')]" />
+-->
+    <!--<xsl:template match="input[@value='Zitieren']" /> -->
     <!-- <xsl:template match="div[contains(@class, 'navbar-form')]" />
  -->
     <!-- Hide the quote button in the reply form -->
