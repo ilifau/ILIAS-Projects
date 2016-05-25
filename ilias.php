@@ -17,17 +17,17 @@ ilInitialisation::initILIAS();
 
 global $ilCtrl, $ilBench;
 
-// fim: remember GET requests for web app restart
-if ($_SERVER['REQUEST_METHOD'] == "GET")
-{
-	if (!empty($_GET['ref_id']))
-	{
-		if (ilObject::_lookupType($_GET['ref_id'], true) !== 'htlm')
-		{
-			$_SESSION['senapp.lastRequest'] = $_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING'];
-		}
-	}
-}
+// fim: [webapp] remember GET requests for web app restart
+//	if ($_SERVER['REQUEST_METHOD'] == "GET")
+//	{
+//		if (!empty($_GET['ref_id']))
+//		{
+//			if (ilObject::_lookupType($_GET['ref_id'], true) !== 'htlm')
+//			{
+//				$_SESSION['senapp.lastRequest'] = $_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING'];
+//			}
+//		}
+//	}
 // fim.
 
 $ilCtrl->setTargetScript("ilias.php");

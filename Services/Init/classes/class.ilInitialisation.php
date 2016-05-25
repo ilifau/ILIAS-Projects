@@ -462,8 +462,9 @@ class ilInitialisation
 		include_once './Services/Http/classes/class.ilHTTPS.php';
 		$cookie_secure = !$ilSetting->get('https', 0) && ilHTTPS::getInstance()->isDetected();
 
-// fim: set explict session cookie lifetime for web app mode on iPad
-		define('IL_COOKIE_EXPIRE', 365 * 24 * 60 * 60);
+		define('IL_COOKIE_EXPIRE',0);
+// fim: [webapp] set explict session cookie lifetime for web app mode on iPad
+//		define('IL_COOKIE_EXPIRE', 365 * 24 * 60 * 60);
 // fim.
 		define('IL_COOKIE_PATH',$cookie_path);
 		define('IL_COOKIE_DOMAIN','');

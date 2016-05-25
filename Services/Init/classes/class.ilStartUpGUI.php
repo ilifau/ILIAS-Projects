@@ -1482,14 +1482,14 @@ class ilStartUpGUI
 				}
 			}
 
-// fim: use the remembered last position when web app is restarted
-			if (empty($_GET['senappHome']) && !empty($_SESSION['senapp.lastRequest']))
-			{
-				if (ilStyleDefinition::getCurrentStyle() == 'reduced')
-				{
-					ilUtil::redirect($_SESSION['senapp.lastRequest']);
-				}
-			}
+// fim: [webapp] use the remembered last position when web app is restarted
+//			if (empty($_GET['senappHome']) && !empty($_SESSION['senapp.lastRequest']))
+//			{
+//				if (ilStyleDefinition::getCurrentStyle() == 'reduced')
+//				{
+//					ilUtil::redirect($_SESSION['senapp.lastRequest']);
+//				}
+//			}
 // fim.
 
 			if(!$_GET["target"])
