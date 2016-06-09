@@ -28,10 +28,11 @@
     <!-- Hide table navigation settings (e.g. changing of displayed rows) -->
 <xsl:template match="div[contains(@class,'ilTableNav')]//td[contains(@class,'ilRight')]" />
 
-<!-- Hide thread commands -->
-   <xsl:template match="div[contains(@class,'ilTableCommandRow')]" />
-   <xsl:template match="div[contains(@class,'ilTableSelectAll')]" />
-   <xsl:template match="input[contains(@id,'thread_ids')]" />
+    <!-- Hide thread commands
+    <xsl:template match="div[contains(@class,'ilTableCommandRow')]" />
+    <xsl:template match="div[contains(@class,'ilTableSelectAll')]" />
+    <xsl:template match="input[contains(@id,'thread_ids')]" />
+    -->
 
     <!-- Hide the quote button in the reply form -->
     <xsl:template match="input[@name='cmd[quoteTopLevelPost]']" />
