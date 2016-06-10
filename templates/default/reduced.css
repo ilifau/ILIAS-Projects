@@ -8998,7 +8998,9 @@ div.ilTopMemberView h3 {
 #ilSubTab > li > a {
   border-radius: 0;
   padding: 3px 7px;
-  font-size: 11.64px;
+  font-size: 130%; /* fim cf */
+
+  /* font-size: 11.64px; */
   /* font-weight: 600; */
 }
 #ilSubTab > li > a:hover {
@@ -11641,3 +11643,10 @@ div.ilTopBar {
 .btn {
   margin: 1px;
 }
+/* fim cf */
+.ilc_page_rnav_RightNavigation {
+   font-size: 100% !important;
+ }
+.ilc_page_lnav_LeftNavigation {
+  font-size: 100% !important;
+} /* fim cf */

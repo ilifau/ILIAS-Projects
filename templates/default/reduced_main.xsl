@@ -83,8 +83,8 @@
     <xsl:template match="li[@id='subtab_view_content']" />
     <xsl:template match="li[@id='subtab_manage']" />
     <xsl:template match="li[@id='subtab_ordering']" />
-    <xsl:template match="li[@id='subtab_crs_member_administration']" />
-    <xsl:template match="li[@id='subtab_crs_members_groups']" />
+    <!--<xsl:template match="li[@id='subtab_crs_member_administration']" />
+    --><xsl:template match="li[@id='subtab_crs_members_groups']" />
 
     <!-- Show "ilTab" and hide some not needed -->
     <xsl:template match="ul[@id='ilTab']">
@@ -99,6 +99,13 @@
     <xsl:template match="li[@id='nontab_members_view']" />
 
     <xsl:template match="div[@class='ilNewObjectSelector']" />
+
+    <!-- change member view for tutors-->
+    <xsl:template match="form[contains(@action,'ilrepositorysearchgui')]" />
+    <xsl:template match="form[contains(@action,'ilobjcoursegui')]/div[@class='ilTableOuter'][1]" />
+    <xsl:template match="form[contains(@action,'ilobjcoursegui')]/div[@class='ilTableHeaderTitle'][1]" />
+    <xsl:template match="form[contains(@action,'ilobjcoursegui')]/div[@class='ilTableNav'][1]" />
+    <xsl:template match="form[contains(@action,'ilobjcoursegui')]/div[@class='ilTableNav yui-skin-sam'][1]" />
 
     <!-- Hide personal startpage in user settings -->
     <xsl:template match="div[@id='il_prop_cont_usr_start']" />
