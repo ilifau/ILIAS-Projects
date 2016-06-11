@@ -86,6 +86,9 @@
     <!--<xsl:template match="li[@id='subtab_crs_member_administration']" />
     --><xsl:template match="li[@id='subtab_crs_members_groups']" />
 
+    <!-- hide survey container, especially heading -->
+    <xsl:template match="div[@id='bl_cntr_4']" />
+
     <!-- Show "ilTab" and hide some not needed -->
     <xsl:template match="ul[@id='ilTab']">
         <xsl:copy><xsl:apply-templates select="@*|node()" /></xsl:copy>
