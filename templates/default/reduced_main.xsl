@@ -54,8 +54,14 @@
         </xsl:copy>
     </xsl:template>
 
-    <!-- hide email function in upper bar -->
+    <!-- hide email function in upper bar and some more things...-->
     <xsl:template match="ul[@id='ilTopBarNav']/li[1]" />
+    <xsl:template match="li[@id='tab_fold']" />
+    <xsl:template match="li[@id='tab_mail_addressbook']" />
+    <xsl:template match="li[@id='tab_options']" />
+    <xsl:template match="div[@id='il_prop_cont_use_placeholders']" />
+    <xsl:template match="div[@id='il_prop_cont_m_type____']" />
+    <!-- <xsl:template match="div[@class='container-fluid']" /> -->
 
     <!-- No main header, no main menu -->
     <xsl:template match="nav[@id='ilTopNav']" />
@@ -126,6 +132,14 @@
         </xsl:copy>
     </xsl:template>
 
+    <!-- hide email settings part 2-->
+    <xsl:template match="nav[@id='2']" />
+
+    <!-- hide learning progress -->
+    <xsl:template match="li[@id='subtab_trac_summary']" />
+    <xsl:template match="li[@id='subtab_trac_matrix']" />
+    <xsl:template match="li[@id='subtab_trac_settings']" />
+
     <!-- No head and list actions -->
     <xsl:template match="div[@class='ilHeadAction']"  />
     <xsl:template match="div[@class='il_ContainerListItem']/div[@class='ilFloatRight']"  />
@@ -169,7 +183,5 @@
 
         </xsl:copy>
     </xsl:template>
-
-
 
 </xsl:stylesheet>
