@@ -54,6 +54,9 @@
         </xsl:copy>
     </xsl:template>
 
+    <!-- hide email function in upper bar -->
+    <xsl:template match="ul[@id='ilTopBarNav']/li[1]" />
+
     <!-- No main header, no main menu -->
     <xsl:template match="nav[@id='ilTopNav']" />
     <xsl:template match="div[contains(@class,'ilMainHeader')]" />
@@ -166,5 +169,7 @@
 
         </xsl:copy>
     </xsl:template>
+
+
 
 </xsl:stylesheet>

@@ -221,9 +221,9 @@ class ilPersonalProfileGUI
 		{
 			$ilUser->setPref("public_profile","y");
 		}
-		else
+		else 
 		{
-			$ilUser->setPref("public_profile","n");
+			$ilUser->setPref("public_profile", "n");
 		}
 
 		// if check on Institute
