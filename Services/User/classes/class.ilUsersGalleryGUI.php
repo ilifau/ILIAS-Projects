@@ -161,6 +161,7 @@ class ilUsersGalleryGUI
 			$user = $user_data['user'];
 
 			if($user_data['public_profile'])
+			//if($user_data['public_profile'] || !$user_data['public_profile']) // fim cf force always picture
 			{
 				$tpl->setCurrentBlock('linked_image');
 				$this->ctrl->setParameterByClass('ilpublicuserprofilegui', 'user', $user->getId());

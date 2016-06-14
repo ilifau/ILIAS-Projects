@@ -132,9 +132,6 @@
         </xsl:copy>
     </xsl:template>
 
-    <!-- hide email settings part 2-->
-    <xsl:template match="nav[@id='2']" />
-
     <!-- hide learning progress -->
     <xsl:template match="li[@id='subtab_trac_summary']" />
     <xsl:template match="li[@id='subtab_trac_matrix']" />
