@@ -1253,7 +1253,7 @@ class ilObjUser extends ilObject
 	function getPref($a_keyword)
 	{
 // fim: force a public profile with picture
-		if (in_array($a_keyword, array('public_profile', 'public_upload')))
+		if (in_array($a_keyword, array('public_profile', 'public_upload', 'public_picture')))
 		{
 			return 'y';
 		}

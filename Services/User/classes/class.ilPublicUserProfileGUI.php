@@ -283,7 +283,7 @@ class ilPublicUserProfileGUI
 			// of public_profile = "y" show user infomation
 			$user = new ilObjUser($this->getUserId());
 			$current = $user->getPref("public_profile");
-							
+
 			// #17462 - see ilPersonalProfileGUI::initPublicProfileForm()
 			if($user->getPref("public_profile") == "g" && !$ilSetting->get('enable_global_profiles'))
 			{

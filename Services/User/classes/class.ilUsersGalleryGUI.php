@@ -161,7 +161,6 @@ class ilUsersGalleryGUI
 			$user = $user_data['user'];
 
 			if($user_data['public_profile'])
-			//if($user_data['public_profile'] || !$user_data['public_profile']) // fim cf force always picture
 			{
 				$tpl->setCurrentBlock('linked_image');
 				$this->ctrl->setParameterByClass('ilpublicuserprofilegui', 'user', $user->getId());
@@ -174,7 +173,7 @@ class ilUsersGalleryGUI
 				$tpl->setCurrentBlock('unlinked_image');
 				$tpl->setVariable('PUBLIC_NAME', $user->getLogin());
 			}
-			$tpl->setVariable('SRC_USR_IMAGE', $user->getPersonalPicturePath('small'));
+			$tpl->setVariable('SRC_USR_IMAGE', $user->getPersonalPicturePath('small',true)); // fim cf forced picture in membergallery
 			$tpl->parseCurrentBlock();
 
 			$tpl->setCurrentBlock('user');
