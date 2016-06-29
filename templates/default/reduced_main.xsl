@@ -22,12 +22,12 @@
     </xsl:template>
     -->
 
-    <!-- PNG logo in the top bar -->
+    <!-- PNG logo in the top bar-->
     <xsl:template match="div[@id='ilTopBar']//div[@class='row']" >
         <xsl:copy>
             <xsl:apply-templates select="@*" />
             <div class="ilTopTitle">
-                <img alt="Logo" src="templates/default/images-ehlssa/HeaderIcon.svg" height="40"/>
+                <img alt="Logo" src="templates/default/img_welcome_fau/welcome_fau_logo.png" height="40"/>
             </div>
             <xsl:apply-templates select="node()" />
         </xsl:copy>
@@ -59,7 +59,7 @@
     <xsl:template match="div[contains(@class,'ilMainHeader')]" />
     <xsl:template match="div[contains(@class,'ilMainMenu')]" />
 
-    <!-- Empty headline (kepp space) -->
+    <!-- Empty headline (keep space) -->
     <xsl:template match="div[contains(@class,'il_HeaderInner')]">
         <div class="il_HeaderInner"></div>
     </xsl:template>
@@ -79,6 +79,37 @@
     <xsl:template match="li[@id='subtab_cont_print_view']" />
     <xsl:template match="li[@id='subtab_info_short']" />
 
+    <!-- adjust menu of course -->
+    <xsl:template match="li[@id='subtab_view_content']" />
+    <xsl:template match="li[@id='subtab_manage']" />
+    <xsl:template match="li[@id='subtab_ordering']" />
+    <!--<xsl:template match="li[@id='subtab_crs_member_administration']" />
+    --><xsl:template match="li[@id='subtab_crs_members_groups']" />
+
+    <!-- Show "ilTab" and hide some not needed -->
+    <xsl:template match="ul[@id='ilTab']">
+        <xsl:copy><xsl:apply-templates select="@*|node()" /></xsl:copy>
+    </xsl:template>
+    <xsl:template match="li[@id='tab_view_content']" />
+    <xsl:template match="li[@id='tab_info_short']" />
+    <xsl:template match="li[@id='tab_settings']" />
+    <xsl:template match="li[@id='tab_meta_data']" />
+    <xsl:template match="li[@id='tab_export']" />
+    <xsl:template match="li[@id='tab_crs_unsubscribe']" />
+    <xsl:template match="li[@id='nontab_members_view']" />
+
+    <xsl:template match="div[@class='ilNewObjectSelector']" />
+
+    <!-- change member view for tutors-->
+    <xsl:template match="form[contains(@action,'ilrepositorysearchgui')]" />
+    <xsl:template match="form[contains(@action,'ilobjcoursegui')]/div[@class='ilTableOuter'][1]" />
+    <xsl:template match="form[contains(@action,'ilobjcoursegui')]/div[@class='ilTableHeaderTitle'][1]" />
+    <xsl:template match="form[contains(@action,'ilobjcoursegui')]/div[@class='ilTableNav'][1]" />
+    <xsl:template match="form[contains(@action,'ilobjcoursegui')]/div[@class='ilTableNav yui-skin-sam'][1]" />
+
+    <!-- Hide personal startpage in user settings -->
+    <xsl:template match="div[@id='il_prop_cont_usr_start']" />
+
     <!-- Prevent collapsing of the navbar -->
     <xsl:template match="button[@class='navbar-toggle']" />
     <xsl:template match="div[contains(@class,'navbar-collapse')]">
@@ -94,7 +125,7 @@
     <xsl:template match="div[@class='il_ContainerListItem']/div[@class='ilFloatRight']"  />
 
     <!-- No footer -->
-    <xsl:template match="footer" />
+    <xsl:template match="footer[@id='ilFooter']" />
 
     <!-- Rewriting of links -->
     <xsl:template match="a" >
@@ -116,12 +147,13 @@
                 </xsl:when>
 
                 <!--  Prevent switching to safari in webapp mode -->
+                <!-- fim: #cf not necessary, but destroys external links
                 <xsl:when test="@href">
                     <xsl:attribute name="onclick">
                         window.location=this.getAttribute("href");return false;
                     </xsl:attribute>
                     <xsl:copy-of select="node()" />
-                </xsl:when>
+                </xsl:when> -->
 
                 <!-- links without href are just anchors -->
                 <xsl:otherwise>
@@ -131,6 +163,5 @@
 
         </xsl:copy>
     </xsl:template>
-
 
 </xsl:stylesheet>

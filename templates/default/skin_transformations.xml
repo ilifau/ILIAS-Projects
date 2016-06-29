@@ -114,6 +114,6 @@
  
     <trans style="reduced" at="output" of="Modules/LearningModule/tpl.page_new.html" with="reduced_main.xsl" debug=""/>
 
-    <!--<trans style="delos" at="output" of="tpl.main.html" with="delos_main.xsl" debug=""/> -->
+    <!-- <trans style="delos" at="output" of="tpl.main.html" with="delos_main.xsl" debug=""/> -->
 
 </transformations>
