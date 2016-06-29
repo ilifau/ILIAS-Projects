@@ -19,9 +19,10 @@ class ilAppService
 	const ERROR_INTERNAL = 500;
 	const ERROR_NOT_IMPLEMENTED = 501;
 
-	/**
-	 * @var ilObjUser
-	 */
+	/** @var array request data */
+	protected $request = array();
+
+	/** @var ilObjUser */
 	protected $userObj = null;
 
     /**
@@ -29,9 +30,14 @@ class ilAppService
     */
     public function handleRequest()
     {
+		$this->readRequestParams();
+
+		//only for development!!
+		$this->logRequest();
+		
         try
         {
-            if (!$this->initUser($_POST['username'], $_POST['password']))
+            if (!$this->initUser($this->request['username'], $this->request['password']))
 			{
 				$this->respondFailure(self::ERROR_UNAUTHORIZED);
 				return;
@@ -43,7 +49,7 @@ class ilAppService
 				return;
 			}
 
-            switch($cmd = $_POST['command'])
+            switch($cmd = $this->request['command'])
             {
                 case 'getModules':
 				case 'getModuleContents':
@@ -61,6 +67,27 @@ class ilAppService
             $this->respondFailure(self::ERROR_INTERNAL, $exception->getMessage());
         }
     }
+
+	/**
+	 * Read the request params either from POST or from json input
+	 */
+	protected function readRequestParams()
+	{
+		$this->request = array();
+
+		if (!empty($_POST))
+		{
+			$this->request = $_POST;
+			return;
+		}
+
+		$json = json_decode(file_get_contents('php://input'), true);
+		if (isset($json))
+		{
+			$this->request = $json;
+			return;
+		}
+	}
 
 
 	/**
@@ -128,7 +155,7 @@ class ilAppService
 	{
 		global $ilAccess;
 
-		$ref_id = $_POST['id'];
+		$ref_id = $this->request['id'];
 		if (ilObject::_lookupType($ref_id, true) != 'htlm' or ilObject::_isInTrash($ref_id))
 		{
 			$this->respondFailure(self::ERROR_NOT_FOUND);
@@ -198,7 +225,7 @@ class ilAppService
 					'title' => $node['title'],
 					'description' => $node['description'],
 					'icon' => ILIAS_HTTP_PATH.$icon,
-					'link' =>  ILIAS_HTTP_PATH.'/login.php?target=frm_'.$node['child'].'&username='.urlencode($_POST['username']).'&password='.urlencode($_POST['password'])
+					'link' =>  ILIAS_HTTP_PATH.'/login.php?target=frm_'.$node['child'].'&username='.urlencode($this->request['username']).'&password='.urlencode($this->request['password'])
 				);
 			}
 		}
@@ -243,4 +270,20 @@ class ilAppService
 
 		echo json_encode($data);
     }
+
+	/**
+	 * Log the data of the last request (only for testing purposes)
+	 */
+	protected function logRequest()
+	{
+		$logfile = 'data/'.CLIENT_ID.'/applog.html';
+
+		$log = "<pre>\n";
+		$log .='Get Parameters='. print_r($_GET,true)."\n";
+		$log .='Request data:'.print_r($this->request, true)."\n";
+		$log .='Cookies:'. print_r($_COOKIE,true)."\n";
+		$log .= '</pre>';
+
+		file_put_contents($logfile, $log);
+	}
 }
