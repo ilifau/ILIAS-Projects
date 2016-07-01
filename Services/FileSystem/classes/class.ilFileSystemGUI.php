@@ -19,7 +19,7 @@ class ilFileSystemGUI
     /**
      * @var array   
      */
-    var  $aditionalToolbarCommands = array();
+    var  $additionalToolbarCommands = array();
 // fim.
 
 
