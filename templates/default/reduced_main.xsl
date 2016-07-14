@@ -61,7 +61,7 @@
 
     <!-- Empty headline (keep space) -->
     <xsl:template match="div[contains(@class,'il_HeaderInner')]">
-        <div class="il_HeaderInner"></div>
+        <div class="il_HeaderInner"/>
     </xsl:template>
 
     <!-- No locator, No tree view -->
@@ -117,6 +117,18 @@
             <xsl:copy-of select="@*" />
             <xsl:attribute name="class">navbar-collapse collapse in</xsl:attribute>
             <xsl:copy-of select="node()" />
+        </xsl:copy>
+    </xsl:template>
+
+    <!-- adjusting image responsive size -->
+    <xsl:template match="td[@class='ilc_Mob']/@width" />
+    <xsl:template match="td[@class='ilc_Mob']/img/@width" />
+    <xsl:template match="td[@class='ilc_Mob']/img/@height"/>
+
+    <xsl:template match="td[@class='ilc_Mob']/img" >
+        <xsl:copy>
+            <xsl:apply-templates select="@*|node()" />
+            <xsl:attribute name="style">max-width:100%</xsl:attribute>
         </xsl:copy>
     </xsl:template>
 
