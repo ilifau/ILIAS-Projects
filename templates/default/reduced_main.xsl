@@ -22,7 +22,7 @@
     </xsl:template>
     -->
 
-    <!-- PNG logo in the top bar-->
+    <!-- PNG logo in the top bar -->
     <xsl:template match="div[@id='ilTopBar']//div[@class='row']" >
         <xsl:copy>
             <xsl:apply-templates select="@*" />
@@ -120,7 +120,7 @@
         </xsl:copy>
     </xsl:template>
 
-    <!-- adjusting image responsive size -->
+    <!-- fim #cf: adjusting image responsive size -->
     <xsl:template match="td[@class='ilc_Mob']/@width" />
     <xsl:template match="td[@class='ilc_Mob']/img/@width" />
     <xsl:template match="td[@class='ilc_Mob']/img/@height"/>

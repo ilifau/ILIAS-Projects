@@ -34,4 +34,16 @@
     </xsl:copy>
 </xsl:template>
 
+    <!-- fim #cf: adjusting image responsive size -->
+    <xsl:template match="td[@class='ilc_Mob']/@width" />
+    <xsl:template match="td[@class='ilc_Mob']/img/@width" />
+    <xsl:template match="td[@class='ilc_Mob']/img/@height"/>
+
+    <xsl:template match="td[@class='ilc_Mob']/img" >
+        <xsl:copy>
+            <xsl:apply-templates select="@*|node()" />
+            <xsl:attribute name="style">max-width:100%</xsl:attribute>
+        </xsl:copy>
+    </xsl:template>
+
 </xsl:stylesheet>
