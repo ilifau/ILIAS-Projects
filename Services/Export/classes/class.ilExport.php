@@ -205,14 +205,15 @@ class ilExport
 			{
 				if ($entry != "." and
 					$entry != ".." and
-					substr($entry, -4) == ".zip" and
-					ereg("^[0-9]{10}_{2}[0-9]+_{2}(".$a_obj_type."_)*[0-9]+\.zip\$", $entry))
+// fim: [app] list all zip files (without expecting name format)
+					substr($entry, -4) == ".zip")
 				{
-					$ts = substr($entry, 0, strpos($entry, "__"));
+					$ts = filemtime($dir.'/'.$entry);
 					$file[$entry.$type] = array("type" => $type, "file" => $entry,
 						"size" => filesize($dir."/".$entry),
 						"timestamp" => $ts);
 				}
+// fim.
 			}
 	
 			// close import directory

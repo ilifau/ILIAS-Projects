@@ -59,6 +59,12 @@ abstract class ilXmlExporter
 		{
 			return ilUtil::getDataDir()."/".$a_obj_type.$ent."_data"."/".$a_obj_type."_".$a_obj_id."/export";
 		}
+// fim: [app] use webspace directory for listing export files of the type 'app'
+		elseif ($a_export_type == "app")
+		{
+			return realpath(ilUtil::getWebspaceDir())."/".$a_obj_type.$ent."_data"."/".$a_obj_type."_".$a_obj_id."/export_".$a_export_type;
+		}
+// fim.
 		return ilUtil::getDataDir()."/".$a_obj_type.$ent."_data"."/".$a_obj_type."_".$a_obj_id."/export_".$a_export_type;
 	}
 

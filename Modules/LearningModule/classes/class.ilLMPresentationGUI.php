@@ -318,6 +318,12 @@ class ilLMPresentationGUI
 		{
 			$layout = "1window";
 		}
+// fim: [app] force layout for app export
+		elseif ($this->getExportFormat() == "app")
+		{
+			$layout = "appExport";
+		}
+// fim.
 		else
 		{
 			$layout = $this->lm->getLayout();
@@ -645,7 +651,6 @@ class ilLMPresentationGUI
 				$this->tpl->fillJavaScriptFiles(true);
 				$this->tpl->fillCssFiles(true);
 			}
-
 
 			$this->tpl->fillBodyClass();
 
@@ -2706,6 +2711,18 @@ class ilLMPresentationGUI
 		return $tag;
 	}
 
+// fim:	[app] new function getOfflineStructure
+	/**
+	 * Get a structure array for offline export
+	 * @return array
+	 */
+	public function getOfflineStructure()
+	{
+		include_once("./Modules/LearningModule/classes/class.ilLMTableOfContentsExplorerGUI.php");
+		$exp = new ilLMTableOfContentsExplorerGUI($this, "getOfflineStructure", $this, $this->lang, $this->export_all_languages);
+		return $exp->getOfflineStructure();
+	}
+// fim.
 
 	/**
 	* table of contents

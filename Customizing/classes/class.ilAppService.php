@@ -1,4 +1,6 @@
 <?php
+// fim: [app] service for retrieving app contents.
+
 /**
  * Copyright (c) 2015 Institut fuer Lern-Innovation, Friedrich-Alexander-Universitaet Erlangen-Nuernberg
  * GPLv3, see docs/LICENSE
@@ -126,11 +128,16 @@ class ilAppService
 
 		$modules = array();
 		$root_node = $tree->getNodeData($root_id);
-		$nodes = $tree->getSubTree($root_node, true, $a_type = 'htlm');
+		$nodes = $tree->getSubTree($root_node, true, $a_type = array('lm', 'htlm'));
 		foreach ($nodes as $node)
 		{
 			if ($ilAccess->checkAccessOfUser($this->userObj->getId(), 'read', '', $node['child'], $node['type'], $node['obj_id'], $tree->getTreeId()))
 			{
+				if ($node['type'] == 'lm' and !$this->checkIliasModuleOfflinePublished($node['obj_id']))
+				{
+					continue;
+				}
+
 				$icon = ilObject::_getIcon($node['obj_id'],'big',$node['type'], false);
 				if (substr($icon,0,1) == '.')
 				{
@@ -138,9 +145,10 @@ class ilAppService
 				}
 				$modules[] = array(
 					'id' => $node['child'],
+					'type' => $node['type'] == 'lm' ? 'ilias' : 'html',
 					'title' => $node['title'],
 					'description' => $node['description'],
-					'icon' => ILIAS_HTTP_PATH.$icon
+					'icon' => ILIAS_HTTP_PATH . $icon
 				);
 			}
 		}
@@ -156,22 +164,112 @@ class ilAppService
 		global $ilAccess;
 
 		$ref_id = $this->request['id'];
-		if (ilObject::_lookupType($ref_id, true) != 'htlm' or ilObject::_isInTrash($ref_id))
+		$type = ilObject::_lookupType($ref_id, true);
+
+		if (!in_array($type, array('lm','htlm')) or ilObject::_isInTrash($ref_id))
 		{
 			$this->respondFailure(self::ERROR_NOT_FOUND);
-			return;
+			return false;
 		}
 
 		if (!$ilAccess->checkAccessOfUser($this->userObj->getId(), 'read', '', $ref_id))
 		{
 			$this->respondFailure(self::ERROR_FORBIDDEN);
-			return;
+			return false;
 		}
 
-		$modObj = ilObjectFactory::getInstanceByRefId($ref_id);
+		switch ($type)
+		{
+			case 'lm':
+				return $this->getIliasModuleOfflineContents($ref_id);
+			case 'htlm':
+				return $this->getHtmlModuleContents($ref_id);
+		}
+	}
 
+
+	/**
+	 * Check if an ILIAS module has offline files published
+	 * @param	integer	$a_obj_id;
+	 * @return 	boolean
+	 */
+	protected function checkIliasModuleOfflinePublished($a_obj_id)
+	{
+		return file_exists($this->getIliasModuleOfflineDirectory($a_obj_id)."/structure.json");
+	}
+
+	/**
+	 * Get the offline directory of an Ilias learning module (may not exist)
+	 * @param integer 	$a_obj_id
+	 * @return string
+	 */
+	protected function getIliasModuleOfflineDirectory($a_obj_id)
+	{
+		return ilUtil::getWebspaceDir()."/lm_data/lm_$a_obj_id/export_app/lm_$a_obj_id";
+	}
+
+	/**
+	 * Get the offline contents of an ILIAS learning module
+	 */
+	protected function getIliasModuleOfflineContents($a_ref_id)
+	{
+		$obj_id = ilObject::_lookupObjId($a_ref_id);
+		$dir = $this->getIliasModuleOfflineDirectory($obj_id);
+
+		$structure = (array) json_decode(file_get_contents($dir.'/structure.json'));
+
+		$this->respondSuccess(array(
+			'basedir'=> ILIAS_HTTP_PATH . substr($dir, 1), // '.' removed
+			'startpage'=> $structure['href'],
+			'contents'=> $this->getWebspaceContents($dir),
+			'structure' => $structure
+		));
+		return true;
+	}
+
+	/**
+	 * Get the contents of an html learning module
+	 */
+	protected function getHtmlModuleContents($a_ref_id)
+	{
+		$modObj = ilObjectFactory::getInstanceByRefId($a_ref_id);
+		$dir = $modObj->getDataDirectory();
+
+		if (is_file($dir.'/structure.json'))
+		{
+			$structure = (array) json_decode(file_get_contents($dir.'/structure.json'));
+		}
+		else
+		{
+			$structure = array(
+				'id' => 1,
+				'type' => 'module',
+				'title' => $modObj->getTitle(),
+				'href' => $modObj->getStartFile(),
+				'childs' => array()
+			);
+
+			file_put_contents($dir.'/structure.json', json_encode($structure, JSON_PRETTY_PRINT));
+		}
+
+		$this->respondSuccess(array(
+			'basedir'=> ILIAS_HTTP_PATH . substr($dir, 1), // '.' removed
+			'startpage'=> $modObj->getStartFile(),
+			'contents'=> $this->getWebspaceContents($dir),
+			'structure' => $structure
+		));
+		return true;
+	}
+
+	/**
+	 * Get the contents of a web space directory
+	 * @param 	string		$a_path		url path relative to ILIAS base directory
+	 * @return	array					list of files with relative url paths
+	 */
+	protected function getWebspaceContents($a_path)
+	{
 		$contents = array();
-		$list = ilUtil::rList($modObj->getDataDirectory(), '');
+		$list = ilUtil::rList($a_path, '');
 		foreach ($list as $file)
 		{
 			$parts = pathinfo($file);
@@ -180,19 +278,9 @@ class ilAppService
 				$contents[] = $file;
 			}
 		}
-
-		$datadir = $modObj->getDataDirectory();
-		if (substr($datadir,0,1) == '.')
-		{
-			$datadir= substr($datadir,1);
-		}
-		$this->respondSuccess(array(
-			'basedir'=> ILIAS_HTTP_PATH.$datadir,
-			'startpage'=> $modObj->getStartFile(),
-			'contents'=> $contents
-		));
-
+		return $contents;
 	}
+
 
 	/**
 	 * Get a link to the course forum

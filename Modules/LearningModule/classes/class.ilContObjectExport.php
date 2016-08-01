@@ -42,6 +42,13 @@ class ilContObjectExport
 		$date = time();
 		switch($this->mode)
 		{
+// fim: [app] add app mode to export directory spec.
+			case "app":
+				$this->export_dir = $this->cont_obj->getExportDirectory("app");
+				$this->subdir = $this->cont_obj->getType()."_".$this->cont_obj->getId();
+				$this->filename = $this->subdir.".zip";
+				break;
+// fim.
 			case "html":
 				if ($this->lang == "")
 				{
@@ -92,6 +99,11 @@ class ilContObjectExport
 	{
 		switch ($this->mode)
 		{
+// fim: [app] add 'app' mode for building export files
+			case "app":
+				$this->buildExportFileAppHTML();
+				break;
+// fim.
 			case "html":
 				$this->buildExportFileHTML();
 				break;
@@ -217,6 +229,18 @@ class ilContObjectExport
 	{
 		die("deprecated.");		
 	}
+
+// fim: [app] new function 	buildExportFileAppHTML
+	/**
+	 * build html package for app
+	 */
+	function buildExportFileAppHTML()
+	{
+		$this->lang = "";
+		$this->cont_obj->createExportDirectory("app");
+		$this->cont_obj->exportHTML($this->export_dir."/".$this->subdir, $expLog, true, "app", $this->lang);
+	}
+// fim.
 
 	/**
 	* build html package

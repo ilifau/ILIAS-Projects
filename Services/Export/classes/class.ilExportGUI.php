@@ -340,6 +340,12 @@ class ilExportGUI
 			{
 				ilUtil::delDir($exp_dir);
 			}
+			// fim: [app] delete app export directory when the zip file is deleted
+			if ($file[0] == 'app')
+			{
+				ilUtil::delDir($export_dir.'/'.$this->obj->getType().'_'.$this->obj->getId());
+			}
+			// fim.
 			
 			// delete entry in database
 			include_once './Services/Export/classes/class.ilExportFileInfo.php';

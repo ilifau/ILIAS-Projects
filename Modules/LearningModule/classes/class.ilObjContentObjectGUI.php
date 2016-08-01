@@ -243,7 +243,9 @@ class ilObjContentObjectGUI extends ilObjectGUI implements ilLinkCheckerGUIRowHa
 				{
 					$exp_gui->addFormat("html", "", $this, "exportHTML");
 				}
-
+// fim: [app] add format for app export
+				$exp_gui->addFormat('app','',$this, "exportAppHTML");
+// fim.
 				$exp_gui->addFormat("scorm", "", $this, "exportSCORM");
 				$exp_gui->addCustomColumn($lng->txt("cont_public_access"),
 						$this, "getPublicAccessColValue");
@@ -2382,6 +2384,16 @@ class ilObjContentObjectGUI extends ilObjectGUI implements ilLinkCheckerGUIRowHa
 //		$this->ctrl->redirect($this, "exportList");
 	}
 
+// fim: [app] new function exportAppHTML
+	function exportAppHTML()
+	{
+		$lang = "";
+		require_once("./Modules/LearningModule/classes/class.ilContObjectExport.php");
+		$cont_exp = new ilContObjectExport($this->object, "app", $lang);
+		$cont_exp->buildExportFile();
+	}
+// fim.
+//
 	/**
 	* create scorm package
 	*/

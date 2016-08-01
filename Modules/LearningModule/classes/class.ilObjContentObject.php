@@ -523,7 +523,16 @@ class ilObjContentObject extends ilObject
 	*/
 	function createExportDirectory($a_type = "xml")
 	{
-		$lm_data_dir = ilUtil::getDataDir()."/lm_data";
+// fim: [app] use webspace directory for creating the app files
+		if ($a_type == 'app')
+		{
+			$lm_data_dir = realpath(ilUtil::getWebspaceDir())."/lm_data";
+		}
+		else
+		{
+			$lm_data_dir = ilUtil::getDataDir()."/lm_data";
+		}
+// fim.
 		if(!is_writable($lm_data_dir))
 		{
 			$this->ilias->raiseError("Content object Data Directory (".$lm_data_dir
@@ -545,7 +554,9 @@ class ilObjContentObject extends ilObject
 				break;
 
 			default:		// = xml
-				if (substr($a_type, 0, 4) == "html")
+// fim: [app] allow 'app' as export directory
+				if (substr($a_type, 0, 4) == "html" || substr($a_type, 0, 3) == "app")
+// fim.
 				{
 					$export_dir = $lm_dir."/export_".$a_type;
 				}
@@ -575,7 +586,13 @@ class ilObjContentObject extends ilObject
 				break;
 				
 			default:			// = xml
-				if (substr($a_type, 0, 4) == "html")
+// fim: [app] use webspace directory for the app files
+				if (substr($a_type, 0, 3) == "app")
+				{
+					$export_dir = realpath(ilUtil::getWebspaceDir())."/lm_data"."/lm_".$this->getId()."/export_".$a_type;
+				}
+				elseif (substr($a_type, 0, 4) == "html")
+// fim.
 				{
 					$export_dir = ilUtil::getDataDir()."/lm_data"."/lm_".$this->getId()."/export_".$a_type;
 				}
@@ -1964,9 +1981,9 @@ class ilObjContentObject extends ilObject
 	function getExportFiles()
 	{
 		$file = array();
-		
-		$types = array("xml", "html", "scorm");
-		
+// fim: [app] allow 'app' type for listing export files
+		$types = array("app", "xml", "html", "scorm");
+// fim.
 		foreach ($types as $type)
 		{
 			$dir = $this->getExportDirectory($type);
@@ -2303,7 +2320,16 @@ class ilObjContentObject extends ilObject
 		// export table of contents
 		$ilBench->start("ExportHTML", "exportHTMLTOC");
 		$ilLocator->clearItems();
-		if ($this->isActiveTOC())
+
+// fim: [app] produce a json file for table of contents
+		if ($a_export_format == 'app')
+		{
+			$content = $lm_gui->getOfflineStructure();
+			$file = $a_target_dir."/structure.json";
+			file_put_contents($file, json_encode($content, JSON_PRETTY_PRINT));
+		}
+		elseif ($this->isActiveTOC())
+// fim.
 		{
 			$tpl = new ilTemplate("tpl.main.html", true, true);
 			//$tpl->addBlockFile("CONTENT", "content", "tpl.adm_content.html");
@@ -2394,23 +2420,29 @@ class ilObjContentObject extends ilObject
 		// zip everything
 		if ($a_zip_file)
 		{
+// fim: [app] use format dependent export directory and zip file name
 			if ($a_lang == "")
 			{
-				$zip_target_dir = $this->getExportDirectory("html");
+				$zip_target_dir = $this->getExportDirectory($a_export_format);
+				$zip_file = $zip_target_dir."/". $this->getType()."_".$this->getId().".zip";
 			}
 			else
 			{
-				$zip_target_dir = $this->getExportDirectory("html_".$a_lang);
+				$zip_target_dir = $this->getExportDirectory($a_export_format."_".$a_lang);
 				ilUtil::makeDir($zip_target_dir);
+				// zip it all
+				$date = time();
+				$zip_file = $zip_target_dir."/".$date."__".IL_INST_ID."__".
+					$this->getType()."_".$this->getId().".zip";
 			}
+// fim.
 
-			// zip it all
-			$date = time();
-			$zip_file = $zip_target_dir."/".$date."__".IL_INST_ID."__".
-				$this->getType()."_".$this->getId().".zip";
 //echo "-".$a_target_dir."-".$zip_file."-"; exit;
 			ilUtil::zip($a_target_dir, $zip_file);
-			ilUtil::delDir($a_target_dir);
+
+// fim: [app] don't delete the export directories for  app export
+//			ilUtil::delDir($a_target_dir);
+// fim.
 		}
 	}
 
