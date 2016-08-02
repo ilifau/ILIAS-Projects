@@ -42,7 +42,7 @@
     <xsl:template match="td[@class='ilc_Mob']/img" >
         <xsl:copy>
             <xsl:apply-templates select="@*|node()" />
-            <xsl:attribute name="style">max-width:100%</xsl:attribute>
+            <xsl:attribute name="style">width:<xsl:value-of select="@width" />px;max-width:100%;</xsl:attribute>
         </xsl:copy>
     </xsl:template>
 
