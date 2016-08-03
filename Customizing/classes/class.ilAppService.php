@@ -143,12 +143,16 @@ class ilAppService
 				{
 					$icon= substr($icon,1);
 				}
+
+				$time = $this->getModuleLastUpdate($node['obj_id'], $node['type']);
 				$modules[] = array(
 					'id' => $node['child'],
 					'type' => $node['type'] == 'lm' ? 'ilias' : 'html',
 					'title' => $node['title'],
 					'description' => $node['description'],
-					'icon' => ILIAS_HTTP_PATH . $icon
+					'icon' => ILIAS_HTTP_PATH . $icon,
+					'time' => $time->get(IL_CAL_DATETIME),
+					'timestamp' => $time->get(IL_CAL_UNIX),
 				);
 			}
 		}
@@ -187,6 +191,24 @@ class ilAppService
 		}
 	}
 
+	/**
+	 * Get the timestamp of the module's last update
+	 * @param integer	$a_obj_id
+	 * @param string	$a_type
+	 * @return ilDateTime
+	 */
+	protected function getModuleLastUpdate($a_obj_id, $a_type)
+	{
+		if ($a_type == 'lm')
+		{
+			return new ilDateTime(filemtime($this->getIliasModuleOfflineDirectory($a_obj_id)."/structure.json"), IL_CAL_UNIX);
+		}
+		else
+		{
+			return new ilDateTime(ilObject::_lookupLastUpdate($a_obj_id), IL_CAL_DATETIME);
+		}
+
+	}
 
 	/**
 	 * Check if an ILIAS module has offline files published
