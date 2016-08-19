@@ -36,13 +36,35 @@
 
     <!-- fim #cf: adjusting image responsive size -->
     <xsl:template match="td[@class='ilc_Mob']/@width" />
+
     <xsl:template match="td[@class='ilc_Mob']/img/@width" />
     <xsl:template match="td[@class='ilc_Mob']/img/@height"/>
-
     <xsl:template match="td[@class='ilc_Mob']/img" >
         <xsl:copy>
             <xsl:apply-templates select="@*|node()" />
             <xsl:attribute name="style">width:<xsl:value-of select="@width" />px;max-width:100%;</xsl:attribute>
+        </xsl:copy>
+    </xsl:template>
+
+    <!-- adjusting video responsive size -->
+    <xsl:template match="td[@class='ilc_Mob']/video/@width" />
+    <xsl:template match="td[@class='ilc_Mob']/video/@height"/>
+    <xsl:template match="td[@class='ilc_Mob']/video/object" />
+    <xsl:template match="td[@class='ilc_Mob']/video" >
+        <xsl:copy>
+            <xsl:attribute name="style">width:<xsl:value-of select="@width" />px;max-width:100%;</xsl:attribute>
+            <xsl:apply-templates select="@*|node()" />
+        </xsl:copy>
+    </xsl:template>
+
+    <!-- don't use mediaelement player -->
+    <xsl:template match="script[contains(@src,'mediaelement')]" />
+
+    <!-- linebreaks the picture text beneath the picture -->
+    <xsl:template match="div[@class='ilc_media_caption_MediaCaption']" >
+        <xsl:copy>
+            <xsl:attribute name="style">width:<xsl:value-of select="../../../tr/td/img/@width" />px;</xsl:attribute>
+            <xsl:apply-templates select="@*|node()" />
         </xsl:copy>
     </xsl:template>
 
