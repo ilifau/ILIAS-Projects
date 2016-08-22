@@ -81,11 +81,11 @@
     <xsl:template match="div[@class='ilc_media_caption_MediaCaption']" >
         <xsl:copy>
             <xsl:if test="../../../tr/td/img">
-                <xsl:attribute name="style">width:<xsl:value-of select="../../../tr/td/img/@width" />px;</xsl:attribute>
+                <xsl:attribute name="style">max-width:100%;</xsl:attribute>
             </xsl:if>
 
             <xsl:if test="../../../tr/td/embed">
-                <xsl:attribute name="style">width:<xsl:value-of select="../../../tr/td/embed/@width" />px;</xsl:attribute>
+                <xsl:attribute name="style">max-width:100%;</xsl:attribute>
             </xsl:if>
             <xsl:apply-templates select="@*|node()" />
         </xsl:copy>
