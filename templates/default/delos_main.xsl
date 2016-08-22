@@ -46,7 +46,16 @@
         </xsl:copy>
     </xsl:template>
 
-    <!-- adjusting video responsive size -->
+    <!-- fim #cf: adjusting image (embeded) responsive size -->
+    <xsl:template match="td[@class='ilc_Mob']/embed/@height"/>
+    <xsl:template match="td[@class='ilc_Mob']/embed" >
+        <xsl:copy>
+            <xsl:attribute name="style">max-width:100%;</xsl:attribute>
+            <xsl:apply-templates select="@*|node()" />
+        </xsl:copy>
+    </xsl:template>
+
+    <!-- fim #cf: adjusting video responsive size -->
     <xsl:template match="td[@class='ilc_Mob']/video/@width" />
     <xsl:template match="td[@class='ilc_Mob']/video/@height"/>
     <xsl:template match="td[@class='ilc_Mob']/video/object" />
@@ -57,13 +66,27 @@
         </xsl:copy>
     </xsl:template>
 
+    <!-- fim #cf: adjusting video responsive size, for youtube embeds - better, not good -->
+    <xsl:template match="embed[@type='application/x-shockwave-flash']" >
+        <xsl:copy>
+            <xsl:attribute name="style">max-width:100%;</xsl:attribute>
+            <xsl:apply-templates select="@*|node()" />
+        </xsl:copy>
+    </xsl:template>
+
     <!-- don't use mediaelement player -->
     <xsl:template match="script[contains(@src,'mediaelement')]" />
 
-    <!-- linebreaks the picture text beneath the picture -->
+    <!-- fim #cf: linebreaks the text beneath the picture (not nice) -->
     <xsl:template match="div[@class='ilc_media_caption_MediaCaption']" >
         <xsl:copy>
-            <xsl:attribute name="style">width:<xsl:value-of select="../../../tr/td/img/@width" />px;</xsl:attribute>
+            <xsl:if test="../../../tr/td/img">
+                <xsl:attribute name="style">width:<xsl:value-of select="../../../tr/td/img/@width" />px;</xsl:attribute>
+            </xsl:if>
+
+            <xsl:if test="../../../tr/td/embed">
+                <xsl:attribute name="style">width:<xsl:value-of select="../../../tr/td/embed/@width" />px;</xsl:attribute>
+            </xsl:if>
             <xsl:apply-templates select="@*|node()" />
         </xsl:copy>
     </xsl:template>
