@@ -86,9 +86,29 @@
 
             <xsl:if test="../../../tr/td/embed">
                 <xsl:attribute name="style">max-width:100%;</xsl:attribute>
-            </xsl:if>
+             we</xsl:if>
             <xsl:apply-templates select="@*|node()" />
         </xsl:copy>
     </xsl:template>
+
+    <!-- no margin-left, margin-right in LEs = full space use -->
+    <xsl:template match="div[@id='mainspacekeeper']" >
+        <xsl:copy>
+            <xsl:attribute name="style">max-width:100%;</xsl:attribute>
+            <xsl:apply-templates select="@*|node()" />
+        </xsl:copy>
+    </xsl:template>
+
+    <!-- no ilLeftNav -->
+    <xsl:template match="div[@id='left_nav']" />
+
+    <!-- no breadcrumbs -->
+    <xsl:template match="ol[@class='breadcrumb']" />
+
+    <!-- no inner header -->
+    <xsl:template match="div[@class='media il_HeaderInner']" />
+
+    <!-- no free space at bottom -->
+    <xsl:template match="div[@id='minheight']" />
 
 </xsl:stylesheet>
