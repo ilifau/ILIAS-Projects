@@ -111,4 +111,19 @@
     <!-- no free space at bottom -->
     <xsl:template match="div[@id='minheight']" />
 
+    <!-- changed fontsize for LM navigation -->
+    <xsl:template match="a[@class='ilc_page_rnavlink_RightNavigationLink']" >
+        <xsl:copy>
+            <xsl:attribute name="style">font-size:200%;</xsl:attribute>
+            <xsl:apply-templates select="@*|node()" />
+        </xsl:copy>
+    </xsl:template>
+    <xsl:template match="a[@class='ilc_page_lnavlink_LeftNavigationLink']" >
+        <xsl:copy>
+            <xsl:attribute name="style">font-size:200%;</xsl:attribute>
+            <xsl:apply-templates select="@*|node()" />
+        </xsl:copy>
+    </xsl:template>
+
+
 </xsl:stylesheet>
