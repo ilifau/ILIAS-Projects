@@ -91,27 +91,27 @@
         </xsl:copy>
     </xsl:template>
 
-    <!-- no margin-left, margin-right in LEs = full space use -->
+    <!-- no margin-left, margin-right in LEs = full space use
     <xsl:template match="div[@id='mainspacekeeper']" >
         <xsl:copy>
             <xsl:attribute name="style">max-width:100%;</xsl:attribute>
             <xsl:apply-templates select="@*|node()" />
         </xsl:copy>
     </xsl:template>
-
-    <!-- no ilLeftNav -->
+ -->
+    <!-- no ilLeftNav
     <xsl:template match="div[@id='left_nav']" />
-
-    <!-- no breadcrumbs -->
+-->
+    <!-- no breadcrumbs
     <xsl:template match="ol[@class='breadcrumb']" />
-
-    <!-- no inner header -->
+-->
+    <!-- no inner header
     <xsl:template match="div[@class='media il_HeaderInner']" />
-
-    <!-- no free space at bottom -->
+-->
+    <!-- no free space at bottom
     <xsl:template match="div[@id='minheight']" />
-
-    <!-- changed fontsize for LM navigation -->
+-->
+    <!-- changed fontsize for LM navigation
     <xsl:template match="a[@class='ilc_page_rnavlink_RightNavigationLink']" >
         <xsl:copy>
             <xsl:attribute name="style">font-size:200%;</xsl:attribute>
@@ -124,6 +124,6 @@
             <xsl:apply-templates select="@*|node()" />
         </xsl:copy>
     </xsl:template>
-
+-->
 
 </xsl:stylesheet>
