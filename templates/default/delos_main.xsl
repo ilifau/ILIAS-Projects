@@ -3,10 +3,9 @@
 <xsl:output method="html" version="4.0" encoding="UTF-8"/>
 
 <!--  Basic rule: copy everything not specified and process the childs -->
-<xsl:template match="node()">
+<xsl:template match="@*|node()">
     <xsl:copy>
-        <xsl:copy-of select="@*" />
-        <xsl:apply-templates select="node()" />
+        <xsl:apply-templates select="@*|node()" />
     </xsl:copy>
 </xsl:template>
 
@@ -42,11 +41,11 @@
 
     <xsl:template match="td[@class='ilc_Mob']/img/@width" />
     <xsl:template match="td[@class='ilc_Mob']/img/@height"/>
+
     <xsl:template match="td[@class='ilc_Mob']/img" >
         <xsl:copy>
-            <xsl:copy-of select="@*" />
             <xsl:attribute name="style">width:<xsl:value-of select="@width" />px;max-width:100%;</xsl:attribute>
-            <xsl:apply-templates select="node()" />
+            <xsl:apply-templates select="@*|node()" />
         </xsl:copy>
     </xsl:template>
 
@@ -54,9 +53,8 @@
     <xsl:template match="td[@class='ilc_Mob']/embed/@height"/>
     <xsl:template match="td[@class='ilc_Mob']/embed" >
         <xsl:copy>
-            <xsl:copy-of select="@*" />
             <xsl:attribute name="style">max-width:100%;</xsl:attribute>
-            <xsl:apply-templates select="node()" />
+            <xsl:apply-templates select="@*|node()" />
         </xsl:copy>
     </xsl:template>
 
@@ -66,18 +64,16 @@
     <xsl:template match="td[@class='ilc_Mob']/video/object" />
     <xsl:template match="td[@class='ilc_Mob']/video" >
         <xsl:copy>
-            <xsl:copy-of select="@*" />
             <xsl:attribute name="style">width:<xsl:value-of select="@width" />px;max-width:100%;</xsl:attribute>
-            <xsl:apply-templates select="node()" />
+            <xsl:apply-templates select="@*|node()" />
         </xsl:copy>
     </xsl:template>
 
     <!-- fim #cf: adjusting video responsive size, for youtube embeds - better, not good -->
     <xsl:template match="embed[@type='application/x-shockwave-flash']" >
         <xsl:copy>
-            <xsl:copy-of select="@*" />
             <xsl:attribute name="style">max-width:100%;</xsl:attribute>
-            <xsl:apply-templates select="node()" />
+            <xsl:apply-templates select="@*|node()" />
         </xsl:copy>
     </xsl:template>
 
@@ -87,7 +83,6 @@
     <!-- fim #cf: linebreaks the text beneath the picture (not nice) -->
     <xsl:template match="div[@class='ilc_media_caption_MediaCaption']" >
         <xsl:copy>
-            <xsl:copy-of select="@*" />
             <xsl:if test="../../../tr/td/img">
                 <xsl:attribute name="style">max-width:100%;</xsl:attribute>
             </xsl:if>
