@@ -96,28 +96,30 @@
 
     <!-- exclude for git/ilias -->
 
-    <!-- no margin-left, margin-right in LEs = full space use
+    <!-- no margin-left, margin-right in LEs = full space use    -->
+    <!-- no ilLeftNav -->
+    <!-- no breadcrumbs-->
+    <!-- no inner header-->
+    <!-- no free space at bottom-->
+    <!-- changed fontsize for LM navigation-->
+    <!-- hiding ilSubTab, to minimize space above LM-Content
+
     <xsl:template match="div[@id='mainspacekeeper']" >
         <xsl:copy>
             <xsl:attribute name="style">max-width:100%;</xsl:attribute>
             <xsl:apply-templates select="@*|node()" />
         </xsl:copy>
     </xsl:template>
-    -->
-    <!-- no ilLeftNav
+
     <xsl:template match="div[@id='left_nav']" />
     <xsl:template match="div[@class='iLLeftNav']" />
--->
-    <!-- no breadcrumbs
+
     <xsl:template match="ol[@class='breadcrumb']" />
--->
-    <!-- no inner header
+
     <xsl:template match="div[@class='media il_HeaderInner']" />
--->
-    <!-- no free space at bottom
+
     <xsl:template match="div[@id='minheight']" />
--->
-    <!-- changed fontsize for LM navigation
+
     <xsl:template match="a[@class='ilc_page_rnavlink_RightNavigationLink']" >
         <xsl:copy>
             <xsl:attribute name="style">font-size:125%;</xsl:attribute>
@@ -130,18 +132,16 @@
             <xsl:apply-templates select="@*|node()" />
         </xsl:copy>
     </xsl:template>
--->
-    <!-- hiding ilSubTab, to minimize space above LM-Content
+
     <xsl:template match="ul[@id='ilSubTab']" />
 -->
-
     <!-- _end exclude for git/ilias -->
-    
-    <!-- getting a gap in questions between markspot and answertext -->
+
+    <!-- getting a gap in questions between markspot and answertext-->
     <xsl:template match="span[@class='answertext']" >
         <xsl:copy>
             <xsl:attribute name="style">padding: 5px;</xsl:attribute>
-
+            <xsl:apply-templates select="@*|node()" />
         </xsl:copy>
     </xsl:template>
 
