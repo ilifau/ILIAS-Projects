@@ -94,6 +94,8 @@
         </xsl:copy>
     </xsl:template>
 
+    <!-- exclude for git/ilias -->
+
     <!-- no margin-left, margin-right in LEs = full space use
     <xsl:template match="div[@id='mainspacekeeper']" >
         <xsl:copy>
@@ -101,14 +103,14 @@
             <xsl:apply-templates select="@*|node()" />
         </xsl:copy>
     </xsl:template>
--->
+    -->
     <!-- no ilLeftNav
     <xsl:template match="div[@id='left_nav']" />
     <xsl:template match="div[@class='iLLeftNav']" />
 -->
     <!-- no breadcrumbs
     <xsl:template match="ol[@class='breadcrumb']" />
- -->
+-->
     <!-- no inner header
     <xsl:template match="div[@class='media il_HeaderInner']" />
 -->
@@ -132,6 +134,9 @@
     <!-- hiding ilSubTab, to minimize space above LM-Content
     <xsl:template match="ul[@id='ilSubTab']" />
 -->
+
+    <!-- _end exclude for git/ilias -->
+    
     <!-- getting a gap in questions between markspot and answertext -->
     <xsl:template match="span[@class='answertext']" >
         <xsl:copy>
@@ -142,14 +147,19 @@
 
     <!-- making a "picture to video" function -->
     <xsl:template match="table[@class='ilc_media_cont_MediaContainer']" >
-        <xsl:if test="//img[contains(@src, 'enlarge.svg')]">
-            <xsl:copy>
-                <!--<xsl:attribute name="target">_blank</xsl:attribute>-->
-                <xsl:attribute name="onclick">window.location=this.getAttribute("href");return false;</xsl:attribute>
-                <xsl:attribute name="href"><xsl:value-of select=".//a/@href" /></xsl:attribute>
+        <xsl:choose>
+            <xsl:when test="//img[contains(@src, 'enlarge.svg')]">
+                <xsl:copy>
+                    <!--<xsl:attribute name="target">_blank</xsl:attribute>-->
+                    <xsl:attribute name="onclick">window.location=this.getAttribute("href");return false;</xsl:attribute>
+                    <xsl:attribute name="href"><xsl:value-of select=".//a/@href" /></xsl:attribute>
+                    <xsl:apply-templates select="@*|node()" />
+                </xsl:copy>
+            </xsl:when>
+            <xsl:otherwise>
                 <xsl:apply-templates select="@*|node()" />
-            </xsl:copy>
-        </xsl:if>
+            </xsl:otherwise>
+        </xsl:choose>
     </xsl:template>
 
     <!-- no magnifying glass -->
