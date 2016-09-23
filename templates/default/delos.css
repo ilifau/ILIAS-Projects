@@ -361,6 +361,7 @@ th {
   line-height: 1;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  z-index: 9;
 }
 .glyphicon-asterisk:before {
   content: "\2a";
@@ -11484,7 +11485,7 @@ table.mceToolbar td {
   }
   .ilFixedTopSpacer,
   .ilFixedTopSpacerBarOnly {
-    margin-top: 40px;
+    margin-top: 3px; /* 40 */
   }
   nav#ilTopNav {
     min-height: 0px;

@@ -94,27 +94,28 @@
         </xsl:copy>
     </xsl:template>
 
-    <!-- no margin-left, margin-right in LEs = full space use -->
+    <!-- no margin-left, margin-right in LEs = full space use
     <xsl:template match="div[@id='mainspacekeeper']" >
         <xsl:copy>
             <xsl:attribute name="style">max-width:100%;</xsl:attribute>
             <xsl:apply-templates select="@*|node()" />
         </xsl:copy>
     </xsl:template>
-
-    <!-- no ilLeftNav-->
+-->
+    <!-- no ilLeftNav
     <xsl:template match="div[@id='left_nav']" />
-
-    <!-- no breadcrumbs-->
+    <xsl:template match="div[@class='iLLeftNav']" />
+-->
+    <!-- no breadcrumbs
     <xsl:template match="ol[@class='breadcrumb']" />
-
-    <!-- no inner header-->
+ -->
+    <!-- no inner header
     <xsl:template match="div[@class='media il_HeaderInner']" />
-
-    <!-- no free space at bottom-->
+-->
+    <!-- no free space at bottom
     <xsl:template match="div[@id='minheight']" />
-
-    <!-- changed fontsize for LM navigation-->
+-->
+    <!-- changed fontsize for LM navigation
     <xsl:template match="a[@class='ilc_page_rnavlink_RightNavigationLink']" >
         <xsl:copy>
             <xsl:attribute name="style">font-size:125%;</xsl:attribute>
@@ -127,16 +128,50 @@
             <xsl:apply-templates select="@*|node()" />
         </xsl:copy>
     </xsl:template>
-
-    <!-- hiding ilSubTab, to minimize space above LM-Content -->
+-->
+    <!-- hiding ilSubTab, to minimize space above LM-Content
     <xsl:template match="ul[@id='ilSubTab']" />
-
+-->
     <!-- getting a gap in questions between markspot and answertext -->
     <xsl:template match="span[@class='answertext']" >
         <xsl:copy>
             <xsl:attribute name="style">padding: 5px;</xsl:attribute>
+
+        </xsl:copy>
+    </xsl:template>
+
+    <!-- making a "picture to video" function -->
+    <xsl:template match="table[@class='ilc_media_cont_MediaContainer']" >
+        <xsl:if test="//img[contains(@src, 'enlarge.svg')]">
+            <xsl:copy>
+                <!--<xsl:attribute name="target">_blank</xsl:attribute>-->
+                <xsl:attribute name="onclick">window.location=this.getAttribute("href");return false;</xsl:attribute>
+                <xsl:attribute name="href"><xsl:value-of select=".//a/@href" /></xsl:attribute>
+                <xsl:apply-templates select="@*|node()" />
+            </xsl:copy>
+        </xsl:if>
+    </xsl:template>
+
+    <!-- no magnifying glass -->
+    <xsl:template match="table[@class='ilc_media_cont_MediaContainer']//div" />
+
+    <!-- Close-Icon of Glossary term in LM z-index changed
+        not working, done in delos.css:354
+    -->
+
+    <!-- reducing mainspacekeeper - geht nicht
+    geändert in delos.css 11487 von 40 auf 0
+    <xsl:template match="div[@id='mainspacekeeper']" >
+        <xsl:copy>
+            <xsl:attribute name="style">margin-top:5px;</xsl:attribute>
             <xsl:apply-templates select="@*|node()" />
         </xsl:copy>
     </xsl:template>
+    -->
+    <!-- questionlayout change
+        ging nicht:
+        - Aussenabstand des Submit-Buttons im Content-Style geändert
+        Text padding-bottom im Content Style geändert
+    -->
 
 </xsl:stylesheet>
