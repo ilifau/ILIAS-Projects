@@ -90,7 +90,7 @@
             <xsl:if test="../../../tr/td/embed">
                 <xsl:attribute name="style">max-width:100%;</xsl:attribute>
             </xsl:if>
-            <xsl:apply-templates select="node()" />
+            <xsl:apply-templates select="@*|node()" />
         </xsl:copy>
     </xsl:template>
 
@@ -145,25 +145,27 @@
         </xsl:copy>
     </xsl:template>
 
-    <!-- making a "picture to video" function -->
+    <!-- making a "picture to video" function-->
     <xsl:template match="table[@class='ilc_media_cont_MediaContainer']" >
         <xsl:choose>
             <xsl:when test="//img[contains(@src, 'enlarge.svg')]">
                 <xsl:copy>
-                    <!--<xsl:attribute name="target">_blank</xsl:attribute>-->
                     <xsl:attribute name="onclick">window.location=this.getAttribute("href");return false;</xsl:attribute>
                     <xsl:attribute name="href"><xsl:value-of select=".//a/@href" /></xsl:attribute>
                     <xsl:apply-templates select="@*|node()" />
                 </xsl:copy>
+
             </xsl:when>
             <xsl:otherwise>
-                <xsl:apply-templates select="@*|node()" />
+                <xsl:copy>
+                    <xsl:apply-templates select="@*|node()" />
+            </xsl:copy>
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
 
     <!-- no magnifying glass -->
-    <xsl:template match="table[@class='ilc_media_cont_MediaContainer']//div" />
+    <xsl:template match="table[@class='ilc_media_cont_MediaContainer']//div/a" />
 
     <!-- Close-Icon of Glossary term in LM z-index changed
         not working, done in delos.css:354
