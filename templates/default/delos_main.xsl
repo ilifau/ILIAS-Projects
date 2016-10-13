@@ -37,6 +37,22 @@
 </xsl:template>
 
     <!-- fim #cf: adjusting image responsive size -->
+    <xsl:template match="td[@class='ilc_Mob']" >
+        <xsl:copy>
+            <xsl:choose>
+                <xsl:when test="object/embed">
+                    <!-- all attributes needed for youtube videos -->
+                    <xsl:copy-of select="@*" />
+                </xsl:when>
+                <xsl:otherwise>
+                    <!-- width will be removed for other media -->
+                    <xsl:apply-templates select="@*" />
+                </xsl:otherwise>
+            </xsl:choose>
+            <xsl:apply-templates select="node()" />
+        </xsl:copy>
+    </xsl:template>
+
     <xsl:template match="td[@class='ilc_Mob']/@width" />
 
     <xsl:template match="td[@class='ilc_Mob']/img/@width" />
@@ -77,31 +93,31 @@
         </xsl:copy>
     </xsl:template>
 
+
+    <!-- doing outer frame -->
+    <!--<xsl:template match="td[@class='ilc_Mob']/object/@width" />
+    <xsl:template match="td[@class='ilc_Mob']/object/@height"/> -->
+    <!--<xsl:template match="td[@class='ilc_Mob']/object/embed/@width" />
+    <xsl:template match="td[@class='ilc_Mob']/object/embed/@height"/> -->
+    <xsl:template match="td[@class='ilc_Mob']/object" >
+        <div style="position: relative; padding-bottom: 56.25%; padding-top: 0px; height: 0; overflow: hidden;">
+            <xsl:copy>
+                <!--<xsl:attribute name="style">width:<xsl:value-of select="@width" />px;max-width:100%;</xsl:attribute> -->
+                <xsl:apply-templates select="@*|node()" />
+            </xsl:copy>
+       </div>
+    </xsl:template>
+
     <!-- fim #cf: adjusting video responsive size, for youtube embeds - better, not good -->
     <!-- http://www.holgerkoenemann.de/ein-vimeo-oder-youtube-video-responsive-einbinden/ -->
     <!-- preparing inner frame -->
     <xsl:template match="td[@class='ilc_Mob']/object/embed" >
         <xsl:copy>
-            <xsl:attribute name="style">position: absolute; top: 0; left: 0; width: 100%; height: 100%;</xsl:attribute>
+            <xsl:attribute name="style">position: absolute; top: 0; left: 0; width:100%; height: 100%;</xsl:attribute>
             <xsl:apply-templates select="@*|node()" />
         </xsl:copy>
     </xsl:template>
 
-    <!-- doing outer frame -->
-    <xsl:template match="td[@class='ilc_Mob']" >
-        <xsl:copy>
-            <xsl:attribute name="width"><xsl:value-of select="object/@width" />px</xsl:attribute>
-            <xsl:apply-templates select="@*|node()" />
-            <xsl:if test="*/embed[@type='application/x-shockwave-flash']">
-                <div style="position: relative; padding-bottom: 56.25%; padding-top: 0px; height: 0; overflow: hidden;">
-                    <xsl:copy-of select="@*|node()" />
-                </div>
-            </xsl:if>
-        </xsl:copy>
-    </xsl:template>
-
-    <!-- deleting old object-frame -->
-    <xsl:template match="td[@class='ilc_Mob']/object" />
 
     <!-- don't use mediaelement player -->
     <xsl:template match="script[contains(@src,'mediaelement')]" />
