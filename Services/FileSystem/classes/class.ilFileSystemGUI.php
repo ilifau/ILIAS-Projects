@@ -624,9 +624,9 @@ class ilFileSystemGUI
 			$this->setPerformedCommand("rename_file", array("old_name" => $_GET["old_name"],
 				"new_name" => $new_name));
 		}
-// fau: [app] touch last update time at file system operation
+// fim: [app] touch last update time at file system operation
 		$this->touchObject();
-// fau.
+// fim.
 		$this->ctrl->redirect($this, "listFiles");
 	}
 
@@ -661,9 +661,9 @@ class ilFileSystemGUI
 			{
 				ilUtil::sendSuccess($lng->txt("cont_dir_created"), true);
 				$this->setPerformedCommand("create_dir", array("name" => $new_dir));
-// fau: [app] touch last update time at file system operation
+// fim: [app] touch last update time at file system operation
 				$this->touchObject();
-// fau.
+// fim.
 			}
 		}
 		else
@@ -738,9 +738,9 @@ class ilFileSystemGUI
 			$this->setPerformedCommand("create_file",
 				array("name" => substr($tgt_file, strlen($this->main_dir)+1)));
 
-// fau: [app] touch last update time at file system operation
+// fim: [app] touch last update time at file system operation
 			$this->touchObject();
-// fau.
+// fim.
 		}
 
 		$this->ctrl->saveParameter($this, "cdir");
@@ -823,9 +823,9 @@ class ilFileSystemGUI
 			$this->setPerformedCommand("delete_file",
 				array("name" => ilUtil::stripSlashes($post_file)));
 		}
-// fau: [app] touch last update time at file system operation
+// fim: [app] touch last update time at file system operation
 		$this->touchObject();
-// fau.
+// fim.
 		$this->ctrl->redirect($this, "listFiles");
 	}
 
@@ -900,9 +900,9 @@ class ilFileSystemGUI
 
 		$this->ctrl->saveParameter($this, "cdir");
 		ilUtil::sendSuccess($lng->txt("cont_file_unzipped"), true);
-// fau: [app] touch last update time at file system operation
+// fim: [app] touch last update time at file system operation
 		$this->touchObject();
-// fau.
+// fim.
 		$this->ctrl->redirect($this, "listFiles");
 	}
 
