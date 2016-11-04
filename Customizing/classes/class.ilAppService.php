@@ -144,6 +144,18 @@ class ilAppService
 					$icon= substr($icon,1);
 				}
 
+				switch ($node['type'])
+				{
+					case 'lm':
+						$basedir = $this->getIliasModuleOfflineDirectory($node['obj_id']);
+						break;
+					case 'htlm':
+						$basedir = $this->getHtmlModuleOfflineDirectory($node['obj_id']);
+				}
+				$files = $this->getWebspaceContents($basedir);
+				$sizes = $this->getFileSizes($basedir,$files);
+				$total = array_sum($sizes) / 1000000;
+
 				$time = $this->getModuleLastUpdate($node['obj_id'], $node['type']);
 				$modules[] = array(
 					'id' => $node['child'],
@@ -153,6 +165,7 @@ class ilAppService
 					'icon' => ILIAS_HTTP_PATH . $icon,
 					'time' => $time->get(IL_CAL_DATETIME),
 					'timestamp' => $time->get(IL_CAL_UNIX),
+					'size' => sprintf('%.2f MB',$total)
 				);
 			}
 		}
@@ -231,6 +244,17 @@ class ilAppService
 	}
 
 	/**
+	 * Get the offline directory of an HTML learning module
+	 * @param integer 	$a_obj_id
+	 * @return string
+	 */
+	protected function getHtmlModuleOfflineDirectory($a_obj_id)
+	{
+		return ilUtil::getWebspaceDir()."/lm_data/lm_$a_obj_id";
+	}
+
+
+	/**
 	 * Get the offline contents of an ILIAS learning module
 	 */
 	protected function getIliasModuleOfflineContents($a_ref_id)
@@ -240,11 +264,16 @@ class ilAppService
 
 		$structure = (array) json_decode(file_get_contents($dir.'/structure.json'));
 
+		$contents = $this->getWebspaceContents($dir);
+		$sizes = $this->getFileSizes(ILIAS_ABSOLUTE_PATH.substr($dir, 1), $contents);
+
 		$this->respondSuccess(array(
 			'basedir'=> ILIAS_HTTP_PATH . substr($dir, 1), // '.' removed
 			'startpage'=> $structure['href'],
+			'total_size' => array_sum($sizes),
 			'contents'=> $this->getWebspaceContents($dir),
-			'structure' => $structure
+			'structure' => $structure,
+			'sizes' => $sizes
 		));
 		return true;
 	}
@@ -274,11 +303,16 @@ class ilAppService
 			file_put_contents($dir.'/structure.json', json_encode($structure, JSON_PRETTY_PRINT));
 		}
 
+		$contents = $this->getWebspaceContents($dir);
+		$sizes = $this->getFileSizes(ILIAS_ABSOLUTE_PATH.substr($dir, 1), $contents);
+
 		$this->respondSuccess(array(
 			'basedir'=> ILIAS_HTTP_PATH . substr($dir, 1), // '.' removed
 			'startpage'=> $modObj->getStartFile(),
+			'total_size' => array_sum($sizes),
 			'contents'=> $this->getWebspaceContents($dir),
-			'structure' => $structure
+			'structure' => $structure,
+			'sizes' => $sizes
 		));
 		return true;
 	}
@@ -303,6 +337,23 @@ class ilAppService
 		return $contents;
 	}
 
+	/**
+	 * Get the file sizes of the web space contents
+	 * @param string	$a_basedir	absolute path ob base dir
+	 * @param array		$a_files	list of files with relative url paths
+	 * @return array				file => size (bytes)
+	 */
+	protected function getFileSizes($a_basedir, $a_files)
+	{
+		$sizes = array();
+		foreach ($a_files as $file)
+		{
+			$sizes[$file] = filesize($a_basedir.'/'.$file);
+		}
+
+		arsort($sizes);
+		return $sizes;
+	}
 
 	/**
 	 * Get a link to the course forum
