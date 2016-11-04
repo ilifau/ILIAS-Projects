@@ -39,6 +39,9 @@ class ilLMTableOfContentsExplorerGUI extends ilLMTOCExplorerGUI
 	 */
 	public function getOfflineStructure()
 	{
+		require_once('Services/Object/classes/class.ilObjectTranslation.php');
+		$this->translation = ilObjectTranslation::getInstance($this->lm->getId());
+
 		return $this->getOfflineNodes($this->getRootNode());
 	}
 // fim.
@@ -52,6 +55,9 @@ class ilLMTableOfContentsExplorerGUI extends ilLMTOCExplorerGUI
 	 */
 	protected function getOfflineNodes($a_node)
 	{
+		$this->setTypeWhiteList(array('du','st','pg'));
+		$this->setTypeBlackList(array());
+
 		$child_data = array();
 		$childs = $this->getChildsOfNode($this->getNodeId($a_node));
 		foreach($childs as $child)
@@ -63,16 +69,43 @@ class ilLMTableOfContentsExplorerGUI extends ilLMTOCExplorerGUI
 		$data['id'] = $this->getNodeId($a_node);
 		$data['type'] = $this->getOfflineType($a_node);
 		$data['title'] = $this->getNodeContent($a_node);
+		if ($data['type'] == 'module')
+		{
+			$languages = $this->translation->getLanguages();
+			$data['description'] = (string) $languages[$this->lm_pres->lang]['description'];
+			if (empty($data['description']))
+			{
+				$data['description'] = $this->lm->getDescription();
+			}
+		}
+
 		if ($data['type'] == 'page')
 		{
 			$data['href'] = $this->getNodeHref($a_node);
-		}
-		elseif (!empty($childs))
-		{
-			$data['href'] = $child_data[0]['href'];
-		}
 
-		$data['childs'] = $child_data;
+			include_once('Services/COPage/classes/class.ilPCQuestion.php');
+			$qlang = $this->lm_pres->lang == $this->translation->getMasterLanguage() ? '-' :  $this->lm_pres->lang;
+			$qdata = ilPCQuestion::_getQuestionDataForPage('lm',$data['id'], $qlang);
+
+			$data['questions'] = array();
+			foreach ($qdata as $row)
+			{
+				$question = array();
+				$question['id'] = $row['question_id'];
+				$question['title'] = $row['title'];
+				$question['keywords'] = empty($row['keywords']) ? array() : (array) unserialize($row['keywords']);
+				$data['questions'][] = $question;
+			}
+		}
+		else
+		{
+			if (!empty($childs))
+			{
+				$data['href'] = $child_data[0]['href'];
+			}
+
+			$data['childs'] = $child_data;
+		}
 
 		return $data;
 	}

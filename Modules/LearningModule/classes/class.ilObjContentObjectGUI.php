@@ -2387,7 +2387,13 @@ class ilObjContentObjectGUI extends ilObjectGUI implements ilLinkCheckerGUIRowHa
 // fim: [app] new function exportAppHTML
 	function exportAppHTML()
 	{
+		include_once("./Services/Object/classes/class.ilObjectTranslation.php");
+		$ot = ilObjectTranslation::getInstance($this->object->getId());
 		$lang = "";
+		if ($ot->getContentActivated())
+		{
+			$lang = "all";
+		}
 		require_once("./Modules/LearningModule/classes/class.ilContObjectExport.php");
 		$cont_exp = new ilContObjectExport($this->object, "app", $lang);
 		$cont_exp->buildExportFile();

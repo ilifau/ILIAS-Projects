@@ -228,6 +228,29 @@ class ilPCQuestion extends ilPageContent
 		return $q_ids;
 	}
 
+	// fim: [badges] get question data of a page
+	/**
+	 * Get question data of a page
+	 */
+	static function _getQuestionDataForPage($a_parent_type, $a_page_id, $a_lang = "-")
+	{
+		global $ilDB;
+
+		$res = $ilDB->queryF("SELECT q.* FROM page_question p INNER JOIN qpl_questions q ON p.question_id = q.question_id ".
+			" WHERE p.page_parent_type = %s ".
+			" AND p.page_id = %s AND p.page_lang = %s",
+			array("text", "integer", "text"),
+			array($a_parent_type, $a_page_id, $a_lang));
+		$q_data = array();
+		while ($rec = $ilDB->fetchAssoc($res))
+		{
+			$q_data[] = $rec;
+		}
+
+		return $q_data;
+	}
+	// fim.
+
 	/**
 	 * Get page for question id
 	 *

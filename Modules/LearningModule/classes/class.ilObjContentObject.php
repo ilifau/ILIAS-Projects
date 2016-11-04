@@ -33,6 +33,15 @@ class ilObjContentObject extends ilObject
 	
 	private $import_dir = '';
 
+
+// fim: [app] initialize variables
+	var $offline_mobs = array();
+	var $offline_files = array();
+	var $offline_int_links = array();
+	var $export_format = 'html';
+// fim.
+
+
 	/**
 	* Constructor
 	* @access	public
@@ -2140,6 +2149,10 @@ class ilObjContentObject extends ilObject
 
 		$user_lang = $ilUser->getLanguage();
 
+		// fim: [app] remember export format for sub functions
+		$this->export_format = $a_export_format;
+		// fim.
+
 		// initialize temporary target directory
 		ilUtil::delDir($a_target_dir);
 		ilUtil::makeDir($a_target_dir);
@@ -2219,7 +2232,7 @@ class ilObjContentObject extends ilObject
 		$lm_gui =& new ilLMPresentationGUI();
 		$lm_gui->setOfflineMode(true, ($a_lang == "all"));
 		$lm_gui->setOfflineDirectory($a_target_dir);
-		$lm_gui->setExportFormat($a_export_format);
+		$lm_gui->setExportFormat($this->export_format);
 
 		$ot = ilObjectTranslation::getInstance($this->getId());
 		$langs = array();
@@ -2236,6 +2249,9 @@ class ilObjContentObject extends ilObject
 			}
 		}
 
+// fim: [app] 	produce a json file for table of contents
+		$structure = array();
+
 		// iterate all languages
 		foreach ($langs as $lang)
 		{
@@ -2249,6 +2265,12 @@ class ilObjContentObject extends ilObject
 			{
 				$ilUser->setLanguage($user_lang);
 				$ilUser->setCurrentLanguage($user_lang);
+			}
+
+			if ($this->export_format == 'app')
+			{
+				$lm_gui->lang = $lang;
+				$structure[$lang] = $lm_gui->getOfflineStructure();
 			}
 
 			if ($lang != "")
@@ -2270,6 +2292,12 @@ class ilObjContentObject extends ilObject
 			$ilBench->stop("ExportHTML", "exportHTMLPages");
 		}
 
+		if ($this->export_format == 'app')
+		{
+			$file = $a_target_dir . "/structure.json";
+			file_put_contents($file, json_encode($structure, JSON_PRETTY_PRINT));
+		}
+// fim.
 		// export glossary terms
 		$ilBench->start("ExportHTML", "exportHTMLGlossaryTerms");
 		$this->exportHTMLGlossaryTerms($lm_gui, $a_target_dir);
@@ -2321,14 +2349,8 @@ class ilObjContentObject extends ilObject
 		$ilBench->start("ExportHTML", "exportHTMLTOC");
 		$ilLocator->clearItems();
 
-// fim: [app] produce a json file for table of contents
-		if ($a_export_format == 'app')
-		{
-			$content = $lm_gui->getOfflineStructure();
-			$file = $a_target_dir."/structure.json";
-			file_put_contents($file, json_encode($content, JSON_PRETTY_PRINT));
-		}
-		elseif ($this->isActiveTOC())
+// fim: [app] don't produce an html toc for the app
+		if ($this->isActiveTOC() && $this->export_format != 'app')
 // fim.
 		{
 			$tpl = new ilTemplate("tpl.main.html", true, true);
@@ -2421,14 +2443,14 @@ class ilObjContentObject extends ilObject
 		if ($a_zip_file)
 		{
 // fim: [app] use format dependent export directory and zip file name
-			if ($a_lang == "")
+			if ($a_lang == "" || $a_lang == "all")
 			{
-				$zip_target_dir = $this->getExportDirectory($a_export_format);
+				$zip_target_dir = $this->getExportDirectory($this->export_format);
 				$zip_file = $zip_target_dir."/". $this->getType()."_".$this->getId().".zip";
 			}
 			else
 			{
-				$zip_target_dir = $this->getExportDirectory($a_export_format."_".$a_lang);
+				$zip_target_dir = $this->getExportDirectory($this->export_format."_".$a_lang);
 				ilUtil::makeDir($zip_target_dir);
 				// zip it all
 				$date = time();
@@ -2684,7 +2706,10 @@ class ilObjContentObject extends ilObject
 		// iterate all learning module pages
 		$mobs = array();
 		$int_links = array();
-		$this->offline_files = array();
+		// fim: [app] prevent re-initialisation
+		// $this->offline_files = array();
+		// fim.
+
 
 		include_once("./Services/COPage/classes/class.ilPageContentUsage.php");
 		include_once("./Services/MediaObjects/classes/class.ilObjMediaObject.php");
@@ -2763,8 +2788,14 @@ class ilObjContentObject extends ilObject
 				$ilBench->stop("ExportHTML", "exportHTMLPage");
 			}
 		}
-		$this->offline_mobs = $mobs;
-		$this->offline_int_links = $int_links;
+
+// fim: [app] keep existing links and mobs from other languages
+		foreach ($mobs as $mob)
+		{
+			$this->offline_mobs[$mob] = $mob;
+		}
+		$this->offline_int_links = array_merge($this->offline_int_links, $int_links);
+// fim.
 	}
 
 
@@ -2778,11 +2809,19 @@ class ilObjContentObject extends ilObject
 		global $tpl, $ilBench;
 
 		$lang_suffix = "";
+
 		if ($a_lang != "-" && $a_lang != "" && $a_all_languages)
 		{
 			$lang_suffix = "_".$a_lang;
 		}
-		
+		// fim: [app] write pages with suffix for master language
+		elseif ($this->export_format == 'app' && ($a_lang == "-" || $a_lang == ""))
+		{
+			$ot = ilObjectTranslation::getInstance($this->getId());
+			$lang_suffix = "_".$ot->getMasterLanguage();
+		}
+		// fim.
+
 //echo "<br>B: export Page HTML ($a_lm_page_id)"; flush();
 		// template workaround: reset of template 
 		$tpl = new ilTemplate("tpl.main.html", true, true);

@@ -996,6 +996,13 @@ abstract class assQuestionGUI
 		}
 		else
 		{
+			// fim: [badges] add keywords to questions
+			$keywords = new ilTextInputGUI($this->lng->txt('keywords'),'meta_keywords');
+			$keywords->setMulti(true);
+			$keywords->setValue($this->object->__get('meta_keywords'));
+			$form->addItem($keywords);
+			// fim.
+
 			// author as hidden field
 			$hi = new ilHiddenInputGUI("author");
 			$author = ilUtil::prepareFormOutput($this->object->getAuthor());
@@ -1972,6 +1979,9 @@ abstract class assQuestionGUI
 		$this->object->setComment( $_POST["comment"] );
 		if ($this->object->getSelfAssessmentEditingMode())
 		{
+			// fim: [badges] write keywords
+			$this->object->__set('meta_keywords', $_POST['meta_keywords']);
+			// fim.
 			$this->object->setNrOfTries( $_POST['nr_of_tries'] );
 		}
 		$this->object->setQuestion( ilUtil::stripOnlySlashes($_POST['question']) ); // ?

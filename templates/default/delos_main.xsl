@@ -13,6 +13,11 @@
    Main transformations
 -->
 
+<!-- Add scaling for the app, content type will automatically be re-added when putput is written-->
+<xsl:template match="meta[@http-equiv='Content-Type']">
+    <meta name="viewport" content="initial-scale=1, user-scalable=0" />
+</xsl:template>
+
 <!-- Rewriting of links -->
 <!-- fim #cf links always open in same tab -->
 <xsl:template match="a" >

@@ -2244,8 +2244,9 @@ abstract class assQuestion
 	{
 		global $ilDB;
 
+		// fim: [badges] read keywords from database
 		$result = $ilDB->queryF(
-			"SELECT external_id FROM qpl_questions WHERE question_id = %s",
+			"SELECT external_id, keywords FROM qpl_questions WHERE question_id = %s",
 			array("integer"),
 			array($question_id)
 		);
@@ -2253,7 +2254,9 @@ abstract class assQuestion
 		{
 			$data = $ilDB->fetchAssoc($result);
 			$this->external_id = $data['external_id'];
+			$this->__set('meta_keywords', empty($data['keywords']) ? array() : (array) unserialize($data['keywords']));
 		}
+		// fim.
 		
 		$result = $ilDB->queryF("SELECT * FROM qpl_sol_sug WHERE question_fi = %s",
 			array('integer'),
@@ -2309,6 +2312,9 @@ abstract class assQuestion
 				"obj_fi" => array("integer", $obj_id),
 				"title" => array("text", NULL),
 				"description" => array("text", NULL),
+				// fim: [badges] write keywords to db
+				"keywords" => array("text", serialize((array) $this->__get('meta_keywords'))),
+				// fim.
 				"author" => array("text", $this->getAuthor()),
 				"owner" => array("integer", $ilUser->getId()),
 				"question_text" => array("clob", NULL),
@@ -2355,6 +2361,9 @@ abstract class assQuestion
 				"obj_fi" => array("integer", $this->getObjId()),
 				"title" => array("text", $this->getTitle()),
 				"description" => array("text", $this->getComment()),
+				// fim: [badges] write keywords to db
+				"keywords" => array("text", serialize((array) $this->__get('meta_keywords'))),
+				// fim.
 				"author" => array("text", $this->getAuthor()),
 				"owner" => array("integer", $this->getOwner()),
 				"question_text" => array("clob", ilRTE::_replaceMediaObjectImageSrc($this->getQuestion(), 0)),
@@ -2378,6 +2387,9 @@ abstract class assQuestion
 				"obj_fi" => array("integer", $this->getObjId()),
 				"title" => array("text", $this->getTitle()),
 				"description" => array("text", $this->getComment()),
+				// fim: [badges] write keywords to db
+				"keywords" => array("text", serialize((array) $this->__get('meta_keywords'))),
+				// fim.
 				"author" => array("text", $this->getAuthor()),
 				"question_text" => array("clob", ilRTE::_replaceMediaObjectImageSrc($this->getQuestion(), 0)),
 				"points" => array("float", $this->getMaximumPoints()),

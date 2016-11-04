@@ -18,7 +18,10 @@ class ilContObjectExport
 	var $err;			// error object
 	var $db;			// database object
 	var $ilias;			// ilias object
+// fim: [app] add type hint
+	/** @var ilObjContentObject $cont_obj */
 	var $cont_obj;		// content object (learning module | digilib book)
+// fim.
 	var $inst_id;		// installation id
 	var $mode;
 
@@ -236,7 +239,6 @@ class ilContObjectExport
 	 */
 	function buildExportFileAppHTML()
 	{
-		$this->lang = "";
 		$this->cont_obj->createExportDirectory("app");
 		$this->cont_obj->exportHTML($this->export_dir."/".$this->subdir, $expLog, true, "app", $this->lang);
 	}
