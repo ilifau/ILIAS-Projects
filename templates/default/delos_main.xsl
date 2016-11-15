@@ -223,8 +223,16 @@
         </xsl:copy>
     </xsl:template>
 
-    <!-- scale background image for videos, backup if offline -->
+    <!-- scale background image for videos, backup if offline - video block
     <xsl:template match="div[@class='ilc_section_Videoblock']">
+        <xsl:copy>
+            <xsl:attribute name="style">background-size: 100% 100%</xsl:attribute>
+            <xsl:apply-templates select="@*|node()" />
+        </xsl:copy>
+    </xsl:template>
+-->
+    <!-- scale background image for videos, backup if offline - mediacontainer -->
+    <xsl:template match="table[@class='ilc_media_cont_MediaContainer']">
         <xsl:copy>
             <xsl:attribute name="style">background-size: 100% 100%</xsl:attribute>
             <xsl:apply-templates select="@*|node()" />
