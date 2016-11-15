@@ -1,45 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:php="http://php.net/xsl">
-<xsl:output method="html" version="4.0" encoding="UTF-8"/>
+    <xsl:output method="html" version="4.0" encoding="UTF-8"/>
 
-<!--  Basic rule: copy everything not specified and process the childs -->
-<xsl:template match="@*|node()">
-    <xsl:copy>
-        <xsl:apply-templates select="@*|node()" />
-    </xsl:copy>
-</xsl:template>
+    <!--  Basic rule: copy everything not specified and process the childs -->
+    <xsl:template match="@*|node()">
+        <xsl:copy>
+            <xsl:apply-templates select="@*|node()" />
+        </xsl:copy>
+    </xsl:template>
 
-<!--
-   Main transformations
--->
+    <!--
+       Main transformations
+    -->
 
-<!-- Add scaling for the app, content type will automatically be re-added when putput is written-->
-<xsl:template match="meta[@http-equiv='Content-Type']">
-    <meta name="viewport" content="initial-scale=1, user-scalable=0" />
-</xsl:template>
+    <!-- Add scaling for the app, content type will automatically be re-added when putput is written-->
+    <xsl:template match="meta[@http-equiv='Content-Type']">
+        <meta name="viewport" content="initial-scale=1, user-scalable=0" />
+    </xsl:template>
 
-<!-- Rewriting of links -->
-<!-- fim #cf links always open in same tab -->
-<xsl:template match="a" >
+    <!-- Rewriting of links -->
+    <!-- fim #cf links always open in same tab -->
+    <xsl:template match="a" >
 
-    <xsl:copy>
-        <xsl:copy-of select="@*" />
+        <xsl:copy>
+            <xsl:copy-of select="@*" />
 
-        <xsl:choose>
-             <!--  Prevent switching to safari in webapp mode -->
-            <xsl:when test="@href and not(@onclick)">
-                <xsl:attribute name="onclick">window.location=this.getAttribute("href");return false;</xsl:attribute>
-                <xsl:copy-of select="node()" />
-            </xsl:when>
+            <xsl:choose>
+                <!--  Prevent switching to safari in webapp mode -->
+                <xsl:when test="@href and not(@onclick)">
+                    <xsl:attribute name="onclick">window.location=this.getAttribute("href");return false;</xsl:attribute>
+                    <xsl:copy-of select="node()" />
+                </xsl:when>
 
-            <!-- links without href are just anchors -->
-            <xsl:otherwise>
-                <xsl:copy-of select="node()" />
-            </xsl:otherwise>
-        </xsl:choose>
+                <!-- links without href are just anchors -->
+                <xsl:otherwise>
+                    <xsl:copy-of select="node()" />
+                </xsl:otherwise>
+            </xsl:choose>
 
-    </xsl:copy>
-</xsl:template>
+        </xsl:copy>
+    </xsl:template>
 
     <!-- fim #cf: adjusting image responsive size -->
     <xsl:template match="td[@class='ilc_Mob']" >
@@ -110,7 +110,7 @@
                 <!--<xsl:attribute name="style">width:<xsl:value-of select="@width" />px;max-width:100%;</xsl:attribute> -->
                 <xsl:apply-templates select="@*|node()" />
             </xsl:copy>
-       </div>
+        </div>
     </xsl:template>
 
     <!-- fim #cf: adjusting video responsive size, for youtube embeds - better, not good -->
@@ -212,6 +212,35 @@
 
     <!-- no magnifying glass -->
     <xsl:template match="table[@class='ilc_media_cont_MediaContainer']//div/a" />
+
+    <!-- enlarged space to answer questions in LM, compare to test-object -->
+    <xsl:template match="div[@class='ilc_qanswer_Answer']//input" >
+        <xsl:copy>
+            <xsl:apply-templates select="@*|node()" />
+            <xsl:for-each select=".">
+                <xsl:attribute name="id"><xsl:value-of select="@value" /></xsl:attribute>
+            </xsl:for-each>
+        </xsl:copy>
+    </xsl:template>
+
+    <!-- scale background image for videos, backup if offline -->
+    <xsl:template match="div[@class='ilc_section_Videoblock']">
+        <xsl:copy>
+            <xsl:attribute name="style">background-size: 100% 100%</xsl:attribute>
+            <xsl:apply-templates select="@*|node()" />
+        </xsl:copy>
+    </xsl:template>
+
+    <!--
+        <xsl:template match="span[@class='answertext']" >
+             <label>
+                 <xsl:attribute name="for">answer_fix_0<xsl:value-of select="../input/@id" /></xsl:attribute>
+                 <xsl:copy>
+                     <xsl:apply-templates select="@*|node()" />
+                 </xsl:copy>
+             </label>
+        </xsl:template>
+    -->
 
     <!-- Close-Icon of Glossary term in LM z-index changed
         not working, done in delos.css:354
