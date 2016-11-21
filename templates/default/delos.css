@@ -361,7 +361,6 @@ th {
   line-height: 1;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  z-index: 9;
 }
 .glyphicon-asterisk:before {
   content: "\2a";
@@ -10122,6 +10121,7 @@ button.ilAreaClose {
   position: absolute;
   top: 0;
   cursor: pointer;
+  z-index: 9;
 }
 div.ilRightAreaSpace {
   width: 50%;

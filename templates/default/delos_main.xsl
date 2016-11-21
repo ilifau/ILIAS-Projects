@@ -213,6 +213,10 @@
     <!-- no magnifying glass -->
     <xsl:template match="table[@class='ilc_media_cont_MediaContainer']//div/a" />
 
+    <!-- Glossar in LM fixing - closebutton with z-index
+        via delos.css : 10124
+    -->
+
     <!-- enlarged space to answer questions in LM, compare to test-object -->
     <xsl:template match="div[@class='ilc_qanswer_Answer']//input" >
         <xsl:copy>
