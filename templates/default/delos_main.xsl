@@ -198,12 +198,20 @@
         </xsl:copy>
     </xsl:template>
 
-    <!-- making a "picture to video" function-->
+    <!-- scale background image for videos, backup if offline - mediacontainer -->
+    <xsl:template match="table[@class='ilc_media_cont_MediaContainer']">
+        <xsl:copy>
+            <xsl:attribute name="style">background-size: 100% 100%</xsl:attribute>
+            <xsl:apply-templates select="@*|node()" />
+        </xsl:copy>
+    </xsl:template>
+
+    <!-- making a "picture to video" function, not working -->
     <xsl:template match="table[@class='ilc_media_cont_MediaContainer']" >
         <xsl:choose>
-            <xsl:when test="//img[contains(@src, 'enlarge.svg')]">
+            <xsl:when test=".//img[contains(@src, 'enlarge.svg')]">
                 <xsl:copy>
-                    <xsl:attribute name="onclick">window.location=this.getAttribute("href");return false;</xsl:attribute>
+                    <xsl:attribute name="onclick">$.colorbox({width:window.innerWidth-100, height:window.innerHeight-100, iframe:true, href:'<xsl:value-of select=".//a/@href" />'});return false;</xsl:attribute>
                     <xsl:attribute name="href"><xsl:value-of select=".//a/@href" /></xsl:attribute>
                     <xsl:apply-templates select="@*|node()" />
                 </xsl:copy>
@@ -217,12 +225,8 @@
         </xsl:choose>
     </xsl:template>
 
-    <!-- no magnifying glass
+    <!-- no magnifying glass -->
     <xsl:template match="table[@class='ilc_media_cont_MediaContainer']//div/a" />
--->
-    <!-- Glossar in LM fixing - closebutton with z-index
-        via delos.css : 10124
-    -->
 
     <!-- enlarged space to answer questions in LM, compare to test-object -->
     <xsl:template match="div[@class='ilc_qanswer_Answer']//input" >
@@ -242,22 +246,15 @@
         </xsl:copy>
     </xsl:template>
 -->
-    <!-- scale background image for videos, backup if offline - mediacontainer -->
-    <xsl:template match="table[@class='ilc_media_cont_MediaContainer']">
-        <xsl:copy>
-            <xsl:attribute name="style">background-size: 100% 100%</xsl:attribute>
-            <xsl:apply-templates select="@*|node()" />
-        </xsl:copy>
-    </xsl:template>
 
-    <!-- fix issue with glossar in LM not full width -->
+    <!-- fix issue with glossar in LM not full width - not working - bug reported
     <xsl:template match="div[@id='bot_center_area']">
         <xsl:copy>
             <xsl:attribute name="style">width: 100% !important</xsl:attribute>
             <xsl:apply-templates select="@*|node()" />
         </xsl:copy>
     </xsl:template>
-
+-->
     <!--
         <xsl:template match="span[@class='answertext']" >
              <label>
@@ -269,23 +266,15 @@
         </xsl:template>
     -->
 
-    <!-- Close-Icon of Glossary term in LM z-index changed
-        not working, done in delos.css:354
+    <!-- questionlayout change:
+    - Aussenabstand des Submit-Buttons im Content-Style geändert
+    Text padding-bottom im Content Style geändert
     -->
 
-    <!-- reducing mainspacekeeper - geht nicht
-    geändert in delos.css 11487 von 40 auf 0
-    <xsl:template match="div[@id='mainspacekeeper']" >
-        <xsl:copy>
-            <xsl:attribute name="style">margin-top:5px;</xsl:attribute>
-            <xsl:apply-templates select="@*|node()" />
-        </xsl:copy>
-    </xsl:template>
-    -->
-    <!-- questionlayout change
-        ging nicht:
-        - Aussenabstand des Submit-Buttons im Content-Style geändert
-        Text padding-bottom im Content Style geändert
+    <!-- changes in delos.css -->
+    <!-- Close-Icon of Glossary term in LM z-index changed :354
+         reducing mainspacekeeper  von 40 auf 0 :11487
+         Glossar in LM fixing - closebutton with z-index :10124
     -->
 
 </xsl:stylesheet>

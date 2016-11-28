@@ -3028,7 +3028,6 @@
 			<img border="0" align="right">
 			<xsl:attribute name="src"><xsl:value-of select="$enlarge_path"/></xsl:attribute>
 			</img>
-				yyy
 			</a>
 		</xsl:when>
 		<xsl:otherwise>
@@ -3040,7 +3039,6 @@
 			<img border="0" align="right">
 			<xsl:attribute name="src"><xsl:value-of select="$enlarge_path"/></xsl:attribute>
 			</img>
-				xxx
 			</a>
 		</xsl:otherwise>
 		</xsl:choose>
