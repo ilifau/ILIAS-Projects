@@ -12,6 +12,10 @@
     <!--
        Main transformations
     -->
+    <xsl:template match="head">
+        <script type="text/javascript" src="./Services/jQuery/js/colorbox/jquery.colorbox-min.js"></script>
+        <xsl:copy-of select="node()" />
+    </xsl:template>
 
     <!-- Add scaling for the app, content type will automatically be re-added when putput is written-->
     <xsl:template match="meta[@http-equiv='Content-Type']">
@@ -210,9 +214,9 @@
         </xsl:choose>
     </xsl:template>
 
-    <!-- no magnifying glass -->
+    <!-- no magnifying glass
     <xsl:template match="table[@class='ilc_media_cont_MediaContainer']//div/a" />
-
+-->
     <!-- Glossar in LM fixing - closebutton with z-index
         via delos.css : 10124
     -->
@@ -239,6 +243,14 @@
     <xsl:template match="table[@class='ilc_media_cont_MediaContainer']">
         <xsl:copy>
             <xsl:attribute name="style">background-size: 100% 100%</xsl:attribute>
+            <xsl:apply-templates select="@*|node()" />
+        </xsl:copy>
+    </xsl:template>
+
+    <!-- fix issue with glossar in LM not full width -->
+    <xsl:template match="div[@id='bot_center_area']">
+        <xsl:copy>
+            <xsl:attribute name="style">width: 100% !important</xsl:attribute>
             <xsl:apply-templates select="@*|node()" />
         </xsl:copy>
     </xsl:template>

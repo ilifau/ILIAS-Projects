@@ -3029,6 +3029,10 @@
 		</xsl:when>
 		<xsl:otherwise>
 			<a target="_blank">
+				<!-- fim: [app] open fullscreen media in colorbox
+					<xsl:attribute name="onclick">$.colorbox({href:'http://www.welcome.odl.org/ilias-dev/<xsl:value-of select="$fullscreen_link"/>&amp;mob_id=<xsl:value-of select="substring-after($cmobid,'mob_')"/>&amp;pg_id=<xsl:value-of select="$pg_id"/>'});return false;</xsl:attribute>
+					--><xsl:attribute name="onclick">$.colorbox({href:'http://www.welcome.odl.org/ilias-dev/data/Welcome/mobs/mm_1321/audimax08.jpg'});return false;</xsl:attribute>
+				<!-- fim. -->
 			<xsl:attribute name="href"><xsl:value-of select="$fullscreen_link"/>&amp;mob_id=<xsl:value-of select="substring-after($cmobid,'mob_')"/>&amp;pg_id=<xsl:value-of select="$pg_id"/></xsl:attribute>
 			<img border="0" align="right">
 			<xsl:attribute name="src"><xsl:value-of select="$enlarge_path"/></xsl:attribute>

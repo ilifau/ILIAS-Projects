@@ -2508,6 +2508,11 @@ class ilObjContentObject extends ilObject
 			array("source" => iljQueryUtil::getLocaljQueryUIPath(),
 				"target" => $a_target_dir.'/js/jquery-ui-min.js',
 				"type" => "js"),
+			//fim: [app] colorbox
+			array("source" => iljQueryUtil::getLocaljQueryUIPath(),
+				"target" => $a_target_dir.'/js/colorbox/jquery.colorbox-min.js',
+				"type" => "js"),
+			//fim
 			array("source" => './Services/COPage/js/ilCOPagePres.js',
 				"target" => $a_target_dir.'/js/ilCOPagePres.js',
 				"type" => "js"),
