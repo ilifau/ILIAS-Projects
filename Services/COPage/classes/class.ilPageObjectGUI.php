@@ -1743,6 +1743,9 @@ return;
 		// ensure no cache hit, if included files/media objects have been changed
 		$params["incl_elements_date"] = $this->obj->getLastUpdateOfIncludedElements();
 
+		// fim: [app] init colorbox and add parameter to open fullscreen in box
+		iljQueryUtil::initColorbox();
+		// fim.
 
 		// should be modularized
 		include_once("./Services/COPage/classes/class.ilPCSection.php");

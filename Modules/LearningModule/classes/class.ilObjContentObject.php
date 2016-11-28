@@ -2249,6 +2249,12 @@ class ilObjContentObject extends ilObject
 			}
 		}
 
+// fim: [app] include colorbox
+		ilUtil::makeDirParents($a_target_dir.'/js/colorbox');
+		ilUtil::rcopy('./Services/jQuery/js/colorbox', $a_target_dir.'/js/colorbox');
+//  fim.
+
+
 // fim: [app] 	produce a json file for table of contents
 		$structure = array();
 
@@ -2427,11 +2433,11 @@ class ilObjContentObject extends ilObject
 				copy($f["source"], $f["target"]);
 			}
 		}
-		
-		// template workaround: reset of template 
+		// template workaround: reset of template
 		$tpl = new ilTemplate("tpl.main.html", true, true);
 		$tpl->setVariable("LOCATION_STYLESHEET",$location_stylesheet);
 		$tpl->addBlockFile("CONTENT", "content", "tpl.adm_content.html");
+
 
 		if ($a_lang != "")
 		{
@@ -2509,10 +2515,13 @@ class ilObjContentObject extends ilObject
 				"target" => $a_target_dir.'/js/jquery-ui-min.js',
 				"type" => "js"),
 			//fim: [app] colorbox
-			array("source" => iljQueryUtil::getLocaljQueryUIPath(),
+			array("source" => '',
 				"target" => $a_target_dir.'/js/colorbox/jquery.colorbox-min.js',
 				"type" => "js"),
-			//fim
+			array("source" => '',
+				"target" => $a_target_dir.'/js/colorbox/example4/colorbox.css',
+				"type" => "css"),
+			//fim.
 			array("source" => './Services/COPage/js/ilCOPagePres.js',
 				"target" => $a_target_dir.'/js/ilCOPagePres.js',
 				"type" => "js"),

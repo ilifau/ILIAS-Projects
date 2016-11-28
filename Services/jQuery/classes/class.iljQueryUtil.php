@@ -71,6 +71,15 @@ class iljQueryUtil
 		return "./Services/jQuery/js/ui_".self::$ui_ver."/jquery-ui.min.js";
  	}
 
+// fim: [app] new function 	getLocalColorboxPath()
+	/**
+	 * Get local path of jQuery UI file
+	 */
+	function getLocalColorboxPath()
+	{
+		return "./Services/jQuery/js/colorbox";
+	}
+// fim.
  	//
  	// Maphilight plugin
  	//
@@ -92,6 +101,16 @@ class iljQueryUtil
 	{
 		return "./Services/jQuery/js/maphilight_".self::$maphilight_ver."/maphilight.js";
  	}
+
+	// fim: [app] init the colorbox functionality
+	static function initColorbox()
+	{
+		global $tpl;
+
+		$tpl->addJavaScript("./Services/jQuery/js/colorbox/jquery.colorbox-min.js", true, 1);
+		$tpl->addCss("./Services/jQuery/js/colorbox/example4/colorbox.css");
+	}
+	// fim.
 
 }
 ?>

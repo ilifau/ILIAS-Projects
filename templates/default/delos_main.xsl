@@ -12,10 +12,12 @@
     <!--
        Main transformations
     -->
+    <!--
     <xsl:template match="head">
         <script type="text/javascript" src="./Services/jQuery/js/colorbox/jquery.colorbox-min.js"></script>
         <xsl:copy-of select="node()" />
     </xsl:template>
+    -->
 
     <!-- Add scaling for the app, content type will automatically be re-added when putput is written-->
     <xsl:template match="meta[@http-equiv='Content-Type']">
@@ -31,6 +33,7 @@
 
             <xsl:choose>
                 <!--  Prevent switching to safari in webapp mode -->
+
                 <xsl:when test="@href and not(@onclick)">
                     <xsl:attribute name="onclick">window.location=this.getAttribute("href");return false;</xsl:attribute>
                     <xsl:copy-of select="node()" />
