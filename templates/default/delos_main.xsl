@@ -12,12 +12,6 @@
     <!--
        Main transformations
     -->
-    <!--
-    <xsl:template match="head">
-        <script type="text/javascript" src="./Services/jQuery/js/colorbox/jquery.colorbox-min.js"></script>
-        <xsl:copy-of select="node()" />
-    </xsl:template>
-    -->
 
     <!-- Add scaling for the app, content type will automatically be re-added when putput is written-->
     <xsl:template match="meta[@http-equiv='Content-Type']">
@@ -27,13 +21,11 @@
     <!-- Rewriting of links -->
     <!-- fim #cf links always open in same tab -->
     <xsl:template match="a" >
-
         <xsl:copy>
             <xsl:copy-of select="@*" />
 
             <xsl:choose>
                 <!--  Prevent switching to safari in webapp mode -->
-
                 <xsl:when test="@href and not(@onclick)">
                     <xsl:attribute name="onclick">window.location=this.getAttribute("href");return false;</xsl:attribute>
                     <xsl:copy-of select="node()" />
@@ -105,12 +97,9 @@
         </xsl:copy>
     </xsl:template>
 
-
+    <!-- fim #cf: adjusting video responsive size, for youtube embeds - better, not good -->
+    <!-- http://www.holgerkoenemann.de/ein-vimeo-oder-youtube-video-responsive-einbinden/ -->
     <!-- doing outer frame -->
-    <!--<xsl:template match="td[@class='ilc_Mob']/object/@width" />
-    <xsl:template match="td[@class='ilc_Mob']/object/@height"/> -->
-    <!--<xsl:template match="td[@class='ilc_Mob']/object/embed/@width" />
-    <xsl:template match="td[@class='ilc_Mob']/object/embed/@height"/> -->
     <xsl:template match="td[@class='ilc_Mob']/object" >
         <div style="position: relative; padding-bottom: 56.25%; padding-top: 0px; height: 0; overflow: hidden;">
             <xsl:copy>
@@ -119,9 +108,6 @@
             </xsl:copy>
         </div>
     </xsl:template>
-
-    <!-- fim #cf: adjusting video responsive size, for youtube embeds - better, not good -->
-    <!-- http://www.holgerkoenemann.de/ein-vimeo-oder-youtube-video-responsive-einbinden/ -->
     <!-- preparing inner frame -->
     <xsl:template match="td[@class='ilc_Mob']/object/embed" >
         <xsl:copy>
@@ -130,6 +116,22 @@
         </xsl:copy>
     </xsl:template>
 
+    <!-- using iframe-html-code in text section -->
+    <xsl:template match="div[@class='ilc_Paragraph ilc_text_block_Standard']" >
+        <xsl:copy>
+            <xsl:if test="iframe">
+                <xsl:attribute name="style">position: relative; padding-bottom: 56.25%; padding-top: 0px; height: 0; overflow: hidden;</xsl:attribute>
+            </xsl:if>
+            <xsl:apply-templates select="@*|node()" />
+        </xsl:copy>
+    </xsl:template>
+
+    <xsl:template match="div[@class='ilc_Paragraph ilc_text_block_Standard']/iframe" >
+        <xsl:copy>
+            <xsl:attribute name="style">position: absolute; top: 0; left: 0; width:100%; height: 100%;</xsl:attribute>
+            <xsl:apply-templates select="@*|node()" />
+        </xsl:copy>
+    </xsl:template>
 
     <!-- don't use mediaelement player -->
     <xsl:template match="script[contains(@src,'mediaelement')]" />
@@ -149,7 +151,6 @@
     </xsl:template>
 
     <!-- exclude for git/ilias -->
-
     <!-- no margin-left, margin-right in LEs = full space use
     <xsl:template match="div[@id='mainspacekeeper']" >
         <xsl:copy>
@@ -206,12 +207,12 @@
         </xsl:copy>
     </xsl:template>
 
-    <!-- making a "picture to video" function, not working -->
+    <!-- making a "picture to video" function -->
     <xsl:template match="table[@class='ilc_media_cont_MediaContainer']" >
         <xsl:choose>
             <xsl:when test=".//img[contains(@src, 'enlarge.svg')]">
                 <xsl:copy>
-                    <xsl:attribute name="onclick">$.colorbox({width:window.innerWidth-100, height:window.innerHeight-100, iframe:true, href:'<xsl:value-of select=".//a/@href" />'});return false;</xsl:attribute>
+                    <xsl:attribute name="onclick">$.colorbox({width:window.innerWidth-100, height:window.innerHeight-100, iframe:true, href:'<xsl:value-of select=".//a/@href" />'});return false</xsl:attribute>
                     <xsl:attribute name="href"><xsl:value-of select=".//a/@href" /></xsl:attribute>
                     <xsl:apply-templates select="@*|node()" />
                 </xsl:copy>
@@ -224,7 +225,6 @@
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
-
     <!-- no magnifying glass -->
     <xsl:template match="table[@class='ilc_media_cont_MediaContainer']//div/a" />
 
@@ -255,7 +255,8 @@
         </xsl:copy>
     </xsl:template>
 -->
-    <!--
+
+    <!-- try to make the text of an answer also triggering the marked event
         <xsl:template match="span[@class='answertext']" >
              <label>
                  <xsl:attribute name="for">answer_fix_0<xsl:value-of select="../input/@id" /></xsl:attribute>
