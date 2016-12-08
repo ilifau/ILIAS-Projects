@@ -55,13 +55,13 @@
     </xsl:template>
 
     <!-- hide email function in upper bar and some more things...-->
-    <xsl:template match="ul[@id='ilTopBarNav']/li[1]" />
-    <xsl:template match="li[@id='tab_fold']" />
+    <!-- <xsl:template match="ul[@id='ilTopBarNav']/li[1]" /> -->
+    <!-- <xsl:template match="li[@id='tab_fold']" /> -->
     <xsl:template match="li[@id='tab_mail_addressbook']" />
     <xsl:template match="li[@id='tab_options']" />
-    <xsl:template match="div[@id='il_prop_cont_use_placeholders']" />
-    <xsl:template match="div[@id='il_prop_cont_m_type____']" />
+    <!-- <xsl:template match="div[@id='il_prop_cont_m_type____']" /> -->
     <!-- <xsl:template match="div[@class='container-fluid']" /> -->
+    <!-- shows mailentry; delete in Mailsettings user ticks or profile gets lost by "/li[1]" -->
 
     <!-- No main header, no main menu -->
     <xsl:template match="nav[@id='ilTopNav']" />
@@ -144,7 +144,7 @@
 
     <!-- cf: reduce personal settings -->
     <xsl:template match="li[@id='tab_general_settings']"  />
-    <xsl:template match="li[@id='tab_mail_settings']"  />
+    <!-- <xsl:template match="li[@id='tab_mail_settings']"  /> -->
 
     <!-- No footer -->
     <xsl:template match="footer" />
