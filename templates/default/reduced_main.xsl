@@ -95,8 +95,9 @@
     <!--<xsl:template match="li[@id='subtab_crs_member_administration']" />
     --><xsl:template match="li[@id='subtab_crs_members_groups']" />
 
-    <!-- hide survey container, especially heading -->
+    <!-- hide survey container, especially heading
     <xsl:template match="div[@id='bl_cntr_4']" />
+    -->
 
     <!-- Show "ilTab" and hide some not needed -->
     <xsl:template match="ul[@id='ilTab']">
@@ -140,6 +141,10 @@
     <!-- No head and list actions -->
     <xsl:template match="div[@class='ilHeadAction']"  />
     <xsl:template match="div[@class='il_ContainerListItem']/div[@class='ilFloatRight']"  />
+
+    <!-- cf: reduce personal settings -->
+    <xsl:template match="li[@id='tab_general_settings']"  />
+    <xsl:template match="li[@id='tab_mail_settings']"  />
 
     <!-- No footer -->
     <xsl:template match="footer" />
