@@ -55,7 +55,7 @@
     </xsl:template>
 
     <!-- hide email function in upper bar and some more things...-->
-     <xsl:template match="ul[@id='ilTopBarNav']/li[1]" />
+    <!-- <xsl:template match="ul[@id='ilTopBarNav']/li[1]" /> -->
     <!-- <xsl:template match="li[@id='tab_fold']" /> -->
     <xsl:template match="li[@id='tab_mail_addressbook']" />
     <!-- <xsl:template match="li[@id='tab_options']" />

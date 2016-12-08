@@ -6,4 +6,7 @@
     <style 	name = "Reduced"
               id = "reduced"
               image_directory = "images"/>
+	<style 	name = "Tutors"
+			  id = "tutors"
+			  image_directory = "images"/>
 </template>

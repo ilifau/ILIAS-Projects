@@ -44,9 +44,8 @@
     </xsl:template>
 
     <!-- Show the thread title above the posts instead of in the posts -->
-
     <xsl:template match="//div[@class='ilFrmPostTitle']" />
-   <xsl:template match="div[@id='il_center_col']">
+    <xsl:template match="div[@id='il_center_col']">
         <xsl:variable name="title" select="//div[@class='ilFrmPostTitle'][1]" />
         <xsl:copy>
             <xsl:copy-of select="@*" />
@@ -59,7 +58,7 @@
     </xsl:template>
 
     <!-- Adjust the thread toolbar -->
-<xsl:template match="ul[contains(@class,'ilToolbarStickyItems')]" />
+    <xsl:template match="ul[contains(@class,'ilToolbarStickyItems')]" />
 <xsl:template match="ul[contains(@class,'ilToolbarItems')]" >
         <xsl:variable name="reply_link" select="//a[contains(@href,'action=showreply')][last()]" />
         <xsl:variable name="back_link" select="//ul[@id='ilTab']/li[1]/a" />
