@@ -186,6 +186,27 @@
         </xsl:copy>
     </xsl:template>
 
+    <!-- hide subtab seite gestalten -->
     <xsl:template match="li[@id='subtab_page_editor']" />
-    
+
+    <!-- optes tries
+    <xsl:template match="div[@class='ilContainerListItemIcon ']" />
+
+    <xsl:template match="div[@class='ilContainerBlock container-fluid form-inline']" >
+        <xsl:for-each select="div">
+            <xsl:choose>
+                <xsl:when test="contains(@class,'ilCLI ilObjListRow row')">
+
+                    <a style="min-height: 10px; min-width:300px; width:100%; background-color: #0F0; display:block; margin-top: 30px">
+                        <xsl:copy-of select="@*" />
+                    </a>
+                    <xsl:apply-templates select="node()" />drin
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:copy-of select="node()" />draussen
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:for-each>
+    </xsl:template>
+-->
 </xsl:stylesheet>
