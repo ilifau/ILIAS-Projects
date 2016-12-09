@@ -186,4 +186,6 @@
         </xsl:copy>
     </xsl:template>
 
+    <xsl:template match="li[@id='subtab_page_editor']" />
+    
 </xsl:stylesheet>
