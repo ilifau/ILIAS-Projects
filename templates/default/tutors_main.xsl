@@ -189,24 +189,21 @@
     <!-- hide subtab seite gestalten -->
     <xsl:template match="li[@id='subtab_page_editor']" />
 
-    <!-- optes tries
+    <!-- optes tries -->
     <xsl:template match="div[@class='ilContainerListItemIcon ']" />
 
     <xsl:template match="div[@class='ilContainerBlock container-fluid form-inline']" >
-        <xsl:for-each select="div">
-            <xsl:choose>
-                <xsl:when test="contains(@class,'ilCLI ilObjListRow row')">
+        <xsl:apply-templates select="div[@class='row ilContainerBlockHeader']" />
 
-                    <a style="min-height: 10px; min-width:300px; width:100%; background-color: #0F0; display:block; margin-top: 30px">
-                        <xsl:copy-of select="@*" />
-                    </a>
-                    <xsl:apply-templates select="node()" />drin
-                </xsl:when>
-                <xsl:otherwise>
-                    <xsl:copy-of select="node()" />draussen
-                </xsl:otherwise>
-            </xsl:choose>
+        <xsl:for-each select="div[@class='ilCLI ilObjListRow row']">
+            <a style="min-height: 10px; min-width:100px; max-width:100%; background-color: #0F0; display:block; margin-top: 30px; padding: 30px">
+                <!-- <xsl:attribute name="href"><xsl:value-of select="following-sibling::div[1]//a/@href" /></xsl:attribute> -->
+                <xsl:copy-of select="parent::div[@class='ilCLI ilObjListRow row']/node()"/>
+            </a>
+
+            <xsl:apply-templates select="node()" />
         </xsl:for-each>
+
     </xsl:template>
--->
+
 </xsl:stylesheet>
