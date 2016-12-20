@@ -249,15 +249,6 @@
     </xsl:template>
  -->
 
-    <!-- fix issue with glossar in LM not full width - not working - bug reported
-    <xsl:template match="div[@id='bot_center_area']">
-        <xsl:copy>
-            <xsl:attribute name="style">width: 100% !important</xsl:attribute>
-            <xsl:apply-templates select="@*|node()" />
-        </xsl:copy>
-    </xsl:template>
--->
-
     <!-- try to make the text of an answer also triggering the marked event
         <xsl:template match="span[@class='answertext']" >
              <label>
@@ -267,6 +258,12 @@
                  </xsl:copy>
              </label>
         </xsl:template>
+    -->
+
+    <!-- bot_center_area fix in delos.css
+        left: 0px !important;
+        width: 100% !important;
+        z-index: 101;
     -->
 
     <!-- questionlayout change:
