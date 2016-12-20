@@ -3022,8 +3022,8 @@
 		<xsl:when test="$fullscreen_link = 'fullscreen.html'">
 			<a target="_blank">
 				<!-- fim: [app] open fullscreen media in colorbox -->
-				<xsl:attribute name="onclick">$.colorbox({width:window.innerWidth-100, height:window.innerHeight-100, iframe:true, href:'fullscreen_<xsl:value-of select="substring-after($cmobid,'mob_')"/>.html'});return false;</xsl:attribute>
-				<!-- fim. -->
+				<!--<xsl:attribute name="onclick">$.colorbox({width:window.innerWidth-100, height:window.innerHeight-100, iframe:true, href:'fullscreen_<xsl:value-of select="substring-after($cmobid,'mob_')"/>.html'});return false;</xsl:attribute>
+				--><!-- fim. -->
 			<xsl:attribute name="href">fullscreen_<xsl:value-of select="substring-after($cmobid,'mob_')"/>.html</xsl:attribute>
 			<img border="0" align="right">
 			<xsl:attribute name="src"><xsl:value-of select="$enlarge_path"/></xsl:attribute>
@@ -3033,8 +3033,8 @@
 		<xsl:otherwise>
 			<a target="_blank">
 				<!-- fim: [app] open fullscreen media in colorbox -->
-				<xsl:attribute name="onclick">$.colorbox({width:window.innerWidth-100, height:window.innerHeight-100, iframe:true, href:'<xsl:value-of select="$fullscreen_link"/>&amp;mob_id=<xsl:value-of select="substring-after($cmobid,'mob_')"/>&amp;pg_id=<xsl:value-of select="$pg_id"/>'});return false;</xsl:attribute>
-				<!-- fim. -->
+				<!--<xsl:attribute name="onclick">$.colorbox({width:window.innerWidth-100, height:window.innerHeight-100, iframe:true, href:'<xsl:value-of select="$fullscreen_link"/>&amp;mob_id=<xsl:value-of select="substring-after($cmobid,'mob_')"/>&amp;pg_id=<xsl:value-of select="$pg_id"/>'});return false;</xsl:attribute>
+				--><!-- fim. -->
 			<xsl:attribute name="href"><xsl:value-of select="$fullscreen_link"/>&amp;mob_id=<xsl:value-of select="substring-after($cmobid,'mob_')"/>&amp;pg_id=<xsl:value-of select="$pg_id"/></xsl:attribute>
 			<img border="0" align="right">
 			<xsl:attribute name="src"><xsl:value-of select="$enlarge_path"/></xsl:attribute>

@@ -222,7 +222,8 @@
         <xsl:choose>
             <xsl:when test=".//img[contains(@src, 'enlarge.svg')]">
                 <xsl:copy>
-                    <xsl:attribute name="onclick">$.colorbox({maxWidth:'100%', maxHeight:'60%', width:window.innerWidth-100, height:window.innerHeight-100, iframe:true, href:'<xsl:value-of select=".//a/@href" />'});return false</xsl:attribute>
+                    <!-- <xsl:attribute name="onclick">$.colorbox({maxWidth:'100%', maxHeight:'60%', width:window.innerWidth-100, height:window.innerHeight-100, iframe:true, href:'<xsl:value-of select=".//a/@href" />'});return false</xsl:attribute> -->
+                    <xsl:attribute name="onclick">window.location=this.getAttribute("href");return false;</xsl:attribute>
                     <xsl:attribute name="href"><xsl:value-of select=".//a/@href" /></xsl:attribute>
                     <xsl:apply-templates select="@*|node()" />
                 </xsl:copy>

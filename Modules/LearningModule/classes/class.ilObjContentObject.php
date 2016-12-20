@@ -2250,8 +2250,8 @@ class ilObjContentObject extends ilObject
 		}
 
 // fim: [app] include colorbox
-		ilUtil::makeDirParents($a_target_dir.'/js/colorbox');
-		ilUtil::rcopy('./Services/jQuery/js/colorbox', $a_target_dir.'/js/colorbox');
+//		ilUtil::makeDirParents($a_target_dir.'/js/colorbox');
+//		ilUtil::rcopy('./Services/jQuery/js/colorbox', $a_target_dir.'/js/colorbox');
 //  fim.
 
 
@@ -2515,13 +2515,13 @@ class ilObjContentObject extends ilObject
 				"target" => $a_target_dir.'/js/jquery-ui-min.js',
 				"type" => "js"),
 			//fim: [app] colorbox
-			array("source" => '',
+		/*	array("source" => '',
 				"target" => $a_target_dir.'/js/colorbox/jquery.colorbox-min.js',
 				"type" => "js"),
 			array("source" => '',
 				"target" => $a_target_dir.'/js/colorbox/example4/colorbox.css',
 				"type" => "css"),
-			//fim.
+		*/	//fim.
 			array("source" => './Services/COPage/js/ilCOPagePres.js',
 				"target" => $a_target_dir.'/js/ilCOPagePres.js',
 				"type" => "js"),
