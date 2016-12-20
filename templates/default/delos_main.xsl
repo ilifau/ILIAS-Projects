@@ -260,12 +260,6 @@
         </xsl:template>
     -->
 
-    <!-- bot_center_area fix in delos.css
-        left: 0px !important;
-        width: 100% !important;
-        z-index: 101;
-    -->
-
     <!-- questionlayout change:
          Aussenabstand des Submit-Buttons im Content-Style geändert
          Text padding-bottom im Content Style geändert
@@ -273,8 +267,10 @@
 
     <!-- changes in delos.css
          Close-Icon of Glossary term in LM z-index changed :354
-         reducing mainspacekeeper  von 40 auf 0 :11487
+         reducing mainspacekeeper - von 40 auf 0 :11487
          Glossar in LM fixing - closebutton with z-index :10124
+         bot_center_area fix - left: 0px !important; width: 100% !important; z-index: 101; :7230
+         ilAreaClose - z-index: 9; padding: 5px; :10122
     -->
 
 </xsl:stylesheet>
