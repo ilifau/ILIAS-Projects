@@ -69,6 +69,17 @@
         </xsl:copy>
     </xsl:template>
 
+    <!-- responsive images with links
+    <xsl:template match="td[@class='ilc_Mob']/a"/> -->
+    <xsl:template match="td[@class='ilc_Mob']/a/img/@width"/>
+    <xsl:template match="td[@class='ilc_Mob']/a/img/@height"/>
+    <xsl:template match="td[@class='ilc_Mob']/a/img" >
+        <xsl:copy>
+            <xsl:attribute name="style">width:<xsl:value-of select="@width" />px;max-width:100%;</xsl:attribute>
+            <xsl:apply-templates select="@*|node()" />
+        </xsl:copy>
+    </xsl:template>
+
     <!-- fim #cf: adjusting image (embeded) responsive size -->
     <xsl:template match="td[@class='ilc_Mob']/embed/@height"/>
     <xsl:template match="td[@class='ilc_Mob']/embed" >
