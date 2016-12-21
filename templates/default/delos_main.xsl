@@ -28,16 +28,9 @@
                 <!--  Prevent switching to safari in webapp mode -->
                 <xsl:when test="@href and not(@onclick)">
                     <xsl:attribute name="onclick">window.location=this.getAttribute("href");return false;</xsl:attribute>
-                    <xsl:copy-of select="node()" />
+                    <xsl:apply-templates select="node()" />
                 </xsl:when>
 
-                <!--   -->
-                <xsl:when test="/img">
-                    <xsl:copy>
-                        <xsl:attribute name="style">max-width:100%;</xsl:attribute>
-                        <xsl:apply-templates select="@*|node()" />
-                    </xsl:copy>
-                </xsl:when>
 
                 <!-- links without href are just anchors -->
                 <xsl:otherwise>
