@@ -34,7 +34,7 @@
                 <!--   -->
                 <xsl:when test="/img">
                     <xsl:copy>
-                        <xsl:attribute name="style">width:<xsl:value-of select="@width" />px;max-width:100%;</xsl:attribute>
+                        <xsl:attribute name="style">max-width:100%;</xsl:attribute>
                         <xsl:apply-templates select="@*|node()" />
                     </xsl:copy>
                 </xsl:when>
