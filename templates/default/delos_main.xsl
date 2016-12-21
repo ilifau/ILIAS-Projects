@@ -31,6 +31,14 @@
                     <xsl:copy-of select="node()" />
                 </xsl:when>
 
+                <!--   -->
+                <xsl:when test="/img">
+                    <xsl:copy>
+                        <xsl:attribute name="style">width:<xsl:value-of select="@width" />px;max-width:100%;</xsl:attribute>
+                        <xsl:apply-templates select="@*|node()" />
+                    </xsl:copy>
+                </xsl:when>
+
                 <!-- links without href are just anchors -->
                 <xsl:otherwise>
                     <xsl:copy-of select="node()" />
