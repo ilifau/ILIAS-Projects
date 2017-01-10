@@ -186,24 +186,30 @@
         </xsl:copy>
     </xsl:template>
 
-    <!-- hide subtab seite gestalten -->
+    <!-- hide subtab - seite gestalten -->
     <xsl:template match="li[@id='subtab_page_editor']" />
 
-    <!-- optes tries -->
+    <!-- hide some email functions -->
+    <xsl:template match="button[@name='cmd[searchUsers]']" />
+    <!-- <xsl:template match="button[@name='cmd[searchGroupsTo]']" />
+    <xsl:template match="button[@name='cmd[searchMailingListsTo]']" /> -->
+
+    <!-- optes / block view
     <xsl:template match="div[@class='ilContainerListItemIcon ']" />
 
     <xsl:template match="div[@class='ilContainerBlock container-fluid form-inline']" >
         <xsl:apply-templates select="div[@class='row ilContainerBlockHeader']" />
-
         <xsl:for-each select="div[@class='ilCLI ilObjListRow row']">
-            <a style="min-height: 10px; min-width:100px; max-width:100%; background-color: #0F0; display:block; margin-top: 30px; padding: 30px">
-                <!-- <xsl:attribute name="href"><xsl:value-of select="following-sibling::div[1]//a/@href" /></xsl:attribute> -->
-                <xsl:copy-of select="parent::div[@class='ilCLI ilObjListRow row']/node()"/>
-            </a>
+                <a >
+                    <xsl:attribute name="href"><xsl:value-of select=".//a/@href" /></xsl:attribute>
+                    <div class="ilc_text_block_Standard" style="min-height: 10px; min-width:100px; width: 50%; max-width:100%; background-color: #0C0; display:block; margin-top: 10px; padding: 10px">
 
-            <xsl:apply-templates select="node()" />
+                        <xsl:value-of select=".//h4" /><br/>
+                        <xsl:copy-of select=".//div[@class='ilListItemSection il_ItemProperties']"/>
+                    </div>
+
+                </a>
         </xsl:for-each>
-
     </xsl:template>
-
+-->
 </xsl:stylesheet>
