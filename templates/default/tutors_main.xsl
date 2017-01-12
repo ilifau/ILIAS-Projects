@@ -194,6 +194,22 @@
     <!-- <xsl:template match="button[@name='cmd[searchGroupsTo]']" />
     <xsl:template match="button[@name='cmd[searchMailingListsTo]']" /> -->
 
+    <!-- hide some member functions -->
+    <xsl:template match="input[@name='cmd[editMembers]']" />
+    <xsl:template match="input[@name='cmd[deleteMembers]']" />
+    <xsl:template match="input[@name='blocked[]']" />
+
+    <!-- hide some forum functions -->
+    <xsl:template match="option[@value='makesticky']" />
+    <xsl:template match="option[@value='unmakesticky']" />
+    <xsl:template match="option[@value='editThread']" />
+    <xsl:template match="option[@value='close']" />
+    <xsl:template match="option[@value='reopen']" />
+    <xsl:template match="option[@value='move']" />
+    <xsl:template match="option[@value='html']" />
+    <xsl:template match="option[@value='confirmDeleteThreads']" />
+    <xsl:template match="option[@value='merge']" />
+
     <!-- optes / block view
     <xsl:template match="div[@class='ilContainerListItemIcon ']" />
 
