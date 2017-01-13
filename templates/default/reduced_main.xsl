@@ -146,6 +146,14 @@
     <xsl:template match="li[@id='tab_general_settings']"  />
     <!-- <xsl:template match="li[@id='tab_mail_settings']"  /> -->
 
+    <!-- getting a gap in questions between markspot and answertext-->
+    <xsl:template match="span[@class='answertext']" >
+        <xsl:copy>
+            <xsl:attribute name="style">padding: 5px;</xsl:attribute>
+            <xsl:apply-templates select="@*|node()" />
+        </xsl:copy>
+    </xsl:template>
+    
     <!-- No footer -->
     <xsl:template match="footer" />
 
