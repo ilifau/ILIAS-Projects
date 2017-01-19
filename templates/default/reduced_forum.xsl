@@ -15,9 +15,7 @@
     -->
 
     <!-- Hide the tabs -->
-    <!-- <xsl:template match="ul[@id='ilTab']" />-->
-    <!-- hide only alle themen -->
-    <xsl:template match="ul[@id='ilTab']/li[1]" />
+    <xsl:template match="ul[@id='ilTab']" />
 
     <!-- Hide the right column -->
      <xsl:template match="div[@id='il_right_col']" />
@@ -27,9 +25,9 @@
     <!--<xsl:template match="div[@class='ilFrmPostCommands']//span[@class='split-btn-default']" />-->
     <xsl:template match="div[@class='ilFrmPostCommands']//a[contains(@href, 'ilforumexportgui')]" />
 
-    <!-- Hide table navigation settings (e.g. changing of displayed rows) -->
-<xsl:template match="div[contains(@class,'ilTableNav')]//td[contains(@class,'ilRight')]" />
-
+    <!-- Hide table navigation settings (e.g. changing of displayed rows)
+    <xsl:template match="div[contains(@class,'ilTableNav')]//td[contains(@class,'ilRight')]" />
+-->
     <!-- Hide thread commands
     <xsl:template match="div[contains(@class,'ilTableCommandRow')]" />
     <xsl:template match="div[contains(@class,'ilTableSelectAll')]" />
@@ -61,10 +59,10 @@
 
     <!-- Adjust the thread toolbar -->
     <xsl:template match="ul[contains(@class,'ilToolbarStickyItems')]" />
-<xsl:template match="ul[contains(@class,'ilToolbarItems')]" >
-        <xsl:variable name="reply_link" select="//a[contains(@href,'action=showreply')][last()]" />
-        <xsl:variable name="back_link" select="//ul[@id='ilTab']/li[1]/a" />
-        <xsl:variable name="createthread_link" select="//a[contains(@href, 'cmd=createThread')]" />
+    <xsl:template match="ul[contains(@class,'ilToolbarItems')]" >
+    <xsl:variable name="reply_link" select="//a[contains(@href,'action=showreply')][last()]" />
+    <xsl:variable name="back_link" select="//ul[@id='ilTab']/li[1]/a" />
+    <xsl:variable name="createthread_link" select="//a[contains(@href, 'cmd=createThread')]" />
 
     <xsl:copy>
         <xsl:copy-of select="@*" />
