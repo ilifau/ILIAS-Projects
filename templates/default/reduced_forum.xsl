@@ -15,14 +15,16 @@
     -->
 
     <!-- Hide the tabs -->
-<xsl:template match="ul[@id='ilTab']" />
+    <!-- <xsl:template match="ul[@id='ilTab']" />-->
+    <!-- hide only alle themen -->
+    <xsl:template match="ul[@id='ilTab']/li[1]" />
 
     <!-- Hide the right column -->
      <xsl:template match="div[@id='il_right_col']" />
 
     <!-- Hide post related actions -->
     <!-- <xsl:template match="div[@class='ilFrmPostCommands']" /> -->
-    <xsl:template match="div[@class='ilFrmPostCommands']//span[@class='split-btn-default']" />
+    <!--<xsl:template match="div[@class='ilFrmPostCommands']//span[@class='split-btn-default']" />-->
     <xsl:template match="div[@class='ilFrmPostCommands']//a[contains(@href, 'ilforumexportgui')]" />
 
     <!-- Hide table navigation settings (e.g. changing of displayed rows) -->
