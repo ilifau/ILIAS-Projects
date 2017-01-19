@@ -11664,3 +11664,14 @@ table.mceToolbar td {
     content: "";
   }
 }
+
+/* fim: [style] */
+a.navbar-brand img,
+#il_startup_logo img {
+  width: auto!important;
+}
+
+#ilMainMenuEntries {
+  padding-left: 100px!important;
+}
+
