@@ -200,11 +200,23 @@
     <!-- assuring some space between pictures and text, looks nicer -->
     <xsl:template match="td[@class='ilc_Mob']" >
         <xsl:copy>
-            <xsl:attribute name="style">padding-left: 10px;</xsl:attribute>
+            <xsl:attribute name="style">padding-left: 10px; </xsl:attribute>
+            <xsl:if test="not(../..//div[@class='ilc_media_caption_MediaCaption'])">
+                <xsl:attribute name="style">padding-left: 10px; padding-bottom: 10px</xsl:attribute>
+            </xsl:if>
+
             <xsl:apply-templates select="@*|node()" />
         </xsl:copy>
     </xsl:template>
-     
+
+    <!-- fixing text under picture -->
+    <xsl:template match="div[@class='ilc_media_caption_MediaCaption']" >
+        <xsl:copy>
+            <xsl:attribute name="style">margin-left: 10px</xsl:attribute>
+            <xsl:apply-templates select="@*|node()" />
+        </xsl:copy>
+    </xsl:template>
+    
     <!-- hide subtab seite gestalten -->
     <xsl:template match="li[@id='subtab_page_editor']" />
 
