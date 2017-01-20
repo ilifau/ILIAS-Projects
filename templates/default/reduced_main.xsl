@@ -204,7 +204,7 @@
             <xsl:apply-templates select="@*|node()" />
         </xsl:copy>
     </xsl:template>
-    
+     
     <!-- hide subtab seite gestalten -->
     <xsl:template match="li[@id='subtab_page_editor']" />
 
