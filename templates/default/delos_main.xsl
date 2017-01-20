@@ -33,5 +33,12 @@
 
     </xsl:copy>
 </xsl:template>
-
+<!--
+    <xsl:template match="td[@class='ilc_Mob']" >
+        <xsl:copy>
+            <xsl:attribute name="style">padding: 10px;</xsl:attribute>
+            <xsl:apply-templates select="@*|node()" />
+        </xsl:copy>
+    </xsl:template>
+-->
 </xsl:stylesheet>
