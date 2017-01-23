@@ -139,7 +139,7 @@
     <xsl:template match="li[@id='subtab_trac_settings']" />
 
     <!-- No head and list actions -->
-    <xsl:template match="div[@class='ilHeadAction']"  />
+    <!-- <xsl:template match="div[@class='ilHeadAction']"  /> -->
     <xsl:template match="div[@class='il_ContainerListItem']/div[@class='ilFloatRight']"  />
 
     <!-- cf: reduce personal settings -->

@@ -216,7 +216,10 @@
             <xsl:apply-templates select="@*|node()" />
         </xsl:copy>
     </xsl:template>
-    
+
+    <!-- hide mail to members in membergallery -->
+    <xsl:template match="a[contains(@href,'ilmailmembersearchgui')]" />
+
     <!-- hide subtab seite gestalten -->
     <xsl:template match="li[@id='subtab_page_editor']" />
 
