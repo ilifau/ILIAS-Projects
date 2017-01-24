@@ -101,6 +101,9 @@
     <!-- Hide the right column -->
      <xsl:template match="div[@id='il_right_col']" />
 
+    <!-- Hide Add to Desktop-function at forum -->
+    <xsl:template match="li[contains(@onclick, 'addToDesk')]" />
+
     <!-- Hide post related actions -->
     <!-- <xsl:template match="div[@class='ilFrmPostCommands']" /> -->
     <!--<xsl:template match="div[@class='ilFrmPostCommands']//span[@class='split-btn-default']" />-->
