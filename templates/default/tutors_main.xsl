@@ -238,6 +238,13 @@
         </xsl:copy>
     </xsl:template>
 
+    <!-- hide "back to magazin"-button after survey -->
+    <xsl:template match="nav[@id='2']" >
+        <xsl:if test="not(..//a[contains(@href,'cmd=exitSurvey')])">
+            <xsl:apply-templates select="node()" />
+        </xsl:if>
+    </xsl:template>
+
     <!-- optes / block view
     <xsl:template match="div[@class='ilContainerListItemIcon ']" />
 

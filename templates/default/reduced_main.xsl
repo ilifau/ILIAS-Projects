@@ -223,4 +223,11 @@
     <!-- hide subtab seite gestalten -->
     <xsl:template match="li[@id='subtab_page_editor']" />
 
+    <!-- hide "back to magazin"-button after survey -->
+    <xsl:template match="nav[@id='2']" >
+        <xsl:if test="not(..//a[contains(@href,'cmd=exitSurvey')])">
+            <xsl:apply-templates select="node()" />
+        </xsl:if>
+    </xsl:template>
+
 </xsl:stylesheet>
