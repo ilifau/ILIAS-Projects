@@ -114,6 +114,8 @@
     -->
     <trans style="reduced" at="output" of="Modules/LearningModule/tpl.page_new.html" with="reduced_main.xsl" debug=""/>
 <!-- fim cf added -->
+    <trans style="delos" at="output" of="tpl.main.html" for="Modules/Glossary" with="delos_main.xsl" next="true" debug=""/>
+
       <trans style="delos" at="output" of="Modules/LearningModule/tpl.page_new.html" with="delos_main.xsl" debug=""/>
     <trans style="reduced" at="output" of="Modules/LearningModule/tpl.page_new.html" with="delos_main.xsl" debug=""/>
 
@@ -121,5 +123,8 @@
     <trans style="reduced" at="output" of="Modules/LearningModule/tpl.ppt_fullscreen.html" with="delos_main.xsl" debug=""/>
 
     <trans style="delos" at="output" of="Modules/LearningModule/tpl.fullscreen.html" with="delos_main.xsl" debug=""/>
+
+    <!-- Fix bot_center_area for glossary terms -->
+    <trans style="delos" at="output" of="Modules/LearningModule/tpl.glossary_term_output.html" with="delos_main.xsl" debug=""/>
 
 </transformations>

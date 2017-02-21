@@ -31,7 +31,6 @@
                     <xsl:apply-templates select="node()" />
                 </xsl:when>
 
-
                 <!-- links without href are just anchors -->
                 <xsl:otherwise>
                     <xsl:copy-of select="node()" />
@@ -253,6 +252,14 @@
 
     <!-- nicer linebreak for footnotes -->
     <xsl:template match="div[@class='ilc_page_fn_Footnote']" >
+        <xsl:copy>
+            <xsl:attribute name="style">word-wrap: break-word;</xsl:attribute>
+            <xsl:apply-templates select="@*|node()" />
+        </xsl:copy>
+    </xsl:template>
+
+    <!-- nicer linebreak for headings (in glossary) -->
+    <xsl:template match="h1[@class='ilc_page_title_PageTitle']" >
         <xsl:copy>
             <xsl:attribute name="style">word-wrap: break-word;</xsl:attribute>
             <xsl:apply-templates select="@*|node()" />
