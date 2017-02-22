@@ -266,6 +266,31 @@
         </xsl:copy>
     </xsl:template>
 
+    <!-- hide border in bot_center_area -->
+    <xsl:template match="div[@class='ilc_page_cont_PageContainer']" >
+        <xsl:copy>
+            <xsl:attribute name="style">border: hidden; padding-top: 10px; padding-bottom: 10px;</xsl:attribute>
+            <xsl:apply-templates select="@*|node()" />
+        </xsl:copy>
+    </xsl:template>
+
+    <!-- making more space for content -->
+    <xsl:template match="div[@class='ilInvisibleBorder']" >
+        <xsl:copy>
+            <xsl:attribute name="style">padding: 0px;</xsl:attribute>
+            <xsl:apply-templates select="@*|node()" />
+        </xsl:copy>
+    </xsl:template>
+
+    <!-- making more space for content -->
+    <xsl:template match="div[@class='ilc_page_frame_PageFrame']" >
+        <xsl:copy>
+            <xsl:attribute name="style">padding-left: 0px;</xsl:attribute>
+            <xsl:apply-templates select="@*|node()" />
+        </xsl:copy>
+    </xsl:template>
+
+
     <!-- enlarged space to answer questions in LM, compare to test-object
     <xsl:template match="div[@class='ilc_qanswer_Answer']//input" >
         <xsl:copy>
@@ -299,6 +324,11 @@
          Glossar in LM fixing - closebutton with z-index :10124
          bot_center_area fix - left: 0px !important; width: 100% !important; z-index: 101; :7230
          ilAreaClose - z-index: 9; padding: 5px; :10122
+         several settings for div#bot_center_area :7221
+         background-color: #FFFFFF; /* f0f0f0 */ :986
+         right: 0px; /* left */ :10127
+
+
     -->
 
 </xsl:stylesheet>

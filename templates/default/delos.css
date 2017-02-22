@@ -983,7 +983,7 @@ body {
   font-size: 14px;
   line-height: 1.42857143;
   color: #333333;
-  background-color: #f0f0f0;
+  background-color: #FFFFFF; /* f0f0f0 */
 }
 input,
 button,
@@ -7220,11 +7220,11 @@ div#agreement {
 /* bottom center area (optional bottom area, used e.g. in learning modules) */
 div#bot_center_area {
   bottom: 0;
-  height: 300px;
+  height: 450px; /* 300 */
   position: fixed;
-  padding: 5px;
-  background-color: #f0f0f0;
-  border-top: 3px solid #E9E9E9;
+  padding: 0px; /* 5 */
+  background-color: #FFFFFF; /* f0f0f0 */
+  border-top: 3px solid #1c86ee; /* E9E9E9 */
   left: 0px !important;
   width: 100% !important;
   z-index: 101;
@@ -10124,7 +10124,7 @@ button.ilAreaClose {
   height: 20px;
   position: absolute;
   top: 0;
-  left: 0px;
+  right: 0px; /* left */
   cursor: pointer;
   z-index: 9;
   padding: 5px;
