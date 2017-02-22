@@ -7224,7 +7224,7 @@ div#bot_center_area {
   position: fixed;
   padding: 0px; /* 5 */
   background-color: #FFFFFF; /* f0f0f0 */
-  border-top: 3px solid #1c86ee; /* E9E9E9 */
+  border-top: 1px solid #eee; /* 3px solid E9E9E9 */
   left: 0px !important;
   width: 100% !important;
   z-index: 101;
@@ -7232,6 +7232,7 @@ div#bot_center_area {
   /* Bug 11209 */
   overflow: auto;
   /* Bug 11209 */
+  box-shadow: 0 0 6px rgba(0,0,0,.5); /* added */
 }
 div#bot_center_area iframe {
   -webkit-overflow-scrolling: touch;
@@ -10123,11 +10124,12 @@ button.ilAreaClose {
   width: 20px;
   height: 20px;
   position: absolute;
-  top: 0;
-  right: 0px; /* left */
+  top: 8px; /*0 */
+  right: 10px; /* left: 0px */
   cursor: pointer;
   z-index: 9;
   padding: 5px;
+  font-size: 16px;
 }
 div.ilRightAreaSpace {
   width: 50%;
