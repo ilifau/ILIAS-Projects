@@ -7,7 +7,7 @@ il.LearningModule = {
 	all_targets: ["center_bottom", "right", "right_top", "right_bottom"],
 	rating_url: '',
 	// fim: [app] use predefined close icon for html export
-	close_html: '&#10060;',
+	close_html: '&times;',
 	// fim.
 
 	setSaveUrl: function (url) {
@@ -93,11 +93,11 @@ il.LearningModule = {
 		if (t == "center_bottom") {
 			el_id = "bot_center_area";
 		}
-		
+// fim: [app] use div instead of button for close (needs adjustment of .ilAreaClose in Delos)
 		if (t != "right_top" && t != "right_bottom") { 
 			area = $("#" + el_id, doc);
 			if (area.length == 0) {
-				$('body').append('<div id="' + el_id + '"><div id="' + el_id + '_drag"></div><button class="btn btn-link ilAreaClose">' + il.LearningModule.close_html + '</button><iframe /></div>');
+				$('body').append('<div id="' + el_id + '"><div id="' + el_id + '_drag"></div><div class="ilAreaClose">' + il.LearningModule.close_html + '</div><iframe /></div>');
 			}
 		} else {
 			//check right area existence
@@ -108,17 +108,18 @@ il.LearningModule = {
 			// append right top and right bottom areas
 			area = $("#right_top_area", doc);
 			if (area.length == 0) {
-				$('#right_cont_area').append('<div id="right_top_area"><div id="right_top_drag"></div><button class="btn btn-link ilAreaClose">' + il.LearningModule.close_html + '</button><iframe /></div>');
+				$('#right_cont_area').append('<div id="right_top_area"><div id="right_top_drag"></div><div class="ilAreaClose">' + il.LearningModule.close_html + '</div><iframe /></div>');
 			}
 			area = $("#right_bottom_area", doc);
 			if (area.length == 0) {
-				$('#right_cont_area').append('<div id="right_bottom_area"><div id="right_bottom_drag"></div><button class="btn btn-link ilAreaClose">' + il.LearningModule.close_html + '</button><iframe /></div>');
+				$('#right_cont_area').append('<div id="right_bottom_area"><div id="right_bottom_drag"></div><div class="btn btn-link ilAreaClose">' + il.LearningModule.close_html + '</div><iframe /></div>');
 			}
 		}
 		
-		$("#" + el_id + " button.ilAreaClose", doc).click(function () {
+		$("#" + el_id + " div.ilAreaClose", doc).click(function () {
 			il.LearningModule.closeContentFrame(t);
 			});
+// fim.
 		$("#" + el_id + " > iframe", doc).attr("src", href);
 		$("#" + el_id, doc).css("display", "block");
 		il.UICore.initLayoutDrag();

@@ -10120,16 +10120,19 @@ body.ilLMNoMenu .ilFixedTopSpacer {
 body.ilLMNoMenu .ilLeftNav {
   top: 0px;
 }
-button.ilAreaClose {
+/* fim: [app] removed button element and changed style */
+.ilAreaClose {
   width: 20px;
   height: 20px;
   position: absolute;
-  top: 8px; /*0 */
-  right: 10px; /* left: 0px */
+  top: 0px; /*0 */
+  right: 32px; /* left: 0px */
   cursor: pointer;
   z-index: 9;
   padding: 5px;
-  font-size: 16px;
+  font-size: 26px;
+  font-weight:bold;
+  color:#557196;
 }
 div.ilRightAreaSpace {
   width: 50%;
