@@ -21,7 +21,7 @@ include_once "./Services/Object/classes/class.ilObjectGUI.php";
 * @ingroup ModulesSurvey
 */
 class ilObjSurveyGUI extends ilObjectGUI
-{		
+{
 	public function __construct()
 	{
 		global $lng, $ilCtrl;
@@ -30,10 +30,10 @@ class ilObjSurveyGUI extends ilObjectGUI
 		$lng->loadLanguageModule("survey");
 		$this->ctrl = $ilCtrl;
 		$this->ctrl->saveParameter($this, "ref_id");
-	
+
 		parent::__construct("", (int)$_GET["ref_id"], true, false);
 	}
-	
+
 	public function executeCommand()
 	{
 		global $ilAccess, $ilNavigationHistory, $ilErr, $ilTabs;
@@ -41,13 +41,13 @@ class ilObjSurveyGUI extends ilObjectGUI
 		$this->external_rater_360 = false;
 		if(!$this->creation_mode &&
 			$this->object->get360Mode() &&
-			$_SESSION["anonymous_id"][$this->object->getId()] && 
-			ilObjSurvey::validateExternalRaterCode($this->object->getRefId(), 
+			$_SESSION["anonymous_id"][$this->object->getId()] &&
+			ilObjSurvey::validateExternalRaterCode($this->object->getRefId(),
 				$_SESSION["anonymous_id"][$this->object->getId()]))
 		{
 			$this->external_rater_360 = true;
 		}
-		
+
 		if(!$this->external_rater_360)
 		{
 			if (!$ilAccess->checkAccess("visible", "", $this->ref_id) &&
@@ -66,22 +66,22 @@ class ilObjSurveyGUI extends ilObjectGUI
 			}
 		}
 
-		$cmd = $this->ctrl->getCmd("properties");						
-		
+		$cmd = $this->ctrl->getCmd("properties");
+
 		// workaround for bug #6288, needs better solution
 		if ($cmd == "saveTags")
 		{
 			$this->ctrl->setCmdClass("ilinfoscreengui");
 		}
-		
+
 		// deep link from repository - "redirect" to page view
 		if(!$this->ctrl->getCmdClass() && $cmd == "questionsrepo")
 		{
 			$_REQUEST["pgov"] = 1;
 			$this->ctrl->setCmd("questions");
 			$this->ctrl->setCmdClass("ilsurveyeditorgui");
-		}		
-		
+		}
+
 		$next_class = $this->ctrl->getNextClass($this);
 		$this->ctrl->setReturn($this, "properties");
 		$this->tpl->addCss(ilUtil::getStyleSheetLocation("output", "survey.css", "Modules/Survey"), "screen");
@@ -92,11 +92,11 @@ class ilObjSurveyGUI extends ilObjectGUI
 			case "ilinfoscreengui":
 				if(!in_array($this->ctrl->getCmdClass(),
 					array('ilpublicuserprofilegui', 'ilobjportfoliogui')))
-				{		
+				{
 					$this->addHeaderAction();
 					$this->infoScreen(); // forwards command
 				}
-				else 
+				else
 				{
 					// #16891
 					$ilTabs->clearTargets();
@@ -105,16 +105,16 @@ class ilObjSurveyGUI extends ilObjectGUI
 					$this->ctrl->forwardCommand($info);
 				}
 				break;
-			
+
 			case 'ilobjectmetadatagui':
-				$this->handleWriteAccess();			
+				$this->handleWriteAccess();
 				$ilTabs->activateTab("meta_data");
-				$this->addHeaderAction();				
+				$this->addHeaderAction();
 				include_once 'Services/Object/classes/class.ilObjectMetaDataGUI.php';
-				$md_gui = new ilObjectMetaDataGUI($this->object);				
+				$md_gui = new ilObjectMetaDataGUI($this->object);
 				$this->ctrl->forwardCommand($md_gui);
 				break;
-			
+
 			case "ilsurveyevaluationgui":
 				$ilTabs->activateTab("svy_results");
 				$this->addHeaderAction();
@@ -129,7 +129,7 @@ class ilObjSurveyGUI extends ilObjectGUI
 				$exec_gui = new ilSurveyExecutionGUI($this->object);
 				$this->ctrl->forwardCommand($exec_gui);
 				break;
-				
+
 			case 'ilpermissiongui':
 				$ilTabs->activateTab("perm_settings");
 				$this->addHeaderAction();
@@ -137,7 +137,7 @@ class ilObjSurveyGUI extends ilObjectGUI
 				$perm_gui =& new ilPermissionGUI($this);
 				$this->ctrl->forwardCommand($perm_gui);
 				break;
-				
+
 			case 'ilobjectcopygui':
 				include_once './Services/Object/classes/class.ilObjectCopyGUI.php';
 				$cp = new ilObjectCopyGUI($this);
@@ -150,7 +150,7 @@ class ilObjSurveyGUI extends ilObjectGUI
 				$gui = ilCommonActionDispatcherGUI::getInstanceFromAjaxCall();
 				$this->ctrl->forwardCommand($gui);
 				break;
-				
+
 			// 360, skill service
 			case 'ilsurveyskillgui':
 				$ilTabs->activateTab("survey_competences");
@@ -165,27 +165,27 @@ class ilObjSurveyGUI extends ilObjectGUI
 				$gui = new ilSurveySkillDeterminationGUI($this->object);
 				$this->ctrl->forwardCommand($gui);
 				break;
-			
+
 			case 'ilsurveyeditorgui':
-				$this->handleWriteAccess();					
+				$this->handleWriteAccess();
 				$ilTabs->activateTab("survey_questions");
 				include_once("./Modules/Survey/classes/class.ilSurveyEditorGUI.php");
 				$gui = new ilSurveyEditorGUI($this);
 				$this->ctrl->forwardCommand($gui);
 				break;
-			
+
 			case 'ilsurveyconstraintsgui':
-				$this->handleWriteAccess();					
+				$this->handleWriteAccess();
 				$ilTabs->activateTab("constraints");
 				include_once("./Modules/Survey/classes/class.ilSurveyConstraintsGUI.php");
 				$gui = new ilSurveyConstraintsGUI($this);
 				$this->ctrl->forwardCommand($gui);
 				break;
-			
-			case 'ilsurveyparticipantsgui':		
+
+			case 'ilsurveyparticipantsgui':
 				if(!$this->object->get360Mode())
 				{
-					$ilTabs->activateTab("maintenance");				
+					$ilTabs->activateTab("maintenance");
 				}
 				else
 				{
@@ -195,19 +195,19 @@ class ilObjSurveyGUI extends ilObjectGUI
 				$gui = new ilSurveyParticipantsGUI($this);
 				$this->ctrl->forwardCommand($gui);
 				break;
-				
+
 			case "illearningprogressgui":
 				$ilTabs->activateTab("learning_progress");
 				include_once("./Services/Tracking/classes/class.ilLearningProgressGUI.php");
 				$new_gui = new ilLearningProgressGUI(ilLearningProgressBaseGUI::LP_CONTEXT_REPOSITORY,
 					$this->object->getRefId());
-				$this->ctrl->forwardCommand($new_gui);				
+				$this->ctrl->forwardCommand($new_gui);
 				break;
-			
-			case 'ilexportgui':				
+
+			case 'ilexportgui':
 				$ilTabs->activateTab("export");
 				include_once("./Services/Export/classes/class.ilExportGUI.php");
-				$exp_gui = new ilExportGUI($this); 
+				$exp_gui = new ilExportGUI($this);
 				$exp_gui->addFormat("xml");
 				$this->ctrl->forwardCommand($exp_gui);
 				break;
@@ -225,7 +225,7 @@ class ilObjSurveyGUI extends ilObjectGUI
 			$this->tpl->show();
 		}
 	}
-				
+
 	/**
 	* Redirects the evaluation object call to the ilSurveyEvaluationGUI class
 	*
@@ -239,8 +239,8 @@ class ilObjSurveyGUI extends ilObjectGUI
 		$eval_gui = new ilSurveyEvaluationGUI($this->object);
 		$this->ctrl->setCmdClass(get_class($eval_gui));
 		$this->ctrl->redirect($eval_gui, "evaluation");
-	}		
-	
+	}
+
 	protected function addDidacticTemplateOptions(array &$a_options)
 	{
 		include_once "Services/Administration/classes/class.ilSettingsTemplate.php";
@@ -253,7 +253,7 @@ class ilObjSurveyGUI extends ilObjectGUI
 					nl2br(trim($item["description"])));
 			}
 		}
-		
+
 		// JF, 2013-06-10
 		$a_options["svy360_1"] = array($this->lng->txt("survey_360_mode"),
 			$this->lng->txt("survey_360_mode_info"));
@@ -264,21 +264,21 @@ class ilObjSurveyGUI extends ilObjectGUI
 	* @access	public
 	*/
 	function afterSave(ilObject $a_new_object)
-	{		
+	{
 		// #16446
 		$a_new_object->loadFromDb();
-		
+
 		$tpl = $this->getDidacticTemplateVar("svytpl");
 		if($tpl)
 		{
 			$a_new_object->applySettingsTemplate($tpl);
 		}
-		
+
 		$a_new_object->set360Mode((bool)$this->getDidacticTemplateVar("svy360"));
 		if($a_new_object->get360Mode())
 		{
 			// this should rather be ilObjSurvey::ANONYMIZE_ON - see ilObjSurvey::getUserDataFromActiveId()
-			$a_new_object->setAnonymize(ilObjSurvey::ANONYMIZE_CODE_ALL); 
+			$a_new_object->setAnonymize(ilObjSurvey::ANONYMIZE_CODE_ALL);
 			$a_new_object->setEvaluationAccess(ilObjSurvey::EVALUATION_ACCESS_PARTICIPANTS);
 		}
 		$a_new_object->saveToDB();
@@ -287,8 +287,8 @@ class ilObjSurveyGUI extends ilObjectGUI
 		ilUtil::sendSuccess($this->lng->txt("object_added"),true);
 		ilUtil::redirect("ilias.php?baseClass=ilObjSurveyGUI&ref_id=".
 			$a_new_object->getRefId()."&cmd=properties");
-	}		
-	
+	}
+
 	/**
 	* adds tabs to tab gui object
 	*
@@ -297,12 +297,12 @@ class ilObjSurveyGUI extends ilObjectGUI
 	function getTabs(&$tabs_gui)
 	{
 		global $ilAccess, $ilUser, $ilHelp;
-		
+
 		if($this->object instanceof ilObjSurveyQuestionPool)
 		{
 			return true;
 		}
-		
+
 		$ilHelp->setScreenIdComponent("svy");
 
 		$hidden_tabs = array();
@@ -313,39 +313,39 @@ class ilObjSurveyGUI extends ilObjectGUI
 			$template = new ilSettingsTemplate($template);
 			$hidden_tabs = $template->getHiddenTabs();
 		}
-		
+
 		if ($ilAccess->checkAccess("write", "", $this->ref_id))
-		{		
+		{
 			$tabs_gui->addTab("survey_questions",
 				$this->lng->txt("survey_questions"),
 				$this->ctrl->getLinkTargetByClass(array("ilsurveyeditorgui", "ilsurveypagegui"), "renderPage"));
 		}
-		
+
 		if ($ilAccess->checkAccess("read", "", $this->ref_id))
 		{
 			$tabs_gui->addTab("info_short",
 				$this->lng->txt("info_short"),
 				$this->ctrl->getLinkTarget($this,'infoScreen'));
 		}
-							
+
 		// properties
 		if ($ilAccess->checkAccess("write", "", $this->ref_id))
-		{			
+		{
 			$tabs_gui->addTab("settings",
 				$this->lng->txt("settings"),
 				$this->ctrl->getLinkTarget($this,'properties'));
 		}
 		else if ($ilAccess->checkAccess("read", "", $this->ref_id))
 		{
-			if($this->object->get360Mode() && 
+			if($this->object->get360Mode() &&
 				$this->object->get360SelfRaters() &&
 				$this->object->isAppraisee($ilUser->getId()) &&
 				!$this->object->isAppraiseeClosed($ilUser->getId()))
 			{
 				$tabs_gui->addTab("survey_360_edit_raters",
 					$this->lng->txt("survey_360_edit_raters"),
-					$this->ctrl->getLinkTargetByClass('ilsurveyparticipantsgui','editRaters'));	
-				
+					$this->ctrl->getLinkTargetByClass('ilsurveyparticipantsgui','editRaters'));
+
 				// :TODO: mail to raters
 			}
 		}
@@ -363,7 +363,7 @@ class ilObjSurveyGUI extends ilObjectGUI
 
 		if ($ilAccess->checkAccess("write", "", $this->ref_id))
 		{
-			// 360° 
+			// 360°
 			if($this->object->get360Mode())
 			{
 				// 360 mode + competence service
@@ -375,10 +375,10 @@ class ilObjSurveyGUI extends ilObjectGUI
 						$this->lng->txt("survey_competences"),
 						$this->ctrl->getLinkTargetByClass("ilsurveyskillgui", "listQuestionAssignment"));
 				}
-				
+
 				$tabs_gui->addTab("survey_360_appraisees",
 					$this->lng->txt("survey_360_appraisees"),
-					$this->ctrl->getLinkTargetByClass('ilsurveyparticipantsgui', 'listAppraisees'));						
+					$this->ctrl->getLinkTargetByClass('ilsurveyparticipantsgui', 'listAppraisees'));
 			}
 			else
 			{
@@ -388,9 +388,9 @@ class ilObjSurveyGUI extends ilObjectGUI
 					$this->ctrl->getLinkTargetByClass('ilsurveyparticipantsgui', 'maintenance'));
 			}
 		}
-			
+
 		include_once "./Modules/Survey/classes/class.ilObjSurveyAccess.php";
-		if ($ilAccess->checkAccess("write", "", $this->ref_id) || 
+		if ($ilAccess->checkAccess("write", "", $this->ref_id) ||
 			ilObjSurveyAccess::_hasEvaluationAccess($this->object->getId(), $ilUser->getId()))
 		{
 			// evaluation
@@ -398,7 +398,7 @@ class ilObjSurveyGUI extends ilObjectGUI
 				$this->lng->txt("svy_results"),
 				$this->ctrl->getLinkTargetByClass("ilsurveyevaluationgui", "evaluation"));
 		}
-		
+
 		// learning progress
 		include_once "./Services/Tracking/classes/class.ilLearningProgressAccess.php";
 		if(ilLearningProgressAccess::checkAccess($this->object->getRefId()))
@@ -407,18 +407,18 @@ class ilObjSurveyGUI extends ilObjectGUI
 				$this->ctrl->getLinkTargetByClass(array("ilobjsurveygui", "illearningprogressgui"), ""),
 				"",
 				array("illplistofobjectsgui", "illplistofsettingsgui", "illearningprogressgui", "illplistofprogressgui"));
-		}		
+		}
 
 		if ($ilAccess->checkAccess("write", "", $this->ref_id))
 		{
 			if(!in_array("meta_data", $hidden_tabs))
 			{
-				// meta data			
+				// meta data
 				include_once "Services/Object/classes/class.ilObjectMetaDataGUI.php";
-				$mdgui = new ilObjectMetaDataGUI($this->object);					
+				$mdgui = new ilObjectMetaDataGUI($this->object);
 				$mdtab = $mdgui->getTab();
 				if($mdtab)
-				{								
+				{
 					$tabs_gui->addTab("meta_data",
 						$this->lng->txt("meta_data"),
 						$mdtab);
@@ -430,7 +430,7 @@ class ilObjSurveyGUI extends ilObjectGUI
 				// export
 				$tabs_gui->addTab("export",
 					$this->lng->txt("export"),
-					$this->ctrl->getLinkTargetByClass("ilexportgui", ""));				
+					$this->ctrl->getLinkTargetByClass("ilexportgui", ""));
 			}
 		}
 
@@ -442,7 +442,7 @@ class ilObjSurveyGUI extends ilObjectGUI
 				$this->ctrl->getLinkTargetByClass(array(get_class($this),'ilpermissiongui'), "perm"));
 		}
 	}
-		
+
 	/**
 	* Checks for write access and returns to the parent object
 	*
@@ -453,19 +453,19 @@ class ilObjSurveyGUI extends ilObjectGUI
 	public function handleWriteAccess()
 	{
 		global $ilAccess;
-		if (!$ilAccess->checkAccess("write", "", $this->ref_id)) 
+		if (!$ilAccess->checkAccess("write", "", $this->ref_id))
 		{
 			// allow only write access
 			ilUtil::sendInfo($this->lng->txt("cannot_edit_survey"), TRUE);
 			$this->ctrl->redirect($this, "infoScreen");
 		}
 	}
-	
-	
+
+
 	//
 	// SETTINGS
 	//
-			
+
 	/**
 	* Save the survey properties
 	*
@@ -474,18 +474,18 @@ class ilObjSurveyGUI extends ilObjectGUI
 	* @access private
 	*/
 	function savePropertiesObject()
-	{		
+	{
 		global $rbacsystem;
-		
+
 		$form = $this->initPropertiesForm();
 		if ($form->checkInput())
-		{					
+		{
 			$valid = true;
-						
+
 			if(!$this->object->get360Mode())
 			{
 				if($form->getInput("tut"))
-				{				
+				{
 					// check if given "tutors" have write permission
 					$tut_ids =array();
 					$tut_logins = $form->getInput("tut_ids");
@@ -493,21 +493,21 @@ class ilObjSurveyGUI extends ilObjectGUI
 					{
 						$tut_id = ilObjUser::_lookupId($tut_login);
 						if($tut_id && $rbacsystem->checkAccessOfUser($tut_id, "write", $this->object->getRefId()))
-						{					
+						{
 							$tut_ids[] = $tut_id;
-						}				
+						}
 					}
 					if(!$tut_ids)
 					{
 						$tut_ids = $form->getItemByPostVar("tut_ids");
-						$tut_ids->setAlert($this->lng->txt("survey_notification_tutor_recipients_invalid"));					
+						$tut_ids->setAlert($this->lng->txt("survey_notification_tutor_recipients_invalid"));
 						$valid = false;
-					}													
-				}			
+					}
+				}
 			}
-			
+
 			if($valid)
-			{			
+			{
 				if(!$this->object->get360Mode())
 				{
 					if($form->getInput("rmd"))
@@ -534,7 +534,7 @@ class ilObjSurveyGUI extends ilObjectGUI
 						$this->object->setReminderEnd($rmd_end);
 						$this->object->setReminderFrequency($form->getInput("rmd_freq"));
 						$this->object->setReminderTarget($form->getInput("rmd_grp"));
-					}		
+					}
 					else
 					{
 						$this->object->setReminderStatus(false);
@@ -542,21 +542,21 @@ class ilObjSurveyGUI extends ilObjectGUI
 
 					if($form->getInput("tut"))
 					{
-						$this->object->setTutorNotificationStatus(true);		
+						$this->object->setTutorNotificationStatus(true);
 						$this->object->setTutorNotificationRecipients($tut_ids); // see above
 						$this->object->setTutorNotificationTarget($form->getInput("tut_grp"));
-					}		
+					}
 					else
 					{
 						$this->object->setTutorNotificationStatus(false);
 					}
 				}
-			
+
 				// #10055
 				if ($_POST['online'] && count($this->object->questions) == 0)
 				{
 					$_POST['online'] = null;
-					ilUtil::sendFailure($this->lng->txt("cannot_switch_to_online_no_questions"), true);			
+					ilUtil::sendFailure($this->lng->txt("cannot_switch_to_online_no_questions"), true);
 				}
 
 				$template_settings = null;
@@ -584,7 +584,7 @@ class ilObjSurveyGUI extends ilObjectGUI
 					$md_desc->setDescription(ilUtil::stripSlashes($_POST['description']));
 					$md_desc->update();
 				}
-				
+
 				$this->object->setViewOwnResults($_POST["view_own"]);
 				$this->object->setMailOwnResults($_POST["mail_own"]);
 
@@ -597,20 +597,20 @@ class ilObjSurveyGUI extends ilObjectGUI
 
 				// activation
 				if($_POST["access_type"])
-				{	
-					$this->object->setActivationLimited(true);								    			
-					$this->object->setActivationVisibility($_POST["access_visiblity"]);	
-					
-					$period = $form->getItemByPostVar("access_period");										
+				{
+					$this->object->setActivationLimited(true);
+					$this->object->setActivationVisibility($_POST["access_visiblity"]);
+
+					$period = $form->getItemByPostVar("access_period");
 					$this->object->setActivationStartDate($period->getStart()->get(IL_CAL_UNIX));
-					$this->object->setActivationEndDate($period->getEnd()->get(IL_CAL_UNIX));							
+					$this->object->setActivationEndDate($period->getEnd()->get(IL_CAL_UNIX));
 				}
 				else
 				{
 					$this->object->setActivationLimited(false);
 				}
-				
-				
+
+
 				if(!$template_settings["enabled_start_date"]["hide"])
 				{
 					if ($_POST["enabled_start_date"])
@@ -635,7 +635,7 @@ class ilObjSurveyGUI extends ilObjectGUI
 					}
 				}
 
-				
+
 				include_once "./Services/AdvancedEditing/classes/class.ilObjAdvancedEditing.php";
 				$introduction = $_POST["introduction"];
 				$this->object->setIntroduction($introduction);
@@ -666,7 +666,7 @@ class ilObjSurveyGUI extends ilObjectGUI
 					$this->object->set360SkillService((int)$_POST["skill_service"]);
 				}
 				else
-				{				
+				{
 					if(!$template_settings["evaluation_access"]["hide"])
 					{
 						$this->object->setEvaluationAccess($_POST["evaluation_access"]);
@@ -674,13 +674,13 @@ class ilObjSurveyGUI extends ilObjectGUI
 
 					$hasDatasets = $this->object->_hasDatasets($this->object->getSurveyId());
 					if (!$hasDatasets)
-					{						
+					{
 						$hide_codes = $template_settings["acc_codes"]["hide"];
-						$hide_anon = $template_settings["anonymization_options"]["hide"];						
+						$hide_anon = $template_settings["anonymization_options"]["hide"];
 						if(!$hide_codes || !$hide_anon)
-						{					
+						{
 							$current = $this->object->getAnonymize();
-							
+
 							// get current setting if property is hidden
 							if(!$hide_codes)
 							{
@@ -693,17 +693,17 @@ class ilObjSurveyGUI extends ilObjectGUI
 							}
 							if(!$hide_anon)
 							{
-								$anon = ((string)$_POST["anonymization_options"] == "statanon");	
+								$anon = ((string)$_POST["anonymization_options"] == "statanon");
 							}
 							else
 							{
 								$anon = ($current == ilObjSurvey::ANONYMIZE_FREEACCESS ||
 									$current == ilObjSurvey::ANONYMIZE_ON);
 							}
-							
+
 							// parse incoming values
 							if (!$anon)
-							{			
+							{
 								if (!$codes)
 								{
 									$this->object->setAnonymize(ilObjSurvey::ANONYMIZE_OFF);
@@ -723,7 +723,7 @@ class ilObjSurveyGUI extends ilObjectGUI
 								{
 									$this->object->setAnonymize(ilObjSurvey::ANONYMIZE_FREEACCESS);
 								}
-							}	
+							}
 
 							// if settings were changed get rid of existing code
 							unset($_SESSION["anonymous_id"][$this->object->getId()]);
@@ -749,29 +749,29 @@ class ilObjSurveyGUI extends ilObjectGUI
 				ilUtil::sendFailure($this->lng->txt("form_input_not_valid"));
 			}
 		}
-		
+
 		$form->setValuesByPost();
 		$this->propertiesObject($form);
 	}
-	
+
 	/**
 	 * Init survey settings form
-	 * 
+	 *
 	 * @return ilPropertyFormGUI
 	 */
 	function initPropertiesForm()
-	{		
+	{
 		$template_settings = $hide_rte_switch = null;
 		$template = $this->object->getTemplate();
 		if($template)
-		{			
+		{
 			include_once "Services/Administration/classes/class.ilSettingsTemplate.php";
 			$template = new ilSettingsTemplate($template);
 
 			$template_settings = $template->getSettings();
 			$hide_rte_switch = $template_settings["rte_switch"]["hide"];
 		}
-		
+
 		include_once("./Services/Form/classes/class.ilPropertyFormGUI.php");
 		$form = new ilPropertyFormGUI();
 		$form->setFormAction($this->ctrl->getFormAction($this));
@@ -782,10 +782,10 @@ class ilObjSurveyGUI extends ilObjectGUI
 		$header = new ilFormSectionHeaderGUI();
 		$header->setTitle($this->lng->txt("settings"));
 		$form->addItem($header);
-		
-		
+
+
 		// title & description (meta data)
-		
+
 		include_once 'Services/MetaData/classes/class.ilMD.php';
 		$md_obj = new ilMD($this->object->getId(), 0, "svy");
 		$md_section = $md_obj->getGeneral();
@@ -806,9 +806,9 @@ class ilObjSurveyGUI extends ilObjectGUI
 			$desc->setValue($desc_obj->getDescription());
 			$form->addItem($desc);
 		}
-					
+
 		// pool usage
-		$pool_usage = new ilRadioGroupInputGUI($this->lng->txt("survey_question_pool_usage"), "use_pool");		
+		$pool_usage = new ilRadioGroupInputGUI($this->lng->txt("survey_question_pool_usage"), "use_pool");
 		$opt = new ilRadioOption($this->lng->txt("survey_question_pool_usage_active"), 1);
 		$opt->setInfo($this->lng->txt("survey_question_pool_usage_active_info"));
 		$pool_usage->addOption($opt);
@@ -817,10 +817,10 @@ class ilObjSurveyGUI extends ilObjectGUI
 		$pool_usage->addOption($opt);
 		$pool_usage->setValue($this->object->getPoolUsage());
 		$form->addItem($pool_usage);
-		
+
 		// 360°: appraisees
 		if($this->object->get360Mode())
-		{								
+		{
 			$self_eval = new ilCheckboxInputGUI($this->lng->txt("survey_360_self_evaluation"), "self_eval");
 			$self_eval->setInfo($this->lng->txt("survey_360_self_evaluation_info"));
 			$self_eval->setChecked($this->object->get360SelfEvaluation());
@@ -836,17 +836,17 @@ class ilObjSurveyGUI extends ilObjectGUI
 			$self_appr->setChecked($this->object->get360SelfAppraisee());
 			$form->addItem($self_appr);
 		}
-		
-		
+
+
 		// activation
-		
+
 		include_once "Services/Object/classes/class.ilObjectActivation.php";
 		$this->lng->loadLanguageModule('rep');
-		
+
 		$section = new ilFormSectionHeaderGUI();
 		$section->setTitle($this->lng->txt('rep_activation_availability'));
 		$form->addItem($section);
-		
+
 		// additional info only with multiple references
 		$act_obj_info = $act_ref_info = "";
 		if(sizeof(ilObject::_getAllReferences($this->object->getId())) > 1)
@@ -854,42 +854,42 @@ class ilObjSurveyGUI extends ilObjectGUI
 			$act_obj_info = ' '.$this->lng->txt('rep_activation_online_object_info');
 			$act_ref_info = $this->lng->txt('rep_activation_access_ref_info');
 		}
-		
-		$online = new ilCheckboxInputGUI($this->lng->txt('rep_activation_online'),'online');		
+
+		$online = new ilCheckboxInputGUI($this->lng->txt('rep_activation_online'),'online');
 		$online->setInfo($this->lng->txt('svy_activation_online_info').$act_obj_info);
 		$online->setChecked($this->object->isOnline());
-		$form->addItem($online);				
-		
+		$form->addItem($online);
+
 		$act_type = new ilCheckboxInputGUI($this->lng->txt('rep_visibility_until'),'access_type');
 		// $act_type->setInfo($this->lng->txt('svy_availability_until_info'));
-		$act_type->setChecked($this->object->isActivationLimited());		
-		
+		$act_type->setChecked($this->object->isActivationLimited());
+
 			$this->tpl->addJavaScript('./Services/Form/js/date_duration.js');
 			include_once "Services/Form/classes/class.ilDateDurationInputGUI.php";
 			$dur = new ilDateDurationInputGUI($this->lng->txt('rep_time_period'), "access_period");
-			$dur->setShowTime(true);						
-			$date = $this->object->getActivationStartDate();				
+			$dur->setShowTime(true);
+			$date = $this->object->getActivationStartDate();
 			$dur->setStart(new ilDateTime($date ? $date : time(), IL_CAL_UNIX));
-			$dur->setStartText($this->lng->txt('rep_activation_limited_start'));				
+			$dur->setStartText($this->lng->txt('rep_activation_limited_start'));
 			$date = $this->object->getActivationEndDate();
 			$dur->setEnd(new ilDateTime($date ? $date : time(), IL_CAL_UNIX));
-			$dur->setEndText($this->lng->txt('rep_activation_limited_end'));				
+			$dur->setEndText($this->lng->txt('rep_activation_limited_end'));
 			$act_type->addSubItem($dur);
 
 			$visible = new ilCheckboxInputGUI($this->lng->txt('rep_activation_limited_visibility'), 'access_visiblity');
 			$visible->setInfo($this->lng->txt('svy_activation_limited_visibility_info'));
 			$visible->setChecked($this->object->getActivationVisibility());
 			$act_type->addSubItem($visible);
-			
-		$form->addItem($act_type);									
-				
-						
+
+		$form->addItem($act_type);
+
+
 		// before start
-		
+
 		$section = new ilFormSectionHeaderGUI();
 		$section->setTitle($this->lng->txt('svy_settings_section_before_start'));
 		$form->addItem($section);
-		
+
 		// introduction
 		$intro = new ilTextAreaInputGUI($this->lng->txt("introduction"), "introduction");
 		$intro->setValue($this->object->prepareTextareaOutput($this->object->getIntroduction()));
@@ -905,13 +905,13 @@ class ilObjSurveyGUI extends ilObjectGUI
 		$intro->setRTESupport($this->object->getId(), "svy", "survey", null, $hide_rte_switch);
 		$form->addItem($intro);
 
-		
+
 		// access
-		
+
 		$section = new ilFormSectionHeaderGUI();
 		$section->setTitle($this->lng->txt('svy_settings_section_access'));
 		$form->addItem($section);
-		
+
 		// enable start date
 		$start = $this->object->getStartDate();
 		$enablestartingtime = new ilCheckboxInputGUI($this->lng->txt("start_date"), "enabled_start_date");
@@ -919,8 +919,8 @@ class ilObjSurveyGUI extends ilObjectGUI
 		// $enablestartingtime->setOptionTitle($this->lng->txt("enabled"));
 		$enablestartingtime->setChecked($start);
 		// start date
-		$startingtime = new ilDateTimeInputGUI('', 'start_date');		
-		$startingtime->setShowTime(true);				
+		$startingtime = new ilDateTimeInputGUI('', 'start_date');
+		$startingtime->setShowTime(true);
 		if ($start)
 		{
 			$startingtime->setDate(new ilDate($start, IL_CAL_TIMESTAMP));
@@ -928,66 +928,66 @@ class ilObjSurveyGUI extends ilObjectGUI
 		$enablestartingtime->addSubItem($startingtime);
 		$form->addItem($enablestartingtime);
 
-		// enable end date		
+		// enable end date
 		$end = $this->object->getEndDate();
 		$enableendingtime = new ilCheckboxInputGUI($this->lng->txt("end_date"), "enabled_end_date");
 		$enableendingtime->setValue(1);
 		// $enableendingtime->setOptionTitle($this->lng->txt("enabled"));
 		$enableendingtime->setChecked($end);
 		// end date
-		$endingtime = new ilDateTimeInputGUI('', 'end_date');		
-		$endingtime->setShowTime(true);		
+		$endingtime = new ilDateTimeInputGUI('', 'end_date');
+		$endingtime->setShowTime(true);
 		if ($end)
 		{
 			$endingtime->setDate(new ilDate($end, IL_CAL_TIMESTAMP));
 		}
 		$enableendingtime->addSubItem($endingtime);
 		$form->addItem($enableendingtime);
-							
+
 		// anonymization
 		if(!$this->object->get360Mode())
-		{			
+		{
 			$codes = new ilCheckboxInputGUI($this->lng->txt("survey_access_codes"), "acc_codes");
 			$codes->setInfo($this->lng->txt("survey_access_codes_info"));
 			$codes->setChecked(!$this->object->isAccessibleWithoutCode());
 			$form->addItem($codes);
-				
+
 			if ($this->object->_hasDatasets($this->object->getSurveyId()))
 			{
-				$codes->setDisabled(true);				
-			}			
+				$codes->setDisabled(true);
+			}
 		}
-		
-		
+
+
 		// question behaviour
-		
+
 		$section = new ilFormSectionHeaderGUI();
 		$section->setTitle($this->lng->txt('svy_settings_section_question_behaviour'));
 		$form->addItem($section);
-		
+
 		// show question titles
 		$show_question_titles = new ilCheckboxInputGUI($this->lng->txt("svy_show_questiontitles"), "show_question_titles");
 		$show_question_titles->setValue(1);
 		$show_question_titles->setChecked($this->object->getShowQuestionTitles());
 		$form->addItem($show_question_titles);
-		
-		
+
+
 		// finishing
-		
+
 		$info = new ilFormSectionHeaderGUI();
 		$info->setTitle($this->lng->txt("svy_settings_section_finishing"));
 		$form->addItem($info);
-							
+
 		$view_own = new ilCheckboxInputGUI($this->lng->txt("svy_results_view_own"), "view_own");
 		$view_own->setInfo($this->lng->txt("svy_results_view_own_info"));
 		$view_own->setChecked($this->object->hasViewOwnResults());
 		$form->addItem($view_own);
-		
+
 		$mail_own = new ilCheckboxInputGUI($this->lng->txt("svy_results_mail_own"), "mail_own");
 		$mail_own->setInfo($this->lng->txt("svy_results_mail_own_info"));
 		$mail_own->setChecked($this->object->hasMailOwnResults());
-		$form->addItem($mail_own);				
-		
+		$form->addItem($mail_own);
+
 		// final statement
 		$finalstatement = new ilTextAreaInputGUI($this->lng->txt("outro"), "outro");
 		$finalstatement->setValue($this->object->prepareTextareaOutput($this->object->getOutro()));
@@ -1000,7 +1000,7 @@ class ilObjSurveyGUI extends ilObjectGUI
 		$finalstatement->addButton("pastelatex");
 		$finalstatement->setRTESupport($this->object->getId(), "svy", "survey", null, $hide_rte_switch);
 		$form->addItem($finalstatement);
-		
+
 		// mail notification
 		$mailnotification = new ilCheckboxInputGUI($this->lng->txt("mailnotification"), "mailnotification");
 		// $mailnotification->setOptionTitle($this->lng->txt("activate"));
@@ -1022,11 +1022,11 @@ class ilObjSurveyGUI extends ilObjectGUI
 		$participantdata->setCols(80);
 		$participantdata->setUseRte(false);
 		$participantdata->setInfo($this->lng->txt("mailparticipantdata_info"));
-		
+
 		// #12755 - because of privacy concerns we restrict user data to a minimum
 		$placeholders = array(
 			"FIRST_NAME" => "firstname",
-			"LAST_NAME" => "lastname",			
+			"LAST_NAME" => "lastname",
 			"LOGIN" => "login"
 		);
 		$txt = array();
@@ -1034,7 +1034,7 @@ class ilObjSurveyGUI extends ilObjectGUI
 		{
 			$txt[] = "[".strtoupper($placeholder)."]: ".$this->lng->txt($caption);
 		}
-		$txt = implode("<br />", $txt);		
+		$txt = implode("<br />", $txt);
 		$participantdatainfo = new ilNonEditableValueGUI($this->lng->txt("mailparticipantdata_placeholder"), "", true);
 		$participantdatainfo->setValue($txt);
 
@@ -1042,10 +1042,10 @@ class ilObjSurveyGUI extends ilObjectGUI
 		$mailnotification->addSubItem($participantdata);
 		$mailnotification->addSubItem($participantdatainfo);
 		$form->addItem($mailnotification);
-	
-		// tutor notification - currently not available for 360° 
+
+		// tutor notification - currently not available for 360°
 		if(!$this->object->get360Mode())
-		{						
+		{
 			// parent course?
 			global $tree;
 			$has_parent = $tree->checkForParentType($this->object->getRefId(), "grp");
@@ -1054,7 +1054,7 @@ class ilObjSurveyGUI extends ilObjectGUI
 				$has_parent = $tree->checkForParentType($this->object->getRefId(), "crs");
 			}
 			$num_inv = sizeof($this->object->getInvitedUsers());
-			
+
 			// notification
 			$tut = new ilCheckboxInputGUI($this->lng->txt("survey_notification_tutor_setting"), "tut");
 			$tut->setChecked($this->object->getTutorNotificationStatus());
@@ -1072,13 +1072,13 @@ class ilObjSurveyGUI extends ilObjectGUI
 						$tut_logins[] = $tmp["login"];
 					}
 				}
-			}		
+			}
 			$tut_ids = new ilTextInputGUI($this->lng->txt("survey_notification_tutor_recipients"), "tut_ids");
 			$tut_ids->setDataSource($this->ctrl->getLinkTarget($this, "doAutoComplete", "", true));
 			$tut_ids->setRequired(true);
-			$tut_ids->setMulti(true);		
+			$tut_ids->setMulti(true);
 			$tut_ids->setMultiValues($tut_logins);
-			$tut_ids->setValue(array_shift($tut_logins));		
+			$tut_ids->setValue(array_shift($tut_logins));
 			$tut->addSubItem($tut_ids);
 
 			$tut_grp = new ilRadioGroupInputGUI($this->lng->txt("survey_notification_target_group"), "tut_grp");
@@ -1086,7 +1086,7 @@ class ilObjSurveyGUI extends ilObjectGUI
 			$tut_grp->setValue($this->object->getTutorNotificationTarget());
 			$tut->addSubItem($tut_grp);
 
-			$tut_grp_crs = new ilRadioOption($this->lng->txt("survey_notification_target_group_parent_course"), 
+			$tut_grp_crs = new ilRadioOption($this->lng->txt("survey_notification_target_group_parent_course"),
 				ilObjSurvey::NOTIFICATION_PARENT_COURSE);
 			if(!$has_parent)
 			{
@@ -1099,22 +1099,22 @@ class ilObjSurveyGUI extends ilObjectGUI
 			}
 			$tut_grp->addOption($tut_grp_crs);
 
-			$tut_grp_inv = new ilRadioOption($this->lng->txt("survey_notification_target_group_invited"), 
+			$tut_grp_inv = new ilRadioOption($this->lng->txt("survey_notification_target_group_invited"),
 				ilObjSurvey::NOTIFICATION_INVITED_USERS);
 			$tut_grp_inv->setInfo(sprintf($this->lng->txt("survey_notification_target_group_invited_info"), $num_inv));
 			$tut_grp->addOption($tut_grp_inv);
-		}		
-		
-		
+		}
+
+
 		// reminders
-		
-		// reminder - currently not available for 360° 
+
+		// reminder - currently not available for 360°
 		if(!$this->object->get360Mode())
-		{			
+		{
 			$info = new ilFormSectionHeaderGUI();
 			$info->setTitle($this->lng->txt("svy_settings_section_reminders"));
-			$form->addItem($info);		
-			
+			$form->addItem($info);
+
 			$rmd = new ilCheckboxInputGUI($this->lng->txt("survey_reminder_setting"), "rmd");
 			$rmd->setChecked($this->object->getReminderStatus());
 			$form->addItem($rmd);
@@ -1139,7 +1139,7 @@ class ilObjSurveyGUI extends ilObjectGUI
 
 			$rmd_freq = new ilNumberInputGUI($this->lng->txt("survey_reminder_frequency"), "rmd_freq");
 			$rmd_freq->setRequired(true);
-			$rmd_freq->setSize(3);		
+			$rmd_freq->setSize(3);
 			$rmd_freq->setSuffix($this->lng->txt("survey_reminder_frequency_days"));
 			$rmd_freq->setValue($this->object->getReminderFrequency());
 			$rmd_freq->setMinValue(1);
@@ -1150,8 +1150,8 @@ class ilObjSurveyGUI extends ilObjectGUI
 			$rmd_grp->setValue($this->object->getReminderTarget());
 			$rmd->addSubItem($rmd_grp);
 
-			$rmd_grp_crs = new ilRadioOption($this->lng->txt("survey_notification_target_group_parent_course"), 
-				ilObjSurvey::NOTIFICATION_PARENT_COURSE);		
+			$rmd_grp_crs = new ilRadioOption($this->lng->txt("survey_notification_target_group_parent_course"),
+				ilObjSurvey::NOTIFICATION_PARENT_COURSE);
 			if(!$has_parent)
 			{
 				$rmd_grp_crs->setInfo($this->lng->txt("survey_notification_target_group_parent_course_inactive"));
@@ -1163,82 +1163,82 @@ class ilObjSurveyGUI extends ilObjectGUI
 			}
 			$rmd_grp->addOption($rmd_grp_crs);
 
-			$rmd_grp_inv = new ilRadioOption($this->lng->txt("survey_notification_target_group_invited"), 
+			$rmd_grp_inv = new ilRadioOption($this->lng->txt("survey_notification_target_group_invited"),
 				ilObjSurvey::NOTIFICATION_INVITED_USERS);
 			$rmd_grp_inv->setInfo(sprintf($this->lng->txt("survey_notification_target_group_invited_info"), $num_inv));
 			$rmd_grp->addOption($rmd_grp_inv);
-		}		
-		
-		
+		}
+
+
 		// results
-		
+
 		$results = new ilFormSectionHeaderGUI();
 		$results->setTitle($this->lng->txt("results"));
 		$form->addItem($results);
 
 		// evaluation access
 		if(!$this->object->get360Mode())
-		{			
+		{
 			$evaluation_access = new ilRadioGroupInputGUI($this->lng->txt('evaluation_access'), "evaluation_access");
-			
+
 			$option = new ilCheckboxOption($this->lng->txt("evaluation_access_off"), ilObjSurvey::EVALUATION_ACCESS_OFF, '');
 			$option->setInfo($this->lng->txt("svy_evaluation_access_off_info"));
 			$evaluation_access->addOption($option);
-			
+
 			$option = new ilCheckboxOption($this->lng->txt("evaluation_access_all"), ilObjSurvey::EVALUATION_ACCESS_ALL, '');
 			$option->setInfo($this->lng->txt("svy_evaluation_access_all_info"));
 			$evaluation_access->addOption($option);
-			
+
 			$option = new ilCheckboxOption($this->lng->txt("evaluation_access_participants"), ilObjSurvey::EVALUATION_ACCESS_PARTICIPANTS, '');
 			$option->setInfo($this->lng->txt("svy_evaluation_access_participants_info"));
 			$evaluation_access->addOption($option);
-			
+
 			$evaluation_access->setValue($this->object->getEvaluationAccess());
 			$form->addItem($evaluation_access);
-			
-			
-			$anonymization_options = new ilRadioGroupInputGUI($this->lng->txt("survey_results_anonymization"), "anonymization_options");	
-			
+
+
+			$anonymization_options = new ilRadioGroupInputGUI($this->lng->txt("survey_results_anonymization"), "anonymization_options");
+
 			$option = new ilCheckboxOption($this->lng->txt("survey_results_personalized"), "statpers");
-			$option->setInfo($this->lng->txt("survey_results_personalized_info"));			
+			$option->setInfo($this->lng->txt("survey_results_personalized_info"));
 			$anonymization_options->addOption($option);
-			
+
 			$option = new ilCheckboxOption($this->lng->txt("survey_results_anonymized"), "statanon");
-			$option->setInfo($this->lng->txt("survey_results_anonymized_info"));			
-			$anonymization_options->addOption($option);					
+			$option->setInfo($this->lng->txt("survey_results_anonymized_info"));
+			$anonymization_options->addOption($option);
 			$anonymization_options->setValue($this->object->hasAnonymizedResults()
 				? "statanon"
-				: "statpers");				
+				: "statpers");
 			$form->addItem($anonymization_options);
-			
+
 			if ($this->object->_hasDatasets($this->object->getSurveyId()))
 			{
 				$anonymization_options->setDisabled(true);
-			}						
+			}
 		}
 		// 360°
 		else
-		{			
+		{
 			$ts_results = new ilRadioGroupInputGUI($this->lng->txt("survey_360_results"), "ts_res");
 			$ts_results->setValue($this->object->get360Results());
-			
+
 			$option = new ilRadioOption($this->lng->txt("survey_360_results_none"), ilObjSurvey::RESULTS_360_NONE);
 			$option->setInfo($this->lng->txt("survey_360_results_none_info"));
 			$ts_results->addOption($option);
-			
+
 			$option = new ilRadioOption($this->lng->txt("survey_360_results_own"), ilObjSurvey::RESULTS_360_OWN);
 			$option->setInfo($this->lng->txt("survey_360_results_own_info"));
 			$ts_results->addOption($option);
-			
+
 			$option = new ilRadioOption($this->lng->txt("survey_360_results_all"), ilObjSurvey::RESULTS_360_ALL);
 			$option->setInfo($this->lng->txt("survey_360_results_all_info"));
 			$ts_results->addOption($option);
-			$form->addItem($ts_results);		
+			$form->addItem($ts_results);
 		}
 
-			
+
 		// competence service activation for 360 mode
-		
+
 		include_once("./Services/Skill/classes/class.ilSkillManagementSettings.php");
 		$skmg_set = new ilSkillManagementSettings();
 		if($this->object->get360Mode() && $skmg_set->isActivated())
@@ -1246,14 +1246,14 @@ class ilObjSurveyGUI extends ilObjectGUI
 			$other = new ilFormSectionHeaderGUI();
 			$other->setTitle($this->lng->txt("other"));
 			$form->addItem($other);
-			
+
 			$skill_service = new ilCheckboxInputGUI($this->lng->txt("survey_activate_skill_service"), "skill_service");
 			$skill_service->setInfo($this->lng->txt("survey_activate_skill_service_info"));
 			$skill_service->setChecked($this->object->get360SkillService());
 			$form->addItem($skill_service);
 		}
-				
-		
+
+
 		$form->addCommandButton("saveProperties", $this->lng->txt("save"));
 
 		// remove items when using template
@@ -1267,10 +1267,10 @@ class ilObjSurveyGUI extends ilObjectGUI
 				}
 			}
 		}
-		
+
 		return $form;
 	}
-	
+
 	/**
 	* Display and fill the properties form of the test
 	*
@@ -1279,9 +1279,9 @@ class ilObjSurveyGUI extends ilObjectGUI
 	function propertiesObject(ilPropertyFormGUI $a_form = null)
 	{
 		global $ilTabs, $ilHelp;
-		
+
 		$this->handleWriteAccess();
-		
+
 		$ilTabs->activateTab("settings");
 
 
@@ -1289,31 +1289,31 @@ class ilObjSurveyGUI extends ilObjectGUI
 		{
 			$ilHelp->setScreenId("settings_360");
 		}
-		
+
 		if(!$a_form)
 		{
 			$a_form = $this->initPropertiesForm();
 		}
-		
+
 		// using template?
 		$message = "";
 		if($this->object->getTemplate())
-		{						
+		{
 			$link = $this->ctrl->getLinkTarget($this, "confirmResetTemplate");
 			$link = "<a href=\"".$link."\">".$this->lng->txt("survey_using_template_link")."</a>";
 			$message = "<div style=\"margin-top:10px\">".
-				$this->tpl->getMessageHTML(sprintf($this->lng->txt("survey_using_template"), 
+				$this->tpl->getMessageHTML(sprintf($this->lng->txt("survey_using_template"),
 					ilSettingsTemplate::lookupTitle($this->object->getTemplate()), $link), "info"). // #10651
 				"</div>";
 		}
-	
+
 		$this->tpl->setContent($a_form->getHTML().$message);
 	}
-			
+
 	function doAutoCompleteObject()
 	{
 		$fields = array('login','firstname','lastname','email');
-				
+
 		include_once './Services/User/classes/class.ilUserAutoComplete.php';
 		$auto = new ilUserAutoComplete();
 		$auto->setSearchFields($fields);
@@ -1328,8 +1328,8 @@ class ilObjSurveyGUI extends ilObjectGUI
 
 		echo $auto->getList(ilUtil::stripSlashes($_REQUEST['term']));
 		exit();
-	}			
-	
+	}
+
 	/**
 	 * Enable all settings - Confirmation
 	 */
@@ -1356,12 +1356,12 @@ class ilObjSurveyGUI extends ilObjectGUI
 		$this->ctrl->redirect($this, "properties");
 	}
 
-	
-	
+
+
 	//
 	// IMPORT/EXPORT
-	// 
-	
+	//
+
 	protected function initImportForm($a_new_type)
 	{
 		include_once("Services/Form/classes/class.ilPropertyFormGUI.php");
@@ -1390,7 +1390,7 @@ class ilObjSurveyGUI extends ilObjectGUI
 
 		return $form;
 	}
-	
+
 	/**
 	* form for new survey object import
 	*/
@@ -1469,16 +1469,16 @@ class ilObjSurveyGUI extends ilObjectGUI
 				$this->tpl->parseCurrentBlock();
 			}
 		}
-		
+
 		// display form to correct errors
 		$form->setValuesByPost();
 		$tpl->setContent($form->getHtml());
 	}
-	
-	
-	// 
+
+
+	//
 	// INFOSCREEN
-	// 
+	//
 
 	/**
 	* this one is called from the info button in the repository
@@ -1491,33 +1491,33 @@ class ilObjSurveyGUI extends ilObjectGUI
 		$this->ctrl->setCmdClass("ilinfoscreengui");
 		$this->infoScreen();
 	}
-	
+
 	/**
 	* show information screen
 	*/
 	function infoScreen()
 	{
 		global $ilAccess, $ilTabs, $ilUser, $ilToolbar;
-		
+
 		if (!$this->external_rater_360 &&
 			!$ilAccess->checkAccess("visible", "", $this->ref_id) &&
 			!$ilAccess->checkAccess("read", "", $this->ref_id))
 		{
 			$this->ilias->raiseError($this->lng->txt("msg_no_perm_read"),$this->ilias->error_obj->MESSAGE);
 		}
-		
+
 		$ilTabs->activateTab("info_short");
-		
+
 		include_once "./Modules/Survey/classes/class.ilSurveyExecutionGUI.php";
-		$output_gui =& new ilSurveyExecutionGUI($this->object);		
-		
+		$output_gui =& new ilSurveyExecutionGUI($this->object);
+
 		include_once("./Services/InfoScreen/classes/class.ilInfoScreenGUI.php");
 		$info = new ilInfoScreenGUI($this);
 		$info->enablePrivateNotes();
-				
+
 		// "active" survey?
 		$canStart = $this->object->canStartSurvey(null, $this->external_rater_360);
-		
+
 		$showButtons = $canStart["result"];
 		if (!$showButtons)
 		{
@@ -1528,21 +1528,21 @@ class ilObjSurveyGUI extends ilObjectGUI
 					$this->lng->txt("survey_edit_settings")."</a>";
 			}
 			ilUtil::sendInfo(implode("<br />", $canStart["messages"]));
-		}				
-				
+		}
+
 		$big_button = false;
 		if ($showButtons)
-		{				
+		{
 			// closing survey?
-			$is_appraisee = false; 
-			if($this->object->get360Mode() && 
+			$is_appraisee = false;
+			if($this->object->get360Mode() &&
 				$this->object->isAppraisee($ilUser->getId()))
 			{
 				$info->addSection($this->lng->txt("survey_360_appraisee_info"));
 
 				$appr_data = $this->object->getAppraiseesData();
 				$appr_data = $appr_data[$ilUser->getId()];
-				$info->addProperty($this->lng->txt("survey_360_raters_status_info"), $appr_data["finished"]);		
+				$info->addProperty($this->lng->txt("survey_360_raters_status_info"), $appr_data["finished"]);
 
 				if(!$appr_data["closed"])
 				{
@@ -1556,29 +1556,28 @@ class ilObjSurveyGUI extends ilObjectGUI
 					if($this->object->get360SkillService())
 					{
 						$txt .= "_skill";
-					}								
-					$info->addProperty($this->lng->txt("status"), 
-						$close_button_360.$this->lng->txt($txt));									
+					}
+					$info->addProperty($this->lng->txt("status"),
+						$close_button_360.$this->lng->txt($txt));
 				}
-				else								
-				{									
+				else
+				{
 					ilDatePresentation::setUseRelativeDates(false);
 
-					$dt = new ilDateTime($appr_data["closed"], IL_CAL_UNIX);								
-					$info->addProperty($this->lng->txt("status"), 
+					$dt = new ilDateTime($appr_data["closed"], IL_CAL_UNIX);
+					$info->addProperty($this->lng->txt("status"),
 						sprintf($this->lng->txt("survey_360_appraisee_close_action_status"),
-							ilDatePresentation::formatDate($dt)));										
+							ilDatePresentation::formatDate($dt)));
 				}
-				
+
 				$is_appraisee = true;
 			}
-			
-			
+
 			// handle code
-			
+
 			// validate incoming
 			$code_input = false;
-			$anonymous_code = $_POST["anonymous_id"];	
+			$anonymous_code = $_POST["anonymous_id"];
 			if ($anonymous_code)
 			{
 				$code_input = true;
@@ -1586,7 +1585,7 @@ class ilObjSurveyGUI extends ilObjectGUI
 				if(!$this->object->checkSurveyCode($anonymous_code)) // #15031 - valid as long survey is not finished
 				{
 					$anonymous_code = null;
-				}		
+				}
 				else
 				{
 					// #15860
@@ -1595,76 +1594,76 @@ class ilObjSurveyGUI extends ilObjectGUI
 			}
 			if ($anonymous_code)
 			{
-				$_SESSION["anonymous_id"][$this->object->getId()] = $anonymous_code;			
-			}	
-			else 
+				$_SESSION["anonymous_id"][$this->object->getId()] = $anonymous_code;
+			}
+			else
 			{
-				$anonymous_code = $_SESSION["anonymous_id"][$this->object->getId()];											
+				//$anonymous_code = $_SESSION["anonymous_id"][$this->object->getId()];
 				if($anonymous_code)
 				{
 					$code_input = true;
 				}
-			}		
-										
+			}
+
 			// try to find code for current (registered) user from existing run
 			if($this->object->getAnonymize() && !$anonymous_code)
 			{
-				$anonymous_code = $this->object->findCodeForUser($ilUser->getId());						
+				$anonymous_code = $this->object->findCodeForUser($ilUser->getId());
 			}
-			
+
 			// get existing runs for current user, might generate code
 			$participant_status = $this->object->getUserSurveyExecutionStatus($anonymous_code);
 			if($participant_status)
-			{				
-				$anonymous_code = $participant_status["code"];				
+			{
+				$anonymous_code = $participant_status["code"];
 				$participant_status = $participant_status["runs"];
 			}
-			
+
 			// (final) check for proper anonymous code
-			if(!$this->object->isAccessibleWithoutCode() && 
+			if(!$this->object->isAccessibleWithoutCode() &&
 				!$is_appraisee &&
 				$code_input && // #11346
 				(!$anonymous_code || !$this->object->isAnonymousKey($anonymous_code)))
-			{				
+			{
 				 $anonymous_code = null;
 				 ilUtil::sendInfo($this->lng->txt("wrong_survey_code_used"));
-			}						
-			
-			// :TODO: really save in session?			
+			}
+
+			// :TODO: really save in session?
 			$_SESSION["anonymous_id"][$this->object->getId()] = $anonymous_code;
-			
+
 			// code is mandatory and not given yet
 			if(!$is_appraisee &&
-				!$anonymous_code && 
+				!$anonymous_code &&
 				!$this->object->isAccessibleWithoutCode())
-			{				
+			{
 				$info->setFormAction($this->ctrl->getFormAction($this, "infoScreen"));
 				$info->addSection($this->lng->txt("anonymization"));
 				$info->addProperty("", $this->lng->txt("anonymize_anonymous_introduction"));
 				$info->addPropertyTextinput($this->lng->txt("enter_anonymous_id"), "anonymous_id", "", 8, "infoScreen", $this->lng->txt("submit"), true);
-			}						
+			}
 			else
-			{										
+			{
 				// trunk/default
 				if(!$this->object->get360Mode())
-				{			
+				{
 					if($anonymous_code)
 					{
 						$info->addHiddenElement("anonymous_id", $anonymous_code);
-					}				
-					
-					$survey_started = $this->object->isSurveyStarted($ilUser->getId(), $anonymous_code);				
+					}
+
+					$survey_started = $this->object->isSurveyStarted($ilUser->getId(), $anonymous_code);
 					if ($survey_started === 1)
-					{							
+					{
 						if($ilUser->getId() != ANONYMOUS_USER_ID)
 						{
 							if($this->object->hasViewOwnResults())
 							{
 								include_once "Services/UIComponent/Button/classes/class.ilLinkButton.php";
 								$button = ilLinkButton::getInstance();
-								$button->setCaption("svy_view_own_results");								
-								$button->setUrl($this->ctrl->getLinkTarget($this, "viewUserResults"));										
-								$ilToolbar->addButtonInstance($button);		
+								$button->setCaption("svy_view_own_results");
+								$button->setUrl($this->ctrl->getLinkTarget($this, "viewUserResults"));
+								$ilToolbar->addButtonInstance($button);
 							}
 
 							if($this->object->hasMailOwnResults())
@@ -1674,22 +1673,22 @@ class ilObjSurveyGUI extends ilObjectGUI
 									$ilToolbar->addSeparator();
 								}
 
-								require_once "Services/Form/classes/class.ilTextInputGUI.php";								
+								require_once "Services/Form/classes/class.ilTextInputGUI.php";
 								$mail = new ilTextInputGUI($this->lng->txt("email"), "mail");
-								$mail->setSize(25);		
-								$mail->setValue($ilUser->getEmail());															
-								$ilToolbar->addInputItem($mail, true);							
+								$mail->setSize(25);
+								$mail->setValue($ilUser->getEmail());
+								$ilToolbar->addInputItem($mail, true);
 
 								$ilToolbar->setFormAction($this->ctrl->getFormAction($this, "mailUserResults"));
-								
+
 								include_once "Services/UIComponent/Button/classes/class.ilSubmitButton.php";
 								$button = ilSubmitButton::getInstance();
 								$button->setCaption("svy_mail_own_results");
 								$button->setCommand("mailUserResults");
-								$ilToolbar->addButtonInstance($button);																				
-							}						
+								$ilToolbar->addButtonInstance($button);
+							}
 						}
-						
+
 						ilUtil::sendInfo($this->lng->txt("already_completed_survey"));
 					}
 					elseif ($survey_started === 0)
@@ -1699,32 +1698,32 @@ class ilObjSurveyGUI extends ilObjectGUI
 					elseif ($survey_started === FALSE)
 					{
 						$big_button = array("start", $this->lng->txt("start_survey"));
-					}																
+					}
 				}
 				// 360°
 				else
 				{
 					$appr_ids = array();
-					
+
 					// use given code (if proper external one)
 					if($anonymous_code)
 					{
-						$anonymous_id = $this->object->getAnonymousIdByCode($anonymous_code);		
+						$anonymous_id = $this->object->getAnonymousIdByCode($anonymous_code);
 						if($anonymous_id)
 						{
 							$appr_ids = $this->object->getAppraiseesToRate(0, $anonymous_id);
 						}
 					}
-					
+
 					// registered user
 					// if an auto-code was generated, we still have to check for the original user id
 					if(!$appr_ids && $ilUser->getId() != ANONYMOUS_USER_ID)
 					{
-						$appr_ids = $this->object->getAppraiseesToRate($ilUser->getId());						
-					}					
-					
+						$appr_ids = $this->object->getAppraiseesToRate($ilUser->getId());
+					}
+
 					if(sizeof($appr_ids))
-					{																			
+					{
 						// map existing runs to appraisees
 						$active_appraisees = array();
 						if($participant_status)
@@ -1733,12 +1732,12 @@ class ilObjSurveyGUI extends ilObjectGUI
 							{
 								$active_appraisees[$item["appr_id"]] = $item["finished"];
 							}
-						}					
-						
+						}
+
 						$list = array();
-						
+
 						foreach($appr_ids as $appr_id)
-						{				
+						{
 							if($this->object->isAppraiseeClosed($appr_id))
 							{
 								// closed
@@ -1746,9 +1745,9 @@ class ilObjSurveyGUI extends ilObjectGUI
 							}
 							else if(array_key_exists($appr_id, $active_appraisees))
 							{
-								// already done							
+								// already done
 								if($active_appraisees[$appr_id])
-								{								
+								{
 									$list[$appr_id] = $this->lng->txt("already_completed_survey");
 								}
 								// resume
@@ -1763,63 +1762,63 @@ class ilObjSurveyGUI extends ilObjectGUI
 								$list[$appr_id] = array("start", $this->lng->txt("start_survey"));
 							}
 						}
-						
+
 						$info->addSection($this->lng->txt("survey_360_rate_other_appraisees"));
-						
+
 						include_once "Services/User/classes/class.ilUserUtil.php";
 						foreach($list as $appr_id => $item)
-						{					
+						{
 							$appr_name = ilUserUtil::getNamePresentation($appr_id, false, false, "", true);
-							
+
 							if(!is_array($item))
-							{							
-								$info->addProperty($appr_name, $item);							
+							{
+								$info->addProperty($appr_name, $item);
 							}
 							else
 							{
 								$this->ctrl->setParameter($output_gui, "appr_id", $appr_id);
 								$href = $this->ctrl->getLinkTarget($output_gui, $item[0]);
 								$this->ctrl->setParameter($output_gui, "appr_id", "");
-								
+
 								include_once "Services/UIComponent/Button/classes/class.ilLinkButton.php";
 								$button = ilLinkButton::getInstance();
 								$button->setCaption($item[1], false);
-								$button->setUrl($href);								
+								$button->setUrl($href);
 								$big_button_360 = '<div>'.$button->render().'</div>';
 
-								$info->addProperty($appr_name, $big_button_360);							
-							}						
-						}																
-					}					
+								$info->addProperty($appr_name, $big_button_360);
+							}
+						}
+					}
 					else if(!$is_appraisee)
 					{
 						ilUtil::sendFailure($this->lng->txt("survey_360_no_appraisees"));
-					}																										
-				}			
+					}
+				}
 			}
-			
+
 			if($this->object->get360Mode() &&
-				$this->object->get360SelfAppraisee() && 
+				$this->object->get360SelfAppraisee() &&
 				!$this->object->isAppraisee($ilUser->getId()) &&
 				$ilUser->getId() != ANONYMOUS_USER_ID) // #14968
 			{
 				$link = $this->ctrl->getLinkTargetByClass("ilsurveyparticipantsgui", "addSelfAppraisee");
-				$link = '<a href="'.$link.'">'.$this->lng->txt("survey_360_add_self_appraisee").'</a>';						
-				$info->addProperty("&nbsp;", $link);								
-			}				
+				$link = '<a href="'.$link.'">'.$this->lng->txt("survey_360_add_self_appraisee").'</a>';
+				$info->addProperty("&nbsp;", $link);
+			}
 		}
-		
+
 		if($big_button)
-		{			
+		{
 			$ilToolbar->setFormAction($this->ctrl->getFormAction($output_gui, "infoScreen"));
-			
+
 			include_once "Services/UIComponent/Button/classes/class.ilSubmitButton.php";
 			$button = ilSubmitButton::getInstance();
 			$button->setCaption($big_button[1], false);
 			$button->setCommand($big_button[0]);
 			$button->setPrimary(true);
-			$ilToolbar->addButtonInstance($button);		
-			
+			$ilToolbar->addButtonInstance($button);
+
 			$ilToolbar->setCloseFormTag(false);
 			$info->setOpenFormTag(false);
 		}
@@ -1829,7 +1828,7 @@ class ilObjSurveyGUI extends ilObjectGUI
 			$info->setFormAction($this->ctrl->getFormAction($output_gui, "infoScreen"));
 		}
 		*/
-		
+
 		if (strlen($this->object->getIntroduction()))
 		{
 			$introduction = $this->object->getIntroduction();
@@ -1844,29 +1843,29 @@ class ilObjSurveyGUI extends ilObjectGUI
 		}
 
 		$info->hideFurtherSections(false);
-						
+
 		if(!$this->object->get360Mode())
 		{
 			$info->addSection($this->lng->txt("svy_general_properties"));
-			
-			$info->addProperty($this->lng->txt("survey_results_anonymization"), 
+
+			$info->addProperty($this->lng->txt("survey_results_anonymization"),
 				!$this->object->hasAnonymizedResults()
 					? $this->lng->txt("survey_results_personalized_info")
 					: $this->lng->txt("survey_results_anonymized_info"));
-					
+
 			include_once "./Modules/Survey/classes/class.ilObjSurveyAccess.php";
-			if ($ilAccess->checkAccess("write", "", $this->ref_id) || 
+			if ($ilAccess->checkAccess("write", "", $this->ref_id) ||
 				ilObjSurveyAccess::_hasEvaluationAccess($this->object->getId(), $ilUser->getId()))
 			{
 				$info->addProperty($this->lng->txt("evaluation_access"), $this->lng->txt("evaluation_access_info"));
 			}
 		}
-		
+
 		$info->addMetaDataSections($this->object->getId(),0, $this->object->getType());
-		
+
 		$this->ctrl->forwardCommand($info);
 	}
-						
+
 	function addLocatorItems()
 	{
 		global $ilLocator;
@@ -1896,7 +1895,7 @@ class ilObjSurveyGUI extends ilObjectGUI
 				break;
 		default:
 				$ilLocator->addItem($this->object->getTitle(), $this->ctrl->getLinkTarget($this, "infoScreen"), "", $_GET["ref_id"]);
-						
+
 				// this has to be done here because ilSurveyEditorGUI is called after finalizing the locator
 				if ((int)$_GET["q_id"] && !(int)$_REQUEST["new_for_survey"])
 				{
@@ -1904,17 +1903,17 @@ class ilObjSurveyGUI extends ilObjectGUI
 					// see ilObjSurveyQuestionPool::addLocatorItems
 					$q_id = (int)$_GET["q_id"];
 					include_once "./Modules/SurveyQuestionPool/classes/class.SurveyQuestion.php";
-					$q_type = SurveyQuestion::_getQuestionType($q_id)."GUI";					
+					$q_type = SurveyQuestion::_getQuestionType($q_id)."GUI";
 					$this->ctrl->setParameterByClass($q_type, "q_id", $q_id);
-					$ilLocator->addItem(SurveyQuestion::_getTitle($q_id), 
-						$this->ctrl->getLinkTargetByClass(array("ilSurveyEditorGUI", $q_type), "editQuestion"));																			
-				}			
+					$ilLocator->addItem(SurveyQuestion::_getTitle($q_id),
+						$this->ctrl->getLinkTargetByClass(array("ilSurveyEditorGUI", $q_type), "editQuestion"));
+				}
 				break;
 		}
 	}
-	
-   
-   
+
+
+
 	/**
 	* redirect script
 	*
@@ -1923,7 +1922,7 @@ class ilObjSurveyGUI extends ilObjectGUI
 	public static function _goto($a_target, $a_access_code = "")
 	{
 		global $ilAccess, $ilErr, $lng;
-		
+
 		// see ilObjSurveyAccess::_checkGoto()
 		include_once "./Services/Utilities/classes/class.ilUtil.php";
 		if (strlen($a_access_code))
@@ -1935,15 +1934,15 @@ class ilObjSurveyGUI extends ilObjectGUI
 			include("ilias.php");
 			exit;
 		}
-		
+
 		if ($ilAccess->checkAccess("visible", "", $a_target) ||
 			$ilAccess->checkAccess("read", "", $a_target))
-		{			
+		{
 			$_GET["baseClass"] = "ilObjSurveyGUI";
 			$_GET["cmd"] = "infoScreen";
 			$_GET["ref_id"] = $a_target;
 			include("ilias.php");
-			exit;		
+			exit;
 		}
 		else if ($ilAccess->checkAccess("read", "", ROOT_FOLDER_ID))
 		{
@@ -1954,13 +1953,13 @@ class ilObjSurveyGUI extends ilObjectGUI
 
 		$ilErr->raiseError($lng->txt("msg_no_perm_read_lm"), $ilErr->FATAL);
 	}
-	
+
 	public function getUserResultsTable($a_active_id)
 	{
 		$rtpl = new ilTemplate("tpl.svy_view_user_results.html", true, true, "Modules/Survey");
-		
+
 		$show_titles = (bool)$this->object->getShowQuestionTitles();
-		
+
 		foreach($this->object->getSurveyPages() as $page)
 		{
 			if(count($page) > 0)
@@ -1973,134 +1972,134 @@ class ilObjSurveyGUI extends ilObjectGUI
 						$rtpl->setVariable("BLOCK_TITLE", trim($page[0]["questionblock_title"]));
 					}
 				}
-				
+
 				// questions
 				foreach($page as $question)
-				{				
+				{
 					$question_gui = $this->object->getQuestionGUI($question["type_tag"], $question["question_id"]);
 					if(is_object($question_gui))
 					{
 						$rtpl->setCurrentBlock("question_bl");
-						
+
 						// heading
 						if(strlen($question["heading"]))
 						{
 							$rtpl->setVariable("HEADING", trim($question["heading"]));
 						}
-						
-						$rtpl->setVariable("QUESTION_DATA", 
+
+						$rtpl->setVariable("QUESTION_DATA",
 							$question_gui->getPrintView(
-								$show_titles, 
-								(bool)$question["questionblock_show_questiontext"], 
+								$show_titles,
+								(bool)$question["questionblock_show_questiontext"],
 								$this->object->getId(),
 								$this->object->loadWorkingData($question["question_id"], $a_active_id)
 							)
 						);
-						
-						$rtpl->parseCurrentBlock();						
+
+						$rtpl->parseCurrentBlock();
 					}
 				}
-				
+
 				$rtpl->setCurrentBlock("block_bl");
 				$rtpl->parseCurrentBlock();
-			}			
+			}
 		}
-		
-		return $rtpl->get();		
+
+		return $rtpl->get();
 	}
-	
+
 	protected function viewUserResultsObject()
 	{
 		global $ilUser, $tpl, $ilTabs;
-		
+
 		$anonymous_code = $_SESSION["anonymous_id"][$this->object->getId()];
 		$active_id = $this->object->getActiveID($ilUser->getId(), $anonymous_code, 0);
 		if($this->object->isSurveyStarted($ilUser->getId(), $anonymous_code) !== 1 ||
 			!$active_id)
 		{
 			$this->ctrl->redirect($this, "infoScreen");
-		}			
-		
+		}
+
 		$ilTabs->clearTargets();
-		$ilTabs->setBackTarget($this->lng->txt("btn_back"), 
+		$ilTabs->setBackTarget($this->lng->txt("btn_back"),
 			$this->ctrl->getLinkTarget($this, "infoScreen"));
-		
+
 		$html = $this->getUserResultsTable($active_id);
-		$tpl->setContent($html);									
+		$tpl->setContent($html);
 	}
-	
+
 	protected function getUserResultsPlain($a_active_id)
-	{		
+	{
 		$res = array();
-		
+
 		$show_titles = (bool)$this->object->getShowQuestionTitles();
-		
+
 		foreach($this->object->getSurveyPages() as $page)
 		{
 			if(count($page) > 0)
 			{
 				$res[] = "\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n";
-				
+
 				// question block
 				if(count($page) > 1)
 				{
 					if((bool)$page[0]["questionblock_show_blocktitle"])
-					{						
+					{
 						$res[$this->lng->txt("questionblock")] = trim($page[0]["questionblock_title"])."\n";
 					}
 				}
-				
+
 				// questions
-				
+
 				$page_res = array();
-				
+
 				foreach($page as $question)
-				{						
+				{
 					$question_gui = $this->object->getQuestionGUI($question["type_tag"], $question["question_id"]);
 					if(is_object($question_gui))
-					{						
-						$question_parts = array();										
-						
+					{
+						$question_parts = array();
+
 						// heading
 						if(strlen($question["heading"]))
 						{
 							$question_parts[$this->lng->txt("heading")] = trim($question["heading"]);
 						}
-						
+
 						if($show_titles)
 						{
 							$question_parts[$this->lng->txt("title")] = trim($question["title"]);
 						}
-						
+
 						if((bool)$question["questionblock_show_questiontext"])
 						{
 							$question_parts[$this->lng->txt("question")] = trim(strip_tags($question_gui->object->getQuestionText()));
 						}
-						
+
 						$answers = $question_gui->getParsedAnswers(
 							$this->object->loadWorkingData($question["question_id"], $a_active_id),
 							true
 						);
-						
+
 						if(sizeof($answers))
-						{				
+						{
 							$multiline = false;
-							if(sizeof($answers) > 1 || 
+							if(sizeof($answers) > 1 ||
 								get_class($question_gui) == "SurveyTextQuestionGUI")
 							{
 								$multiline = true;
 							}
-							
+
 							$parts = array();
 							foreach($answers as $answer)
-							{	
+							{
 								$text = null;
 								if($answer["textanswer"])
 								{
 									$text = ' ("'.$answer["textanswer"].'")';
-								}								
+								}
 								if(!isset($answer["cols"]))
-								{									
+								{
 									if(isset($answer["title"]))
 									{
 										$parts[] = $answer["title"].$text;
@@ -2112,64 +2111,64 @@ class ilObjSurveyGUI extends ilObjectGUI
 									else if($text)
 									{
 										$parts[] = substr($text, 2, -1);
-									}											
+									}
 								}
 								// matrix
 								else
-								{									
+								{
 									$tmp = array();
 									foreach($answer["cols"] as $col)
 									{
 										$tmp[] = $col["title"];
-									}								
+									}
 									$parts[] = $answer["title"].": ".implode(", ", $tmp).$text;
 								}
-														
-							}							
-							$question_parts[$this->lng->txt("answer")] = 
+
+							}
+							$question_parts[$this->lng->txt("answer")] =
 								($multiline ? "\n" : "").implode("\n", $parts);
 						}
-						
+
 						$tmp = array();
 						foreach($question_parts as $type => $value)
 						{
 							$tmp[] = $type.": ".$value;
 						}
 						$page_res[] = implode("\n", $tmp);
-					}													
-				}				
-				
+					}
+				}
+
 				$res[] = implode("\n\n-------------------------------\n\n", $page_res);
-			}			
+			}
 		}
-		
+
 		$res[] = "\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n";
-		
+
 		return implode("\n", $res);
 	}
-	
+
 	public function sendUserResultsMail($a_active_id, $a_recipient)
-	{		
+	{
 		global $ilUser;
-		
+
 		$finished = $this->object->getSurveyParticipants(array($a_active_id));
 		$finished = array_pop($finished);
 		$finished = ilDatePresentation::formatDate(new ilDateTime($finished["finished_tstamp"], IL_CAL_UNIX));
-				
-		require_once "Services/Mail/classes/class.ilMail.php";	
+
+		require_once "Services/Mail/classes/class.ilMail.php";
 		require_once "Services/Link/classes/class.ilLink.php";
-				
-		$body = ilMail::getSalutation($ilUser->getId())."\n\n";		
-		$body .= $this->lng->txt("svy_mail_own_results_body")."\n";		
-		$body .= "\n".$this->lng->txt("obj_svy").": ".$this->object->getTitle()."\n";					
+
+		$body = ilMail::getSalutation($ilUser->getId())."\n\n";
+		$body .= $this->lng->txt("svy_mail_own_results_body")."\n";
+		$body .= "\n".$this->lng->txt("obj_svy").": ".$this->object->getTitle()."\n";
 		$body .= ilLink::_getLink($this->object->getRefId(), "svy")."\n";
 		$body .= "\n".$this->lng->txt("survey_results_finished").": ".$finished."\n\n";
-		
+
 		$body .= $this->getUserResultsPlain($a_active_id);
-		
+
 		// $body .= ilMail::_getAutoGeneratedMessageString($this->lng);
 		$body .= ilMail::_getInstallationSignature();
-				
+
 		require_once "Services/Mail/classes/class.ilMail.php";
 		$mail = new ilMail(ANONYMOUS_USER_ID);
 		$mail->sendMimeMail(
@@ -2182,30 +2181,30 @@ class ilObjSurveyGUI extends ilObjectGUI
 			true
 		);
 	}
-		
+
 	function mailUserResultsObject()
 	{
 		global $ilUser;
-		
+
 		$anonymous_code = $_SESSION["anonymous_id"][$this->object->getId()];
 		$active_id = $this->object->getActiveID($ilUser->getId(), $anonymous_code, 0);
 		if($this->object->isSurveyStarted($ilUser->getId(), $anonymous_code) !== 1 ||
 			!$active_id)
 		{
 			$this->ctrl->redirect($this, "infoScreen");
-		}			
-		
-		$recipient = $_POST["mail"];	
+		}
+
+		$recipient = $_POST["mail"];
 		if(!ilUtil::is_email($recipient))
 		{
 			$this->ctrl->redirect($this, "infoScreen");
 		}
-		
+
 		$this->sendUserResultsMail($active_id, $recipient);
-		
+
 		ilUtil::sendSuccess($this->lng->txt("mail_sent"), true);
 		$this->ctrl->redirect($this, "infoScreen");
 	}
-} 
+}
 
 ?>
