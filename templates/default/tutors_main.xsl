@@ -245,20 +245,23 @@
         </xsl:if>
     </xsl:template>
 
+    <!-- hide advertising buttons in bottom bar -->
+    <xsl:template match="div[@id='ilLMPageContent']//div[@class='btn-group']" />
+    <xsl:template match="div[@div='ilFooterContainer']//div[@class='btn-group']" />
+
     <!-- optes / block view
     <xsl:template match="div[@class='ilContainerListItemIcon ']" />
+    <xsl:template match="div[@class='row ilContainerBlockHeader']" />
 
     <xsl:template match="div[@class='ilContainerBlock container-fluid form-inline']" >
         <xsl:apply-templates select="div[@class='row ilContainerBlockHeader']" />
         <xsl:for-each select="div[@class='ilCLI ilObjListRow row']">
                 <a >
                     <xsl:attribute name="href"><xsl:value-of select=".//a/@href" /></xsl:attribute>
-                    <div class="ilc_text_block_Standard" style="min-height: 10px; min-width:100px; width: 50%; max-width:100%; background-color: #0C0; display:block; margin-top: 10px; padding: 10px">
-
+                    <div class="ilc_text_block_Standard" style="text-decoration:none; box-shadow: 10px 6px 5px #B0BAC9; min-height: 10px; min-width:100px; width: 100%; max-width:100%; background-color: #0C0; display:block; margin-top: 30px; padding: 10px">
                         <xsl:value-of select=".//h4" /><br/>
                         <xsl:copy-of select=".//div[@class='ilListItemSection il_ItemProperties']"/>
                     </div>
-
                 </a>
         </xsl:for-each>
     </xsl:template>

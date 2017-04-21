@@ -230,4 +230,9 @@
         </xsl:if>
     </xsl:template>
 
+    <!-- hide advertisting buttons in bottom bar -->
+    <xsl:template match="div[@id='ilLMPageContent']//div[@class='btn-group']" />
+    <xsl:template match="div[@div='ilFooterContainer']//div[@class='btn-group']" />
+
+
 </xsl:stylesheet>
