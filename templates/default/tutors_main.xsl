@@ -249,6 +249,9 @@
     <xsl:template match="div[@id='ilLMPageContent']//div[@class='btn-group']" />
     <xsl:template match="div[@div='ilFooterContainer']//div[@class='btn-group']" />
 
+    <!-- hide LM menu for tutors -->
+    <xsl:template match="div[@class='row ilContainerBlockHeader']//div[@class='btn-group']" />
+
     <!-- optes / block view
     <xsl:template match="div[@class='ilContainerListItemIcon ']" />
     <xsl:template match="div[@class='row ilContainerBlockHeader']" />
