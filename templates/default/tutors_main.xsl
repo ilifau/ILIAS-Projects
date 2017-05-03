@@ -247,10 +247,13 @@
 
     <!-- hide advertising buttons in bottom bar -->
     <xsl:template match="div[@id='ilLMPageContent']//div[@class='btn-group']" />
-    <xsl:template match="div[@div='ilFooterContainer']//div[@class='btn-group']" />
+    <!-- <xsl:template match="div[@div='ilFooterContainer']//div[@class='btn-group']" />-->
 
     <!-- hide LM menu for tutors -->
     <xsl:template match="div[@class='row ilContainerBlockHeader']//div[@class='btn-group']" />
+
+    <!-- hide Itemproperties -->
+    <xsl:template match="div[@class='il_ContainerListItem']//div[@class='ilListItemSection il_ItemProperties']" />
 
     <!-- optes / block view
     <xsl:template match="div[@class='ilContainerListItemIcon ']" />
