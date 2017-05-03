@@ -252,8 +252,16 @@
     <!-- hide LM menu for tutors -->
     <xsl:template match="div[@class='row ilContainerBlockHeader']//div[@class='btn-group']" />
 
-    <!-- hide Itemproperties -->
+    <!-- hide Itemproperties
     <xsl:template match="div[@class='il_ContainerListItem']//div[@class='ilListItemSection il_ItemProperties']" />
+
+work in progress
+    <xsl:template match="div[@class='il_ContainerListItem']" >
+        <xsl:if test="not(..//div[@class='ilListItemSection il_ItemProperties'][contains(text,'verfügbar')])">
+            <xsl:apply-templates select="node()" />
+        </xsl:if>
+    </xsl:template>
+-->
 
     <!-- optes / block view
     <xsl:template match="div[@class='ilContainerListItemIcon ']" />
