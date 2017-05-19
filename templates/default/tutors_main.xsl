@@ -252,6 +252,10 @@
     <!-- hide LM menu for tutors -->
     <xsl:template match="div[@class='row ilContainerBlockHeader']//div[@class='btn-group']" />
 
+    <!-- hide perma link below LM -->
+    <xsl:template match="label[@for='current_perma_link']" />
+    <xsl:template match="input[@id='current_perma_link']" />
+
     <!-- hide Itemproperties
     <xsl:template match="div[@class='il_ContainerListItem']//div[@class='ilListItemSection il_ItemProperties']" />
 

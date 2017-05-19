@@ -234,6 +234,10 @@
     <xsl:template match="div[@id='ilLMPageContent']//div[@class='btn-group']" />
     <!-- <xsl:template match="div[@div='ilFooterContainer']//div[@class='btn-group']" />-->
 
+    <!-- hide perma link below LM -->
+    <xsl:template match="label[@for='current_perma_link']" />
+    <xsl:template match="input[@id='current_perma_link']" />
+
     <!-- hide Itemproperties
     <xsl:template match="div[@class='il_ContainerListItem']//div[@class='ilListItemSection il_ItemProperties']" />
 -->
