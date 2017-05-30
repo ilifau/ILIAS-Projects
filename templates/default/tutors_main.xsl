@@ -256,6 +256,9 @@
     <xsl:template match="label[@for='current_perma_link']" />
     <xsl:template match="input[@id='current_perma_link']" />
 
+    <!-- hide printview in general for LMs -->
+    <xsl:template match="li[@id='tab_cont_print_view']" />
+
     <!-- hide Itemproperties
     <xsl:template match="div[@class='il_ContainerListItem']//div[@class='ilListItemSection il_ItemProperties']" />
 
