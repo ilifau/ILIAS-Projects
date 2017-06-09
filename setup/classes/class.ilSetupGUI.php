@@ -535,7 +535,9 @@ echo "<br>+".$client_id;
 
 		if (count($languages) % 2)
 		{
-			$this->tpl->touchBlock("lng_empty_cell");
+			// fim: removed for setup access
+			// $this->tpl->touchBlock("lng_empty_cell");
+			// fim.
 		}
 
 		if ($this->cmd != "logout" and $this->setup->isInstalled() and $this->setup->isAuthenticated())

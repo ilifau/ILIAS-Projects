@@ -69,12 +69,12 @@
     <xsl:template match="div[contains(@class,'ilMainMenu')]" />
 
     <!-- Empty headline (keep space) -->
-    <xsl:template match="div[contains(@class,'il_HeaderInner')]">
-        <div class="il_HeaderInner"></div>
+    <xsl:template match="div[contains(@class,'media il_HeaderInner')]">
+        <div class="media il_HeaderInner"></div>
     </xsl:template>
 
     <!-- No locator, No tree view -->
-    <xsl:template match="ol[@class='breadcrumb']" />
+    <xsl:template match="ol[@class='breadcrumb hidden-print']" />
     <xsl:template match="a[@class='ilTreeView']" />
     <xsl:template match="div[@class='ilLeftNav']" />
 
@@ -259,6 +259,9 @@
     <!-- hide printview in general for LMs -->
     <xsl:template match="li[@id='tab_cont_print_view']" />
 
+    <!-- hide search function -->
+    <xsl:template match="li[@id='ilMMSearch']" />
+
     <!-- hide Itemproperties
     <xsl:template match="div[@class='il_ContainerListItem']//div[@class='ilListItemSection il_ItemProperties']" />
 
@@ -270,21 +273,4 @@ work in progress
     </xsl:template>
 -->
 
-    <!-- optes / block view
-    <xsl:template match="div[@class='ilContainerListItemIcon ']" />
-    <xsl:template match="div[@class='row ilContainerBlockHeader']" />
-
-    <xsl:template match="div[@class='ilContainerBlock container-fluid form-inline']" >
-        <xsl:apply-templates select="div[@class='row ilContainerBlockHeader']" />
-        <xsl:for-each select="div[@class='ilCLI ilObjListRow row']">
-                <a >
-                    <xsl:attribute name="href"><xsl:value-of select=".//a/@href" /></xsl:attribute>
-                    <div class="ilc_text_block_Standard" style="text-decoration:none; box-shadow: 10px 6px 5px #B0BAC9; min-height: 10px; min-width:100px; width: 100%; max-width:100%; background-color: #0C0; display:block; margin-top: 30px; padding: 10px">
-                        <xsl:value-of select=".//h4" /><br/>
-                        <xsl:copy-of select=".//div[@class='ilListItemSection il_ItemProperties']"/>
-                    </div>
-                </a>
-        </xsl:for-each>
-    </xsl:template>
--->
 </xsl:stylesheet>

@@ -74,7 +74,7 @@
     </xsl:template>
 
     <!-- No locator, No tree view -->
-    <xsl:template match="ol[@class='breadcrumb']" />
+    <xsl:template match="ol[@class='breadcrumb hidden-print']" />
     <xsl:template match="a[@class='ilTreeView']" />
     <xsl:template match="div[@class='ilLeftNav']" />
 
@@ -240,6 +240,9 @@
 
     <!-- hide printview in general for LMs -->
     <xsl:template match="li[@id='tab_cont_print_view']" />
+
+    <!-- hide search function -->
+    <xsl:template match="li[@id='ilMMSearch']" />
 
     <!-- hide Itemproperties
     <xsl:template match="div[@class='il_ContainerListItem']//div[@class='ilListItemSection il_ItemProperties']" />
