@@ -1616,6 +1616,48 @@ class ilUtil
 		return TRUE;
 	}
 
+// fim: new function rlist (recourseively list all files in a directory)
+	/**
+	 * Recourseively list all files in a directory
+	 * @param string    directory
+	 * @param string    path prefix (empty or path with slash)
+	 * @return array    list of files
+	 */
+	public static function rList ($a_dir, $a_prefix)
+	{
+		$files = array();
+
+		// check if arguments are directories
+		if (!@is_dir($a_dir) or
+			!@is_dir($a_dir))
+		{
+			return array();
+		}
+
+		$dir = opendir($a_dir);
+		while($file = readdir($dir))
+		{
+			if ($file != "." and
+				$file != "..")
+			{
+				// directories
+				if (@is_dir($a_dir."/".$file))
+				{
+
+					$files = array_merge($files, self::rList($a_dir."/".$file, $a_prefix.$file."/"));
+				}
+
+				// files
+				if (@is_file($a_dir."/".$file))
+				{
+					$files[] = $a_prefix.$file;
+				}
+			}
+		}
+		return $files;
+	}
+// fim.
+
 	/**
 	* get webspace directory
 	*

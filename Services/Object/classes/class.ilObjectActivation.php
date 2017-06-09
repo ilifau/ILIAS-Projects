@@ -379,7 +379,9 @@ class ilObjectActivation
 		elseif($item['timing_type'] == self::TIMINGS_ACTIVATION)
 		{
 			$a_item['start'] = $item['timing_start'];
-			$a_item['end'] = $item['timing_end'];
+            // fim: #cf not showing enddate
+			//$a_item['end'] = $item['timing_end'];
+            // fim.
 			$a_item['activation_info'] = 'obj_activation_list_gui';
 		}
 		else

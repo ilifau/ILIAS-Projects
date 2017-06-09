@@ -7258,7 +7258,7 @@ div#bot_center_area_drag:hover {
 }
 .ilLeftNavSpace {
   /* padding: 0 20px 0 310px; */
-  margin-left: 315px !important;
+  /* margin-left: 315px !important; */
 }
 @media (max-width: 767px) {
   .ilLeftNavSpace {
@@ -8998,7 +8998,9 @@ div.ilTopMemberView h3 {
 #ilSubTab > li > a {
   border-radius: 0;
   padding: 3px 7px;
-  font-size: 11.64px;
+  font-size: 130%; /* fim cf */
+
+  /* font-size: 11.64px; */
   /* font-weight: 600; */
 }
 #ilSubTab > li > a:hover {
@@ -10516,10 +10518,9 @@ div.ilStartupSection form.form-horizontal {
   width: 40em;
 }
 div#il_startup_logo img {
-  width: 175px; /* fim: #cf 50px */
-  height: 175px;/* fim: #cf 50px */
+  width: 50px;
+  height: 50px;
   margin: 15px;
-  margin-top: -78px; /* fim: #cf added */
 }
 /* Services/Bookmarks */
 #block_pdbookm_0 #tree_div {
@@ -11620,3 +11621,32 @@ table.mceToolbar td {
     content: "";
   }
 }
+div.ilTopBar {
+  background-color: #762282!important;
+}
+.ilFixedTopSpacer {
+  margin-top: 40px;
+  padding-top: 0;
+}
+.ilTopTitle {
+  display: block!important;
+}
+/* prvented stacking of toolbar */
+@media only screen and (max-width: 768px) {
+  .navbar-form {
+    border: 0;
+  }
+  .navbar-nav > li {
+    float: left!important;
+  }
+}
+.btn {
+  margin: 1px;
+}
+/* fim cf */
+.ilc_page_rnav_RightNavigation {
+   font-size: 100% !important;
+ }
+.ilc_page_lnav_LeftNavigation {
+  font-size: 100% !important;
+} /* fim cf */

@@ -296,6 +296,9 @@ class ilAuthUtils
 		$ilAuth->setExpire(0);
 
 		ini_set("session.cookie_lifetime", "0");
+// fim: [webapp] set explict session cookie lifetime for web app mode on iPad
+//		ini_set("session.cookie_lifetime", (string) 365 * 24 * 60 * 60);
+// fim.
 //echo "-".get_class($ilAuth)."-";
 		$GLOBALS['ilAuth'] =& $ilAuth;
 
