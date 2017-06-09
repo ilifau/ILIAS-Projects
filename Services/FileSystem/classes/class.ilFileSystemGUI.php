@@ -15,7 +15,14 @@ class ilFileSystemGUI
 
 	protected $use_upload_directory = false;
 
+	//fim: additional toolbar commands arrray(array('txt' => string, 'cmd' => 'string'))
 	/**
+	 * @var array
+	 */
+	 var  $aditionalToolbarCommands = array();
+    // fim.
+
+    /**
 	 * @var array
 	 */
 	protected $allowed_suffixes = array();
@@ -313,6 +320,18 @@ class ilFileSystemGUI
 		//$this->commands[] = $arr;
 	}
 
+// fim: new function to add a toolbar command
+	/**
+	 * dd a toolbar command
+	 * @param string    command
+	 * @param string    text
+	 */
+	function addToolbarCommand($a_cmd, $a_txt) {
+		$this->additionalToolbarCommands[] = array('cmd'=> $a_cmd, 'txt' => $a_txt);
+	}
+// fim.
+
+
 	/**
 	 * Clear commands
 	 */
@@ -580,7 +599,14 @@ class ilFileSystemGUI
 			$ilToolbar->addInputItem($si, true);
 			$ilToolbar->addFormButton($lng->txt("copy"), "uploadFile");
 		}
-			
+
+// fim: add a custom toolbar button
+		foreach ($this->additionalToolbarCommands as $command)
+		{
+			$ilToolbar->addFormButton($command['txt'], $command['cmd']);
+		}
+// fim.
+
 		// load files templates
 		include_once("./Services/FileSystem/classes/class.ilFileSystemTableGUI.php");
 		$fs_table = new ilFileSystemTableGUI($this, "listFiles", $dir["dir"], $dir["subdir"],
@@ -905,7 +931,7 @@ class ilFileSystemGUI
 			include_once("./Services/Utilities/classes/class.ilFileUtils.php");
 			$cur_files = array_keys(ilUtil::getDir($cur_dir));
 			$cur_files_r = iterator_to_array(new RecursiveIteratorIterator(new RecursiveDirectoryIterator($cur_dir)));
-			
+
 			if ($this->getAllowDirectories())
 			{
 				ilUtil::unzip($a_file, true);

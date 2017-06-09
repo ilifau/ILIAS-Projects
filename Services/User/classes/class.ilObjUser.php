@@ -1190,6 +1190,12 @@ class ilObjUser extends ilObject
 	*/
 	function getPref($a_keyword)
 	{
+// fim: force a public profile with picture
+		if (in_array($a_keyword, array('public_profile', 'public_upload', 'public_picture')))
+		{
+			return 'y';
+		}
+// fim.
 		if (array_key_exists($a_keyword, $this->prefs))
 		{
 			return $this->prefs[$a_keyword];

@@ -423,29 +423,34 @@ class ilUserUtil
 		global $ilUser;
 		
 		return (bool)$ilUser->getPref("usr_starting_point");	
-	}	
-		
+	}
+
 	/**
-	 * Get current personal starting point 
-	 * 
-	 * @return int 
+	 * Get current personal starting point
+	 * @return int
 	 */
-	public static function getPersonalStartingPoint()
+// fim: added UserObj as parameter
+	public static function getPersonalStartingPoint($userObj = null)
 	{
 		global $ilUser;
-								
+
+		if (!isset($userObj)) {
+			$userObj = $ilUser;
+		}
+
 		$valid = array_keys(self::getPossibleStartingPoints());
-		$current = $ilUser->getPref("usr_starting_point");	
+		$current = $userObj->getPref("usr_starting_point");
 		if($current == self::START_REPOSITORY_OBJ)
 		{
 			return $current;
-		}		
+		}
 		else if(!$current || !in_array($current, $valid))
 		{
 			return self::getStartingPoint();
 		}
 		return $current;
 	}
+// fim.
 	
 	/**
 	 * Set personal starting point setting
@@ -454,52 +459,57 @@ class ilUserUtil
 	 * @param int $a_ref_id
 	 * @return boolean 
 	 */
-	public static function setPersonalStartingPoint($a_value, $a_ref_id = null)
+// fim: added UserObj as parameter
+	public static function setPersonalStartingPoint($a_value, $a_ref_id = null, $userObj = null)
 	{
 		global $ilUser, $tree;
-		
-		if(!$a_value)
-		{
-			$ilUser->setPref("usr_starting_point", null);
-			$ilUser->setPref("usr_starting_point_ref_id", null);
-			return;
+
+		if (!isset($userObj)) {
+			$userObj = $ilUser;
 		}
-		
+
 		if($a_value == self::START_REPOSITORY_OBJ)
 		{
 			$a_ref_id = (int)$a_ref_id;
-			if(ilObject::_lookupObjId($a_ref_id) && 
+			if(ilObject::_lookupObjId($a_ref_id) &&
 				!$tree->isDeleted($a_ref_id))
 			{
-				$ilUser->setPref("usr_starting_point", $a_value);
-				$ilUser->setPref("usr_starting_point_ref_id", $a_ref_id);
+				$userObj->setPref("usr_starting_point", $a_value);
+				$userObj->setPref("usr_starting_point_ref_id", $a_ref_id);
 				return true;
 			}
 		}
 		$valid = array_keys(self::getPossibleStartingPoints());
 		if(in_array($a_value, $valid))
-		{							
-			$ilUser->setPref("usr_starting_point", $a_value);
+		{
+			$userObj->setPref("usr_starting_point", $a_value);
 			return true;
-		}	
+		}
 		return false;
-	}	
+	}
+// fim.
 	
 	/**
 	 * Get ref id of personal starting object
 	 * 
 	 * @return int
 	 */
-	public static function getPersonalStartingObject()
+// fim: added UserObj as parameter
+	public static function getPersonalStartingObject($userObj = null)
 	{
 		global $ilUser;
-		
-		$ref_id = $ilUser->getPref("usr_starting_point_ref_id");
+
+		if (!isset($userObj)) {
+			$userObj = $ilUser;
+		}
+
+		$ref_id = $userObj->getPref("usr_starting_point_ref_id");
 		if(!$ref_id)
 		{
 			$ref_id = self::getStartingObject();
 		}
 		return $ref_id;
 	}
+// fim.
 }
 ?>

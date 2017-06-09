@@ -94,7 +94,15 @@ class ilObjFileBasedLMGUI extends ilObjectGUI
 						$this->lng->txt("cont_startfile"));
 				}							
 				$fs_gui->addCommand($this, "setStartFile", $this->lng->txt("cont_set_start_file"));
-				
+
+// fim: handle an add command for offline caching files
+				if ($cmd=='addOfflineCachingFiles')
+				{
+					$this->addOfflineCachingFiles();
+				}
+				$fs_gui->addToolbarCommand("addOfflineCachingFiles", $this->lng->txt("cont_add_offline_caching_files"));
+// fim.
+
 				$this->ctrl->forwardCommand($fs_gui);
 											
 				// try to set start file automatically
@@ -464,6 +472,72 @@ class ilObjFileBasedLMGUI extends ilObjectGUI
 		$this->object->update();
 		$this->ctrl->redirectByClass("ilfilesystemgui", "listFiles");
 	}
+
+//fim: new function to add offline caching files
+	/**
+	 * Add offline caching files
+	 */
+	function addOfflineCachingFiles()
+	{
+		global $tpl;
+
+		$manifest = $this->object->getDataDirectory(). '/index-offline.appcache';
+		$indexfile = $this->object->getDataDirectory(). '/index-offline.html';
+
+		// create the directory for support files
+		if (!@is_dir($this->object->getDataDirectory().'/index-offline'))
+		{
+			mkdir($this->object->getDataDirectory().'/index-offline');
+		}
+
+		// copy support files
+		ilUtil::rcopy($tpl->getTemplatePath('index-offline','Modules/HTMLLearningModule'),
+			$this->object->getDataDirectory().'/index-offline');
+
+
+		// write the appcache file
+		$tpl = new ilTemplate("tpl.index-offline.appcache", true, true, "Modules/HTMLLearningModule");
+		$list = ilUtil::rList($this->object->getDataDirectory(), '');
+		foreach ($list as $file)
+		{
+			$parts = pathinfo($file);
+			if ($parts['basename'] != basename($manifest) and strtolower($parts['extension']) != 'zip')
+			{
+				$tpl->setCurrentBlock('cached-files');
+				$tpl->setVariable("FILE", $file);
+				$tpl->parseCurrentBlock();
+			}
+		}
+		$tpl->setVariable("TIME", date('Y-m-d H:i:s'));
+		$tpl->parse();
+
+		if ($handle = fopen($manifest, 'w')) {
+			fwrite($handle, $tpl->get());
+			fclose($handle);
+		}
+
+		$startfile = $this->object->getStartFile();
+		if ($startfile == basename($indexfile) and is_file($indexfile))
+		{
+			$content = file_get_contents($indexfile);
+			preg_match('/STARTFILE="(.*)"/', $content, $matches);
+			$startfile = !empty($matches[1]) ? $matches[1] : 'index.html';
+		}
+
+		$tpl = new ilTemplate("tpl.index-offline.html", true, true, "Modules/HTMLLearningModule");
+		$tpl->setVariable("STARTFILE", $startfile);
+		$tpl->setVariable("TITLE", $this->object->getTitle());
+		$tpl->parse();
+
+		if ($handle = fopen($indexfile, 'w')) {
+			fwrite($handle, $tpl->get());
+			fclose($handle);
+		}
+
+		$this->ctrl->redirectByClass("ilfilesystemgui", "listFiles");
+	}
+// fim.
+
 
 	/**
 	* permission form

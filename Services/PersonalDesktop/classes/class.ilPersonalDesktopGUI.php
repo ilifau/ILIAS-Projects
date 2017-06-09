@@ -633,7 +633,17 @@ class ilPersonalDesktopGUI
 	{
 		$this->ctrl->redirectByClass("ilpersonalsettingsgui");
 	}
-	
+
+// fim: new function jumpToPassword
+	/**
+	 * workaround for password
+	 */
+	function jumpToPassword()
+	{
+		$this->ctrl->redirectByClass("ilpersonalsettingsgui", 'showPassword');
+	}
+// fim.
+
 	/**
 	* workaround for menu in calendar only
 	*/

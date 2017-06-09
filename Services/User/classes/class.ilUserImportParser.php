@@ -1703,6 +1703,12 @@ class ilUserImportParser extends ilSaxParser
 					$this->prefs[$this->currentPrefKey] = trim($this->cdata);
 				$this->currentPrefKey = null;
 				break;
+// fim: add personal starting point
+			case 'StartRef':
+				require_once "./Services/User/classes/class.ilUserUtil.php";
+				ilUserUtil::setPersonalStartingPoint(ilUserUtil::START_REPOSITORY_OBJ, (int) $this->cdata, $this->userObj);
+				break;
+// fim.
 		}
 	}
 

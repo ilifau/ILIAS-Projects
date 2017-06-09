@@ -599,13 +599,13 @@ class ilObjUserGUI extends ilObjectGUI
 				break;
 		}		
 		
-		$from = $this->form_gui->getItemByPostVar('time_limit_from')->getDate();	
-		$user->setTimeLimitFrom($from 
+		$from = $this->form_gui->getItemByPostVar('time_limit_from')->getDate();
+		$user->setTimeLimitFrom($from
 			? $from->get(IL_CAL_UNIX)
 			: null);
 		
-		$until = $this->form_gui->getItemByPostVar('time_limit_until')->getDate();		
-		$user->setTimeLimitUntil($until 
+		$until = $this->form_gui->getItemByPostVar('time_limit_until')->getDate();
+		$user->setTimeLimitUntil($until
 			? $until->get(IL_CAL_UNIX)
 			: null);
 		
@@ -620,10 +620,10 @@ class ilObjUserGUI extends ilObjectGUI
 		if($this->isSettingChangeable('birthday'))
 		{
 			$bd = $this->form_gui->getItemByPostVar('birthday');
-			$bd = $bd->getDate();			
+			$bd = $bd->getDate();
 			$user->setBirthday($bd
 				? $bd->get(IL_CAL_DATE)
-				: null);			
+				: null);
 		}
 		
 		// Login
@@ -889,6 +889,11 @@ class ilObjUserGUI extends ilObjectGUI
 				$this->object->setPref('chat_osc_accept_msg', $_POST['chat_osc_accept_msg'] ? 'y' : 'n');
 			}
 
+// fim: update prsonal starting point
+			require_once('Services/User/classes/class.ilUserUtil.php');
+			ilUserUtil::setPersonalStartingPoint($_POST['usr_start'], $_POST['usr_start_ref_id'], $this->object);
+// fim.
+
 			// set a timestamp for last_password_change
 			// this ts is needed by ilSecuritySettings
 			$this->object->setLastPasswordChangeTS( time() );
@@ -989,7 +994,7 @@ class ilObjUserGUI extends ilObjectGUI
 		$data["time_limit_until"] = $this->object->getTimeLimitUntil()
 			? new ilDateTime($this->object->getTimeLimitUntil(), IL_CAL_UNIX)
 			: null;
-	
+
 		
 		// BEGIN DiskQuota, Show disk space used
 		require_once 'Services/WebDAV/classes/class.ilDiskQuotaActivationChecker.php';
@@ -1073,6 +1078,12 @@ class ilObjUserGUI extends ilObjectGUI
 
 		$data["send_mail"] = ($this->object->prefs['send_info_mails'] == 'y');
 
+
+// fim: read personal starting point
+		require_once('Services/User/classes/class.ilUserUtil.php');
+		$data["usr_start"] = ilUserUtil::getPersonalStartingPoint($this->object);
+		$data["usr_start_ref_id"] = ilUserUtil::getPersonalStartingObject($this->object);
+// fim.
 
 		$this->form_gui->setValuesByArray($data);
 	}
@@ -1431,7 +1442,7 @@ class ilObjUserGUI extends ilObjectGUI
 				$caption = ($field == "title")
 					? "person_title"
 					: $field;
-				$inp = new ilTextInputGUI($lng->txt($caption), $field);			
+				$inp = new ilTextInputGUI($lng->txt($caption), $field);
 				$inp->setSize(32);
 				$inp->setMaxLength(32);
 				$inp->setRequired($req);
@@ -1454,7 +1465,7 @@ class ilObjUserGUI extends ilObjectGUI
 		if($this->isSettingChangeable('birthday'))
 		{
 			$birthday = new ilBirthdayInputGUI($lng->txt('birthday'), 'birthday');
-			$birthday->setRequired(isset($settings["require_birthday"]) && $settings["require_birthday"]);			
+			$birthday->setRequired(isset($settings["require_birthday"]) && $settings["require_birthday"]);
 			$this->form_gui->addItem($birthday);
 		}
 
@@ -1570,7 +1581,7 @@ class ilObjUserGUI extends ilObjectGUI
 			}
 		}		
 		
-		
+
 		// other information
 		if($this->isSettingChangeable('user_profile_other'))
 		{
@@ -1777,7 +1788,47 @@ class ilObjUserGUI extends ilObjectGUI
 			$cb->setValue(1);
 			$this->form_gui->addItem($cb);
 		}
-		
+
+		// fim: starting point
+		include_once "Services/User/classes/class.ilUserUtil.php";
+		if(ilUserUtil::hasPersonalStartingPoint())
+		{
+			$this->lng->loadLanguageModule("administration");
+			$si = new ilRadioGroupInputGUI($this->lng->txt("adm_user_starting_point"), "usr_start");
+			$si->setRequired(true);
+			$si->setInfo($this->lng->txt("adm_user_starting_point_info"));
+			foreach(ilUserUtil::getPossibleStartingPoints() as $value => $caption)
+			{
+				$si->addOption(new ilRadioOption($caption, $value));
+			}
+			$si->setValue(ilUserUtil::getPersonalStartingPoint($a_mode=='edit'? $this->object : null));
+			$this->form_gui->addItem($si);
+
+			// starting point: repository object
+			$repobj = new ilRadioOption($lng->txt("adm_user_starting_point_object"), ilUserUtil::START_REPOSITORY_OBJ);
+			$repobj_id = new ilTextInputGUI($lng->txt("adm_user_starting_point_ref_id"), "usr_start_ref_id");
+			$repobj_id->setRequired(true);
+			$repobj_id->setSize(5);
+			if($si->getValue() == ilUserUtil::START_REPOSITORY_OBJ)
+			{
+				$start_ref_id = ilUserUtil::getPersonalStartingObject($a_mode=='edit'? $this->object : null);
+				$repobj_id->setValue($start_ref_id);
+				if($start_ref_id)
+				{
+					$start_obj_id = ilObject::_lookupObjId($start_ref_id);
+					if($start_obj_id)
+					{
+						$repobj_id->setInfo($lng->txt("obj_".ilObject::_lookupType($start_obj_id)).
+							": ".ilObject::_lookupTitle($start_obj_id));
+					}
+				}
+			}
+			$repobj->addSubItem($repobj_id);
+			$si->addOption($repobj);
+		}
+		// fim.
+
+
 		// Options
 		if($this->isSettingChangeable('send_mail'))
 		{
@@ -2440,7 +2491,7 @@ class ilObjUserGUI extends ilObjectGUI
 	public static function _goto($a_target)
 	{
 		global $ilUser, $ilCtrl;
-				
+
 		// #10888
 		if($a_target == md5("usrdelown"))
 		{						
@@ -2453,7 +2504,7 @@ class ilObjUserGUI extends ilObjectGUI
 			}
 			exit("This account is not flagged for deletion."); // #12160
 		}
-		
+
 		// badges
 		if(substr($a_target, -4) == "_bdg")
 		{

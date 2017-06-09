@@ -173,7 +173,9 @@ class ilUsersGalleryGUI
 				$tpl->setCurrentBlock('unlinked_image');
 				$tpl->setVariable('PUBLIC_NAME', $user->getLogin());
 			}
-			$tpl->setVariable('SRC_USR_IMAGE', $user->getPersonalPicturePath('small'));
+            // fim: cf forced picture in membergallery
+			$tpl->setVariable('SRC_USR_IMAGE', $user->getPersonalPicturePath('small',true));
+			// fim.
 			$tpl->parseCurrentBlock();
 
 			$tpl->setCurrentBlock('user');
