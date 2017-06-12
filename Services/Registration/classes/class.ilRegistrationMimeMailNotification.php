@@ -52,6 +52,9 @@ class ilRegistrationMimeMailNotification extends ilMimeMailNotification
 
 					$this->setBody($this->getLanguage()->txt('reg_mail_body_salutation') . ' ' . $user->getFullname() . ',');
 					$this->appendBody("\n\n");
+// fim: ili: fau: regCodes - change language variable in confirmation e-mail
+					$this->appendBody($this->getLanguage()->txt('reg_mail_body_confirmation'));
+// fim. ili. fau.
 					$this->appendBody($this->getLanguage()->txt('reg_mail_body_activation'));
 					$this->appendBody("\n");
 					$this->appendBody(ILIAS_HTTP_PATH . '/confirmReg.php?client_id=' . CLIENT_ID . '&rh=' . ilObjUser::_generateRegistrationHash($user->getId()));

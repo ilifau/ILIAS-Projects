@@ -5017,8 +5017,18 @@ class ilObjUser extends ilObject
 	        array($a_hash));		         
 		while($row = $ilDB->fetchAssoc($res))
 		{
+// fim: // ili: // fau: regCodes - inject code into registration settings
 			require_once 'Services/Registration/classes/class.ilRegistrationSettings.php';
-			$oRegSettigs = new ilRegistrationSettings();
+			require_once 'Services/Registration/classes/class.ilRegistrationCode.php';//added
+            $oRegSettigs = ilRegistrationSettings::getInstance();//added
+			//$oRegSettigs = new ilRegistrationSettings();
+
+            $oRegCode = new ilRegistrationCode(self::_lookupPref($row['usr_id'],'registration_code'));
+            if (isset($oRegCode->code_id))
+            {
+                $oRegSettigs->setCodeObject($oRegCode);
+            }
+// fim. // ili. // fau.
 			
 			if((int)$oRegSettigs->getRegistrationHashLifetime() != 0 &&
 			   time() - (int)$oRegSettigs->getRegistrationHashLifetime() > strtotime($row['create_date']))
@@ -5034,7 +5044,10 @@ class ilObjUser extends ilObject
 				array('text', 'integer'),
 				array('', (int)$row['usr_id'])
 			);
-			
+
+// fim: // ili: // fau: regCodes - delete registration code from preferences when it is not longer needed
+            self::_deletePref($row['usr_id'],'registration_code');
+// fim. // ili. // fau.
 			return (int)$row['usr_id'];
 		}		
 		

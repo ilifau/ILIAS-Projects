@@ -443,8 +443,11 @@ class ilUserProfile
 		// custom registration settings
 		if(self::$mode == self::MODE_REGISTRATION)
 		{
+// fim: ili: fau: regCodes - get registration settings instance that may have a code injected
 			include_once 'Services/Registration/classes/class.ilRegistrationSettings.php';
-			$registration_settings = new ilRegistrationSettings();
+			$registration_settings = ilRegistrationSettings::getInstance();
+// fim. ili. fau.
+			//$registration_settings = new ilRegistrationSettings();
 
 			self::$user_field["username"]["group"] = "login_data";
 			self::$user_field["password"]["group"] = "login_data";

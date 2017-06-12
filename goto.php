@@ -80,6 +80,26 @@ if(!ilStartUpGUI::_checkGoto($_GET["target"]))
 	}
 }
 
+// fim: ili: fau: regCodes - add code to registration link
+/* broken */
+if ($target_type == '')
+{
+	switch($target_id)
+	{
+		case "register":
+			if ($additional)
+			{
+				ilUtil::redirect('register.php?code='.$additional);
+			}
+			else
+			{
+				ilUtil::redirect('register.php');
+			}
+			break;
+	}
+}
+
+// fim. ili. fau.
 
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 //
