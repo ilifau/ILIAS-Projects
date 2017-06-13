@@ -758,7 +758,7 @@ elseif ($_SESSION['ilAccountRegistrationGUI:code'])
 		}
 		else
 		{
-			// account has to e approved by admin
+			// account has to be approved by admin
 			$this->userObj->setActive(0,0);
 		}
 // fim. ili. fau.
@@ -863,6 +863,7 @@ elseif ($_SESSION['ilAccountRegistrationGUI:code'])
                 break;
             case ilRegistrationSettings::LOGIN_GEN_FIRST_LASTNAME:
                 $base_login = ilUtil::getASCIIFilename(strtolower($this->form->getInput('usr_firstname')))
+					. '.'
                     . ilUtil::getASCIIFilename(strtolower($this->form->getInput('usr_lastname')));
                 break;
             case ilRegistrationSettings::LOGIN_GEN_GUEST_LISTENER:
@@ -1037,7 +1038,7 @@ elseif ($_SESSION['ilAccountRegistrationGUI:code'])
 			$this->tpl->setVariable('FORMACTION', 'login.php?cmd=post&target=' . ilUtil::stripSlashes($_GET['target']));
 			$this->tpl->setVariable('TARGET', 'target="_parent"');
 // fim: ili: fau: samlAuth - changed language var for local login
-            $this->tpl->setVariable('TXT_LOGIN', $lng->txt('local_login_to_ilias'));
+            $this->tpl->setVariable('TXT_LOGIN', $lng->txt('join_session'));
 // fim. ili. fau.
 			$this->tpl->setVariable('USERNAME', $this->userObj->getLogin());
 			$this->tpl->setVariable('PASSWORD', $password);
