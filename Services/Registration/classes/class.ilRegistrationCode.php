@@ -3,13 +3,13 @@
 /* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
 
 /**
-* Class ilRegistrationCode
-*
-* @author Stefan Meyer <smeyer.ilias@gmx.de>
-* @version $Id: class.ilRegistrationSettingsGUI.php 23797 2010-05-07 15:54:03Z jluetzen $
-*
-* @ingroup ServicesRegistration
-*/
+ * Class ilRegistrationCode
+ *
+ * @author Stefan Meyer <smeyer.ilias@gmx.de>
+ * @version $Id: class.ilRegistrationSettingsGUI.php 23797 2010-05-07 15:54:03Z jluetzen $
+ *
+ * @ingroup ServicesRegistration
+ */
 class ilRegistrationCode
 {
 	const DB_TABLE = 'reg_registration_codes';
@@ -105,18 +105,18 @@ class ilRegistrationCode
 	public static function create($role, $stamp, $local_roles, $limit, $limit_date, $reg_type, $ext_type)
 	{
 		global $ilDB;
-		
+
 		$id = $ilDB->nextId(self::DB_TABLE);
-		
+
 		// create unique code
 		$found = true;
 		while ($found)
 		{
 			$code = self::generateRandomCode();
- 			$chk = $ilDB->queryF("SELECT code_id FROM ".self::DB_TABLE." WHERE code = %s", array("text"), array($code));
+			$chk = $ilDB->queryF("SELECT code_id FROM ".self::DB_TABLE." WHERE code = %s", array("text"), array($code));
 			$found = (bool)$ilDB->numRows($chk);
 		}
-		
+
 		if(is_array($local_roles))
 		{
 			$local_roles = implode(";", $local_roles);
@@ -125,7 +125,7 @@ class ilRegistrationCode
 		{
 			$limit_date = serialize($limit_date);
 		}
-		
+
 		$data = array(
 			'code_id' => array('integer', $id),
 			'code' => array('text', $code),
@@ -136,30 +136,30 @@ class ilRegistrationCode
 			'alimitdt' => array('text', $limit_date),
 			'reg_enabled' => array('integer',$reg_type),
 			'ext_enabled' => array('integer',$ext_type)
-			);
+		);
 
 		$ilDB->insert(self::DB_TABLE, $data);
 		return $id;
 	}
-	
+
 	protected static function generateRandomCode()
 	{
 		// missing : 01iloO
 		$map = "23456789abcdefghjkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ";
-		
+
 		$code = "";
 		$max = strlen($map)-1;
 		for($loop = 1; $loop <= self::CODE_LENGTH; $loop++)
 		{
-		  $code .= $map[mt_rand(0, $max)];
+			$code .= $map[mt_rand(0, $max)];
 		}
 		return $code;
 	}
-	
+
 	public static function getCodesData($order_field, $order_direction, $offset, $limit, $filter_code, $filter_role, $filter_generated, $filter_access_limitation)
 	{
 		global $ilDB;
-		
+
 		// filter
 		$where = self::filterToSQL($filter_code, $filter_role, $filter_generated, $filter_access_limitation);
 
@@ -170,13 +170,13 @@ class ilRegistrationCode
 		{
 			$cnt = $rec["cnt"];
 		}
-		
+
 		$sql = "SELECT * FROM ".self::DB_TABLE.$where;
 		if($order_field)
 		{
 			$sql .= " ORDER BY `".$order_field."` ".$order_direction;
 		}
-		
+
 		// set query
 		$ilDB->setLimit((int)$limit, (int)$offset);
 		$set = $ilDB->query($sql);
@@ -187,7 +187,7 @@ class ilRegistrationCode
 		}
 		return array("cnt" => $cnt, "set" => $result);
 	}
-	
+
 	public static function loadCodesByIds(array $ids)
 	{
 		global $ilDB;
@@ -200,7 +200,7 @@ class ilRegistrationCode
 		}
 		return $result;
 	}
-	
+
 	public static function deleteCodes(array $ids)
 	{
 		global $ilDB;
@@ -211,11 +211,11 @@ class ilRegistrationCode
 		}
 		return false;
 	}
-	
+
 	public static function getGenerationDates()
 	{
 		global $ilDB;
-		
+
 		$set = $ilDB->query("SELECT DISTINCT(`generated`) genr FROM ".self::DB_TABLE." ORDER BY genr");
 		$result = array();
 		while($rec = $ilDB->fetchAssoc($set))
@@ -224,7 +224,7 @@ class ilRegistrationCode
 		}
 		return $result;
 	}
-	
+
 	protected static function filterToSQL($filter_code, $filter_role, $filter_generated, $filter_access_limitation)
 	{
 		global $ilDB;
@@ -255,7 +255,7 @@ class ilRegistrationCode
 			return "";
 		}
 	}
-	
+
 	public static function getCodesForExport($filter_code, $filter_role, $filter_generated, $filter_access_limitation)
 	{
 		global $ilDB;
@@ -272,7 +272,7 @@ class ilRegistrationCode
 		}
 		return $result;
 	}
-	
+
 	/**
 	 * Check if code has been used already
 	 * @global type $ilDB
@@ -282,7 +282,7 @@ class ilRegistrationCode
 	public static function isUnusedCode($code)
 	{
 		global $ilDB;
-		
+
 		$set = $ilDB->query("SELECT used FROM ".self::DB_TABLE." WHERE code = ".$ilDB->quote($code, "text"));
 		$set = $ilDB->fetchAssoc($set);
 		if($set && !$set["used"])
@@ -291,7 +291,7 @@ class ilRegistrationCode
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Check if given code is a valid registration code
 	 * @param string $a_code code
@@ -300,13 +300,13 @@ class ilRegistrationCode
 	public static function isValidRegistrationCode($a_code)
 	{
 		global $ilDB;
-		
+
 		$query = 'SELECT code_id FROM reg_registration_codes '.
 			'WHERE used = '.$ilDB->quote(0,'integer').' '.
 			'AND reg_enabled = '.$ilDB->quote(1,'integer').' '.
 			'AND code = '.$ilDB->quote($a_code,'text');
 		$res = $ilDB->query($query);
-		
+
 		return $res->numRows() ? true : false;
 	}
 
@@ -319,7 +319,7 @@ class ilRegistrationCode
 	}
 
 	public static function getCodeRole($code)
-    {
+	{
 		global $ilDB;
 
 		$set = $ilDB->query("SELECT role FROM ".self::DB_TABLE." WHERE code = ".$ilDB->quote($code, "text"));
@@ -329,9 +329,9 @@ class ilRegistrationCode
 			return $row["role"];
 		}
 	}
-	
+
 	public static function getCodeData($code)
-    {
+	{
 		global $ilDB;
 
 		$set = $ilDB->query("SELECT role, role_local, alimit, alimitdt, reg_enabled, ext_enabled".
@@ -470,7 +470,10 @@ class ilRegistrationCode
 				'description' => array('text', $this->description),
 				'use_limit' => array('integer', $this->use_limit),
 				'use_count' => array('integer', $this->use_count),
-				'used' =>array('integer', $this->last_use->get(IL_CAL_UNIX)),
+                //fim: ili: fau: last_use->get(IL_CAL_UNIX) is NULL
+				//'used' =>array('integer', $this->last_use->get(IL_CAL_UNIX)),
+				'used' =>array('integer', '1'),
+                //fim. ili. fau.
 				'role' => array('integer', $this->global_role),
 				'role_local' => array('text', implode(';', $this->local_roles)),
 				'alimit' => array('text', $this->limit_type),
