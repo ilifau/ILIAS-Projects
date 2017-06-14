@@ -17,7 +17,7 @@
 <!-- Hide the tabs -->
 <xsl:template match="ul[@id='ilTab']" />
 
-<!-- Hide table navogation settings (e.g. changing of displayed rows) -->
+<!-- Hide table navigation settings (e.g. changing of displayed rows) -->
 <xsl:template match="div[@class='ilTableFilterSec']" />
 <xsl:template match="div[contains(@class,'ilTableNav')]//td[contains(@class,'ilRight')]" />
 

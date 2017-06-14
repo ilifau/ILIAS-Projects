@@ -111,18 +111,25 @@
     <!-- Hope: cleaned up xsl-files (no code twice) -->
     <!-- Problem: rethinking the inner structure for calling templates-->
 
-    <trans style="tutors" at="output" of="tpl.main.html" for="Modules/Forum" with="tutors_forum.xsl" next="true" debug=""/>
-    <trans style="reduced" at="output" of="tpl.main.html" for="Modules/Forum" with="reduced_forum.xsl"  debug=""/>
+    <trans style="tutors" at="output" of="tpl.main.html" with="tutors_main.xsl" next="true" debug=""/>
 
-    <trans style="tutors" at="output" of="tpl.main.html" for="Modules/Glossary" with="reduced_glossary.xsl" next="true" debug=""/>
+    <trans style="reduced" at="output" of="tpl.main.html" with="tutors_main.xsl" next="true" debug=""/>
+    <trans style="reduced" at="output" of="tpl.main.html" with="reduced_main.xsl" next="true" debug=""/>
+
+    <trans style="tutors" at="output" of="tpl.main.html" for="Modules/Forum" with="tutors_forum.xsl" debug=""/>
+    <trans style="reduced" at="output" of="tpl.main.html" for="Modules/Forum" with="tutors_forum.xsl" debug=""/>
+
+    <trans style="tutors" at="output" of="tpl.main.html" for="Modules/Glossary" with="reduced_glossary.xsl" debug=""/>
     <trans style="reduced" at="output" of="tpl.main.html" for="Modules/Glossary" with="reduced_glossary.xsl" debug=""/>
 
-    <trans style="tutors" at="output" of="tpl.main.html" with="tutors_main.xsl" next="true" debug=""/>
-    <trans style="reduced" at="output" of="tpl.main.html" with="reduced_main.xsl" debug=""/>
-
-    <trans style="tutors" at="output" of="Modules/LearningModule/tpl.page_new.html" with="tutors_main.xsl" next="true" debug=""/>
+    <trans style="tutors" at="output" of="Modules/LearningModule/tpl.page_new.html" with="tutors_main.xsl" debug=""/>
+    <trans style="reduced" at="output" of="Modules/LearningModule/tpl.page_new.html" with="tutors_main.xsl" next="true" debug=""/>
     <trans style="reduced" at="output" of="Modules/LearningModule/tpl.page_new.html" with="reduced_main.xsl" debug=""/>
 
-    <!-- <trans style="delos" at="output" of="tpl.main.html" with="delos_main.xsl" debug=""/> -->
+    <!--
+    not necessary
+        <trans style="reduced" at="output" of="tpl.main.html" for="Modules/Forum" with="reduced_forum.xsl"  debug=""/>
+        <trans style="delos" at="output" of="tpl.main.html" with="delos_main.xsl" debug=""/>
+       -->
 
 </transformations>

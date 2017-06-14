@@ -254,7 +254,7 @@ elseif ($_SESSION['ilAccountRegistrationGUI:code'])
 			{
 				$code->setInfo($lng->txt("registration_code_optional_info"));
 			}
-			$this->form->addItem($code);    
+			$this->form->addItem($code);
 		}
 		
 
@@ -1046,7 +1046,10 @@ elseif ($_SESSION['ilAccountRegistrationGUI:code'])
 		}
 		else if($this->registration_settings->getRegistrationType() == IL_REG_APPROVE)
 		{
-			$this->tpl->setVariable('TXT_REGISTERED', $lng->txt('txt_submitted'));
+// fim: ili: fau: Fallback after registration without code
+            $login_url = './login.php?cmd=force_login&lang=' . $this->userObj->getLanguage();
+			$this->tpl->setVariable('TXT_REGISTERED', sprintf($lng->txt('txt_submitted'), $login_url));
+// fim. ili. fau.
 		}
 // fim: ili: fau: regCodes show info about confirmation mail also for code - don't redirect automatically
         else if($this->registration_settings->activationEnabled())
@@ -1065,7 +1068,6 @@ elseif ($_SESSION['ilAccountRegistrationGUI:code'])
 		{
 			$this->tpl->setVariable('TXT_REGISTERED', $lng->txt('txt_registered_passw_gen'));
 		}
-
 	}
 
 	protected function doProfileAutoComplete()

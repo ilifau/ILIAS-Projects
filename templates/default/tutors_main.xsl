@@ -249,7 +249,7 @@
     <xsl:template match="div[@id='ilLMPageContent']//div[@class='btn-group']" />
     <!-- <xsl:template match="div[@div='ilFooterContainer']//div[@class='btn-group']" />-->
 
-    <!-- hide LM menu for tutors -->
+    <!-- hide LM menu -->
     <xsl:template match="div[@class='row ilContainerBlockHeader']//div[@class='btn-group']" />
 
     <!-- hide perma link below LM -->
