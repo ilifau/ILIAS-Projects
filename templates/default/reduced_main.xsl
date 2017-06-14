@@ -248,4 +248,12 @@
     <xsl:template match="div[@class='il_ContainerListItem']//div[@class='ilListItemSection il_ItemProperties']" />
 -->
 
+    <!-- ONLY FOR REGISTRATION VIA CODE: looks smoother -->
+    <xsl:template match="div[@id='il_prop_cont_usr_registration_code']" >
+        <xsl:copy>
+            <xsl:attribute name="style">padding-top: 10px; </xsl:attribute>
+            <xsl:apply-templates select="@*|node()" />
+        </xsl:copy>
+    </xsl:template>
+
 </xsl:stylesheet>

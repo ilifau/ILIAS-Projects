@@ -254,7 +254,7 @@ elseif ($_SESSION['ilAccountRegistrationGUI:code'])
 			{
 				$code->setInfo($lng->txt("registration_code_optional_info"));
 			}
-			$this->form->addItem($code);	
+			$this->form->addItem($code);    
 		}
 		
 
