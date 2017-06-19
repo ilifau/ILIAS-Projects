@@ -107,12 +107,9 @@
 
     <!-- module/service specific transformations at final output -->
     <!--  the 'next' cascade ends with the general transformations for the main output -->
-    <!-- Changed order, trying to get a standardreduced view (for tutors) and some more small changed for participants -->
-    <!-- Hope: cleaned up xsl-files (no code twice) -->
-    <!-- Problem: rethinking the inner structure for calling templates-->
+    <!-- ALL REDUCED TO TUTORS-VIEW, PARTICIPANTS FURTHER REDUCED -->
 
     <trans style="tutors" at="output" of="tpl.main.html" with="tutors_main.xsl" next="true" debug=""/>
-
     <trans style="reduced" at="output" of="tpl.main.html" with="tutors_main.xsl" next="true" debug=""/>
     <trans style="reduced" at="output" of="tpl.main.html" with="reduced_main.xsl" next="true" debug=""/>
 
@@ -127,9 +124,9 @@
     <trans style="reduced" at="output" of="Modules/LearningModule/tpl.page_new.html" with="reduced_main.xsl" debug=""/>
 
     <!--
-    not necessary
-        <trans style="reduced" at="output" of="tpl.main.html" for="Modules/Forum" with="reduced_forum.xsl"  debug=""/>
-        <trans style="delos" at="output" of="tpl.main.html" with="delos_main.xsl" debug=""/>
-       -->
+          not necessary
+              <trans style="reduced" at="output" of="tpl.main.html" for="Modules/Forum" with="reduced_forum.xsl"  debug=""/>
+              <trans style="delos" at="output" of="tpl.main.html" with="delos_main.xsl" debug=""/>
+             -->
 
 </transformations>

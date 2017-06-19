@@ -13,10 +13,8 @@
     <!--
        Forum transformations
     -->
-    <!-- no left_nav -->
-    <xsl:template match="div[@id='left_nav']" />
 
-    <!-- Hide the tabs -->
+    <!-- Hide the tabs in Forum entry -->
     <xsl:template match="ul[@id='ilTab']" />
 
     <!-- Hide the right column -->
@@ -100,7 +98,5 @@
             <xsl:copy-of select="li" />
         </xsl:copy>
     </xsl:template>
-
-
 
 </xsl:stylesheet>

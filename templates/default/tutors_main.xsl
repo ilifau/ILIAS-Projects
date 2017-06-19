@@ -22,6 +22,14 @@
     </xsl:template>
     -->
 
+    <!-- remove scroll by css
+       /* ILIAS part candidates */
+    html,
+    body {
+      height: 94%; /* 100% */
+    }
+ -->
+
     <!-- PNG logo in the top bar -->
     <xsl:template match="div[@id='ilTopBar']//div[@class='row']" >
         <xsl:copy>
@@ -70,13 +78,14 @@
 
     <!-- Empty headline (keep space) -->
     <xsl:template match="div[contains(@class,'media il_HeaderInner')]">
-        <div class="media il_HeaderInner"></div>
+        <div class="media il_HeaderInner"></div> 
     </xsl:template>
 
     <!-- No locator, No tree view -->
     <xsl:template match="ol[@class='breadcrumb hidden-print']" />
-    <xsl:template match="a[@class='ilTreeView']" />
-    <xsl:template match="div[@class='ilLeftNav']" />
+    <!--<xsl:template match="a[@class='ilTreeView']" /> -->
+    <xsl:template match="a[@id='imgtree']"/>
+    <xsl:template match="div[@id='left_nav']" />
 
     <!-- Hide some tabs menus completely, identified by one tab -->
     <xsl:template match="ul[./li/@id='tab_personal_data']" />
@@ -265,12 +274,12 @@
     <!-- hide Itemproperties
     <xsl:template match="div[@class='il_ContainerListItem']//div[@class='ilListItemSection il_ItemProperties']" />
 
-work in progress
-    <xsl:template match="div[@class='il_ContainerListItem']" >
-        <xsl:if test="not(..//div[@class='ilListItemSection il_ItemProperties'][contains(text,'verfügbar')])">
-            <xsl:apply-templates select="node()" />
-        </xsl:if>
-    </xsl:template>
--->
+    work in progress
+        <xsl:template match="div[@class='il_ContainerListItem']" >
+            <xsl:if test="not(..//div[@class='ilListItemSection il_ItemProperties'][contains(text,'verfügbar')])">
+                <xsl:apply-templates select="node()" />
+            </xsl:if>
+        </xsl:template>
+    -->
 
 </xsl:stylesheet>
