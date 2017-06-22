@@ -281,13 +281,15 @@
             <xsl:apply-templates select="@*|node()" />
         </xsl:copy>
     </xsl:template>
+
+    <!-- removed due to an email 22.06. honert
     <xsl:template match="div[@class='ilc_page_frame_PageFrame']" >
         <xsl:copy>
             <xsl:attribute name="style">padding-left: 0px;</xsl:attribute>
             <xsl:apply-templates select="@*|node()" />
         </xsl:copy>
     </xsl:template>
-
+    -->
     <!-- enlarged space to answer questions in LM, compare to test-object
     <xsl:template match="div[@class='ilc_qanswer_Answer']//input" >
         <xsl:copy>
