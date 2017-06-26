@@ -238,7 +238,7 @@ elseif ($_SESSION['ilAccountRegistrationGUI:code'])
 		
 		
 		// code handling
-	/*
+		/* Disabled to only ask for Code once
 		if($this->code_enabled)
 		{
 			include_once 'Services/Registration/classes/class.ilRegistrationCode.php';

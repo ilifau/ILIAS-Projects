@@ -271,6 +271,10 @@
     <!-- hide search function -->
     <xsl:template match="li[@id='ilMMSearch']" />
 
+    <!-- hide search function -->
+    <xsl:template match="input[@id='usr_email']/@style" />
+    <xsl:template match="input[@id='usr_email_retype']/@style" />
+
     <!-- hide Itemproperties
     <xsl:template match="div[@class='il_ContainerListItem']//div[@class='ilListItemSection il_ItemProperties']" />
 
