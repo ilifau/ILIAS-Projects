@@ -238,7 +238,7 @@ elseif ($_SESSION['ilAccountRegistrationGUI:code'])
 		
 		
 		// code handling
-		
+	/*
 		if($this->code_enabled)
 		{
 			include_once 'Services/Registration/classes/class.ilRegistrationCode.php';
@@ -255,7 +255,7 @@ elseif ($_SESSION['ilAccountRegistrationGUI:code'])
 				$code->setInfo($lng->txt("registration_code_optional_info"));
 			}
 			$this->form->addItem($code);
-		}
+		}*/
 		
 
 		// user defined fields
@@ -754,7 +754,7 @@ elseif ($_SESSION['ilAccountRegistrationGUI:code'])
 			isset($this->codeObj))
 		{
 			// account can directly be activated
-			$this->userObj->setActive(1,0);
+			$this->userObj->setActive(0,0);//cf changed
 		}
 		else
 		{
@@ -767,7 +767,7 @@ elseif ($_SESSION['ilAccountRegistrationGUI:code'])
 			$this->registration_settings->getRegistrationType() == IL_REG_CODES ||
 			$this->code_was_used)
 		{
-			$this->userObj->setActive(1,0);
+			$this->userObj->setActive(0,0);//cf changed
 		}
 		else if($this->registration_settings->getRegistrationType() == IL_REG_ACTIVATION)
 		{
@@ -863,7 +863,7 @@ elseif ($_SESSION['ilAccountRegistrationGUI:code'])
                 break;
             case ilRegistrationSettings::LOGIN_GEN_FIRST_LASTNAME:
                 $base_login = ilUtil::getASCIIFilename(strtolower($this->form->getInput('usr_firstname')))
-					. '.'
+					. '.' //cf added
                     . ilUtil::getASCIIFilename(strtolower($this->form->getInput('usr_lastname')));
                 break;
             case ilRegistrationSettings::LOGIN_GEN_GUEST_LISTENER:
