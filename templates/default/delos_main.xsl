@@ -323,9 +323,12 @@
          Glossar in LM fixing - closebutton with z-index :10124
          bot_center_area fix - left: 0px !important; width: 100% !important; z-index: 101; :7230
          ilAreaClose    - z-index: 9; padding: 5px; :10122
-                        - top: 5px; /* 0 */
+                        - top: 30px; /* 0 */
                         - right: 15px; /* 32px; */ /* left: 0px */
                         - font-size: 20px; /* 26 */
+                        - position: relative;
+                        - float: right;
+
          several settings for div#bot_center_area :7221 :10127
          background-color: #FFFFFF; /* f0f0f0 */ :986
 

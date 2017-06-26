@@ -10124,8 +10124,8 @@ body.ilLMNoMenu .ilLeftNav {
 .ilAreaClose {
   width: 20px;
   height: 20px;
-  position: absolute;
-  top: 10px; /* 0 */
+  position: relative;
+  top: 30px; /* 0 */
   right: 15px; /* 32px; */ /* left: 0px */
   cursor: pointer;
   z-index: 9;
@@ -10133,6 +10133,7 @@ body.ilLMNoMenu .ilLeftNav {
   font-size: 20px; /* 26 */
   font-weight:bold;
   color:#557196;
+  float: right;
 }
 div.ilRightAreaSpace {
   width: 50%;
