@@ -1066,7 +1066,9 @@ class ilRegistrationSettingsGUI
 		{
 			case "absolute":
 				$date = $this->form_gui->getInput("abs_date");
-				$date = $date["date"];
+//fim: ili: fau: small fix to use absolute date
+				//$date = $date["date"];
+//fim. ili. fau.
 				if($date < date("Y-m-d"))
 				{
 					return false;
@@ -1141,7 +1143,10 @@ class ilRegistrationSettingsGUI
 			case "absolute":
 				$date = $this->form_gui->getInput("abs_date");
 				$codeObj->limit_type = "absolute";
-				$codeObj->limit_date = new ilDateTime($date["date"],IL_CAL_DATE);
+//fim: ili: fau: cf: small fix to use absolute date
+				//$codeObj->limit_date = new ilDateTime($date["date"],IL_CAL_DATE);
+				$codeObj->limit_date = new ilDateTime($date,IL_CAL_DATE);
+//fim. ili. fau. cf.
 				$codeObj->limit_duration = array();
 				break;
 			case "relative":
