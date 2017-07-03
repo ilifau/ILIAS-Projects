@@ -508,7 +508,7 @@ class ilUserProfile
 			switch ($p["input"])
 			{
 				case "login":
-// fau: regCodes - show message for generated username at registration form
+// fim: ili: fau: regCodes - show message for generated username at registration form
 					if (self::$mode == self::MODE_REGISTRATION
 						&& $registration_settings->loginGenerationType() != ilRegistrationSettings::LOGIN_GEN_MANUAL)
 					{
@@ -516,7 +516,7 @@ class ilUserProfile
 						$val->setValue($lng->txt('reg_login_is_generated'));
 					}
 					elseif ((int)$ilSetting->get('allow_change_loginname') || self::$mode == self::MODE_REGISTRATION)
-// fau.
+// fim. ili. fau.
 					{
 						$val = new ilTextInputGUI($lng->txt('username'),'username');
 						if($a_user)

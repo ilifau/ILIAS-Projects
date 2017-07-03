@@ -238,6 +238,7 @@ elseif ($_SESSION['ilAccountRegistrationGUI:code'])
 		
 		
 		// code handling
+		//fim: ili: fau: regCodes
 		/* Disabled to only ask for Code once
 		if($this->code_enabled)
 		{
@@ -256,7 +257,7 @@ elseif ($_SESSION['ilAccountRegistrationGUI:code'])
 			}
 			$this->form->addItem($code);
 		}*/
-		
+		//fim. ili. fau.
 
 		// user defined fields
 
@@ -1046,7 +1047,7 @@ elseif ($_SESSION['ilAccountRegistrationGUI:code'])
 		}
 		else if($this->registration_settings->getRegistrationType() == IL_REG_APPROVE)
 		{
-// fim: ili: fau: Fallback after registration without code
+// fim: ili: fau: regCodes Fallback after registration without code
             $login_url = './login.php?cmd=force_login&lang=' . $this->userObj->getLanguage();
 			$this->tpl->setVariable('TXT_REGISTERED', sprintf($lng->txt('txt_submitted'), $login_url));
 // fim. ili. fau.

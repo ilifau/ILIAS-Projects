@@ -949,7 +949,7 @@ class ilFileSystemGUI
 			$diff = array_diff($new_files, $cur_files);
 			$diff_r = array_diff($new_files_r, $cur_files_r);
 
-//fim: ili: fau: fix for html files
+//fim: ili: fau: fixHtmlObjects - fix for html files
 			// unlink forbidden file types
 /*			foreach ($diff_r as $f => $d)
 			{
@@ -961,7 +961,7 @@ class ilFileSystemGUI
 				}
 			}
 */
-//fim. ili. fau. 
+//fim. ili. fau.
 			if(sizeof($diff))
 			{
 				if ($this->getAllowDirectories())

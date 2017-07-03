@@ -2115,7 +2115,7 @@ class ilObjMediaObject extends ilObject
 	 *
 	 * @param string
 	 */
-//fim: ili: fau: removed due to problems with external player and selfmade gimmicks
+//fim: ili: fau: fixHtmlObjects - removed due to problems with external player and selfmade gimmicks
 	static function renameExecutables($a_dir)
 	{
 		ilUtil::renameExecutables($a_dir);

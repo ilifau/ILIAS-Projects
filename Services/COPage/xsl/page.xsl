@@ -2521,7 +2521,9 @@
 	<xsl:param name="curPurpose"/>
 	<xsl:param name="data"/>
 	<xsl:param name="inline"/>
-	<img border="0"> <!-- fim: fau: ili: inline picture fix -->
+<!-- fim: fau: ili: fixInlinePictures - inline picture fix -->
+	<img border="0"> <!-- <img border="0" width="100%"> -->
+<!-- fim. ili. fau. -->
 		<xsl:if test = "$map_item = '' or $cmobid != concat('il__mob_',$map_mob_id)">
 			<xsl:attribute name="src"><xsl:value-of select="$data"/></xsl:attribute>
 		</xsl:if>

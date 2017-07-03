@@ -33,7 +33,7 @@
     <!-- hide subtab seite gestalten -->
     <xsl:template match="li[@id='subtab_page_editor']" />
 
-    <!-- ONLY FOR REGISTRATION VIA CODE: looks smoother -->
+    <!-- ONLY FOR REGISTRATION VIA CODE: regCodes - looks smoother -->
     <xsl:template match="div[@id='il_prop_cont_usr_registration_code']" >
         <xsl:copy>
             <xsl:attribute name="style">padding-top: 10px; </xsl:attribute>

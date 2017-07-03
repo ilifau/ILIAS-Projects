@@ -80,7 +80,7 @@ if(!ilStartUpGUI::_checkGoto($_GET["target"]))
 	}
 }
 
-// fim: ili: fau: regCodes - add code to registration link
+// fim: ili: fau: fixRegCodes - add code to registration link
 /* broken
 if ($target_type == '')
 {
