@@ -961,7 +961,7 @@ class ilFileSystemGUI
 				}
 			}
 */
-//fim. ili. fau.
+//fim. ili. fau. 
 			if(sizeof($diff))
 			{
 				if ($this->getAllowDirectories())
