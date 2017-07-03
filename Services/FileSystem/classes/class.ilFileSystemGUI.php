@@ -600,12 +600,14 @@ class ilFileSystemGUI
 			$ilToolbar->addFormButton($lng->txt("copy"), "uploadFile");
 		}
 
+//fim: ili: fau: buggy, throws exception
 // fim: add a custom toolbar button
-		foreach ($this->additionalToolbarCommands as $command)
-		{
-			$ilToolbar->addFormButton($command['txt'], $command['cmd']);
-		}
+//		foreach ($this->additionalToolbarCommands as $command)
+//		{
+//			$ilToolbar->addFormButton($command['txt'], $command['cmd']);
+//		}
 // fim.
+//fim. ili. fau.
 
 		// load files templates
 		include_once("./Services/FileSystem/classes/class.ilFileSystemTableGUI.php");
@@ -947,8 +949,9 @@ class ilFileSystemGUI
 			$diff = array_diff($new_files, $cur_files);
 			$diff_r = array_diff($new_files_r, $cur_files_r);
 
+//fim: ili: fau: fix for html files
 			// unlink forbidden file types
-			foreach ($diff_r as $f => $d)
+/*			foreach ($diff_r as $f => $d)
 			{
 				$pi = pathinfo($f);
 				if (!is_dir($f) && !$this->isValidSuffix(strtolower($pi["extension"])))
@@ -957,7 +960,8 @@ class ilFileSystemGUI
 					unlink($f);
 				}
 			}
-
+*/
+//fim. ili. fau.
 			if(sizeof($diff))
 			{
 				if ($this->getAllowDirectories())
