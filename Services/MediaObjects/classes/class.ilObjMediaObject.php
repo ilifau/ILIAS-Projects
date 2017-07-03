@@ -2115,13 +2115,15 @@ class ilObjMediaObject extends ilObject
 	 *
 	 * @param string
 	 */
+//fim: ili: fau: removed due to problems with external player and selfmade gimmicks
 	static function renameExecutables($a_dir)
 	{
 		ilUtil::renameExecutables($a_dir);
-		if (!self::isTypeAllowed("html"))
-		{
-			ilUtil::rRenameSuffix($a_dir, "html", "sec");        // see #20187
-		}
+//		if (!self::isTypeAllowed("html"))
+//		{
+//			ilUtil::rRenameSuffix($a_dir, "html", "sec");        // see #20187
+//		}
 	}
+//fim. ili. fau.
 }
 ?>
