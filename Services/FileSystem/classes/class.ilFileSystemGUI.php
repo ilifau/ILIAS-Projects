@@ -951,7 +951,7 @@ class ilFileSystemGUI
 
 //fim: ili: fau: fixHtmlObjects - fix for html files
 			// unlink forbidden file types
-/*			foreach ($diff_r as $f => $d)
+/**/			foreach ($diff_r as $f => $d)
 			{
 				$pi = pathinfo($f);
 				if (!is_dir($f) && !$this->isValidSuffix(strtolower($pi["extension"])))
@@ -960,7 +960,7 @@ class ilFileSystemGUI
 					unlink($f);
 				}
 			}
-*/
+
 //fim. ili. fau.
 			if(sizeof($diff))
 			{

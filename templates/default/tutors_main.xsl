@@ -275,6 +275,10 @@
     <xsl:template match="input[@id='usr_email']/@style" />
     <xsl:template match="input[@id='usr_email_retype']/@style" />
 
+    <!-- hide public Area Links
+    <xsl:template match="p[@class='ilStartupSection']/a[2]" />
+    <xsl:template match="div[@class='ilStartupSection']//a[2]" />
+-->
     <!-- hide Itemproperties
     <xsl:template match="div[@class='il_ContainerListItem']//div[@class='ilListItemSection il_ItemProperties']" />
 

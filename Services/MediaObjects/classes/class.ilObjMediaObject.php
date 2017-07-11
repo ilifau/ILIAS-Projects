@@ -2119,10 +2119,10 @@ class ilObjMediaObject extends ilObject
 	static function renameExecutables($a_dir)
 	{
 		ilUtil::renameExecutables($a_dir);
-//		if (!self::isTypeAllowed("html"))
-//		{
-//			ilUtil::rRenameSuffix($a_dir, "html", "sec");        // see #20187
-//		}
+		if (!self::isTypeAllowed("html"))
+		{
+			ilUtil::rRenameSuffix($a_dir, "html", "sec");        // see #20187
+		}
 	}
 //fim. ili. fau.
 }
