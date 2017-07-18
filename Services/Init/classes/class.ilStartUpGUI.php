@@ -1718,12 +1718,13 @@ class ilStartUpGUI
 
 		try
 		{
-			require_once 'Services/Registration/classes/class.ilRegistrationSettings.php';
-			$oRegSettings = new ilRegistrationSettings();
-			
+// fau: regCodes - get settings instance after hash verification (code my be injected)
 			$usr_id = ilObjUser::_verifyRegistrationHash(trim($_GET['rh']));
 			$oUser = ilObjectFactory::getInstanceByObjId($usr_id);
 			$oUser->setActive(true);
+			require_once 'Services/Registration/classes/class.ilRegistrationSettings.php';
+			$oRegSettings = ilRegistrationSettings::getInstance();
+// fau.
 			if($oRegSettings->passwordGenerationEnabled())
             {
             	$passwd = ilUtil::generatePasswords(1);

@@ -163,8 +163,6 @@ class ilInitialisation
 			die ("Fatal Error: ilInitialisation::initClientIniFile called without CLIENT_ID.");
 		}
 
-		$ini_file = "./".ILIAS_WEB_DIR."/".CLIENT_ID."/client.ini.php";
-
 		// get settings from ini file
 		require_once("./Services/Init/classes/class.ilIniFile.php");
 		$ilClientIniFile = new ilIniFile($ini_file);

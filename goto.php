@@ -158,6 +158,21 @@ if(!ilStartUpGUI::_checkGoto($_GET["target"]))
 //
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
+// fau: regCodes - add code to registration link
+if ($target_type == '')
+{
+	switch($target_id) {
+
+		case "register":
+			if ($additional) {
+				ilUtil::redirect('register.php?code=' . $additional);
+			} else {
+				ilUtil::redirect('register.php');
+			}
+			break;
+	}
+}
+// fau.
 switch($target_type)
 {
 	// exception, must be kept for now

@@ -425,8 +425,11 @@ class ilUserProfile
 		// custom registration settings
 		if(self::$mode == self::MODE_REGISTRATION)
 		{
+
+// fau: regCodes - get registration settings instance that may have a code injected
 			include_once 'Services/Registration/classes/class.ilRegistrationSettings.php';
-			$registration_settings = new ilRegistrationSettings();
+			$registration_settings = ilRegistrationSettings::getInstance();
+// fau.
 
 			self::$user_field["username"]["group"] = "login_data";
 			self::$user_field["password"]["group"] = "login_data";
@@ -487,7 +490,15 @@ class ilUserProfile
 			switch ($p["input"])
 			{
 				case "login":
-					if ((int)$ilSetting->get('allow_change_loginname') || self::$mode == self::MODE_REGISTRATION)
+// fau: regCodes - show message for generated username at registration form
+                    if (self::$mode == self::MODE_REGISTRATION
+                        && $registration_settings->loginGenerationType() != ilRegistrationSettings::LOGIN_GEN_MANUAL)
+                    {
+                        $val = new ilNonEditableValueGUI($lng->txt('username'),'username');
+                        $val->setValue($lng->txt('reg_login_is_generated'));
+                    }
+                    elseif ((int)$ilSetting->get('allow_change_loginname') || self::$mode == self::MODE_REGISTRATION)
+// fau.
 					{
 						$val = new ilTextInputGUI($lng->txt('username'),'username');
 						if($a_user)
