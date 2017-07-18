@@ -35,7 +35,7 @@
         <xsl:copy>
             <xsl:apply-templates select="@*" />
             <div class="ilTopTitle">
-                <img alt="Logo" src="templates/default/images-ehlssa/HeaderIcon.svg" height="40"/>
+                <img alt="Logo" src="templates/default/images-custom/HeaderIcon.svg" height="50"/>
             </div>
             <xsl:apply-templates select="node()" />
         </xsl:copy>

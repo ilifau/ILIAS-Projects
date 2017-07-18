@@ -236,7 +236,6 @@ elseif ($_SESSION['ilAccountRegistrationGUI:code'])
 		$this->form = new ilPropertyFormGUI();
 		$this->form->setFormAction($this->ctrl->getFormAction($this));
 		
-		
 		// code handling
 		//fim: ili: fau: regCodes
 		/* Disabled to only ask for Code once
