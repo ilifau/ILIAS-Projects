@@ -665,7 +665,6 @@ elseif ($_SESSION['ilAccountRegistrationGUI:code'])
 
 		$this->userObj->setTimeLimitOwner(7);
 		
-		
 		$access_limit = null;
 
 		$this->code_was_used = false;
@@ -701,6 +700,10 @@ elseif ($_SESSION['ilAccountRegistrationGUI:code'])
 							break;
 					}
 				}
+				//fim: fau: ili: RegCodes - add startref (hard coded)
+				require_once "./Services/User/classes/class.ilUserUtil.php";
+				ilUserUtil::setPersonalStartingPoint(ilUserUtil::START_REPOSITORY_OBJ, (int) $this->code_startref, $this->userObj);
+//fim. fau. ili.
 			}
 		}
 // fim. ili. fau.

@@ -100,6 +100,10 @@ class ilRegistrationCode
 	 * @var array	$notification_users
 	 */
 	public $notification_users;
+	/**
+	 * @var integer $startref
+	 */
+	public $code_startref;
 // fim. ili. fau.
 
 	public static function create($role, $stamp, $local_roles, $limit, $limit_date, $reg_type, $ext_type)
@@ -380,6 +384,7 @@ class ilRegistrationCode
 		$this->email_verification = false;
 		$this->email_verification_time = 1800;
 		$this->notification_users = array();
+		$this->code_startref = 0;
 	}
 	/**
 	 * Read properties from the database
@@ -427,6 +432,7 @@ class ilRegistrationCode
 			$this->email_verification = (bool) $row['email_verification'];
 			$this->email_verification_time = (integer) $row['email_verification_time'];
 			$this->notification_users = explode(';', (string) $row['notification_users']);
+			$this->code_startref = (integer) $row['code_startref'];
 		}
 	}
 	/**
@@ -485,7 +491,8 @@ class ilRegistrationCode
 				'captcha_required' => array('integer', $this->captcha_required),
 				'email_verification' => array('integer', $this->email_verification),
 				'email_verification_time' => array('integer', $this->email_verification_time),
-				'notification_users' => array('text', implode(';', $this->notification_users))
+				'notification_users' => array('text', implode(';', $this->notification_users)),
+				'code_startref' => array('integer', $this->code_startref)
 			)
 		);
 	}
@@ -533,6 +540,7 @@ class ilRegistrationCode
 			}
 		}
 	}
+
 	/**
 	 * Check if the code can be used for account registration
 	 * - is saved

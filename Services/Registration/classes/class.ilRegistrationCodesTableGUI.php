@@ -148,6 +148,7 @@ class ilRegistrationCodesTableGUI extends ilTable2GUI
 			$result[$k]["email_verification"] = $code["email_verification"] ? $this->lng->txt('yes') : $this->lng->txt('no');
 			$result[$k]["email_verification_time"] = $code["email_verification_time"];
 			$result[$k]["notification_logins"] = implode(", ", $logins);
+			$result[$k]["code_startref"] = $code["code_startref"];
 // fim. ili. fau.
 
 			if($code["used"])
@@ -354,6 +355,10 @@ class ilRegistrationCodesTableGUI extends ilTable2GUI
                 'txt' => $this->lng->txt("reg_notification"),
                 'default' => false
             ),
+			'code_startref' => array(
+				'txt' => $this->lng->txt("reg_code_startref"),
+				'default' => false
+			),
         );
     }
 // fim. ili. fau.
