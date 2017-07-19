@@ -8963,7 +8963,7 @@ input.ilOpenIDBox {
 .ilMainHeader > header > .row > a.navbar-brand > img {
   display: inline-block;
   height: 50px;
-  width: 50px;
+  /*width: 50px; fim ili fau */
 }
 .ilMainMenu {
   background-color: white;
@@ -10581,9 +10581,10 @@ div.ilStartupSection form.form-horizontal {
   width: 40em;
 }
 div#il_startup_logo img {
-  width: 50px;
+  height:75px
+  /*width: 50px;
   height: 50px;
-  margin: 15px;
+  margin: 15px; fim ili fau */
 }
 /* Services/Bookmarks */
 #block_pdbookm_0 #tree_div {
