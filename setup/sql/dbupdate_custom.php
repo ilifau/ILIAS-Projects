@@ -37,3 +37,12 @@ if( !$ilDB->tableColumnExists('reg_registration_codes', 'title'))
     );
 }
 ?>
+
+<#2>
+<?php
+if( $ilDB->tableColumnExists('reg_registration_codes', 'title')) {
+    $ilDB->addTableColumn('reg_registration_codes', 'code_startref',
+        array('type' => 'integer', 'length' => 4, 'notnull' => true, 'default' => 600)
+    );
+}
+?>

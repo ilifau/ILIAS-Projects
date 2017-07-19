@@ -610,7 +610,12 @@ class ilAccountRegistrationGUI
 		}
 
 		$this->userObj->setFullName();
-
+		
+//fim: fau: ili: RegCodes - add startref (hard coded) 
+		require_once "./Services/User/classes/class.ilUserUtil.php";
+		ilUserUtil::setPersonalStartingPoint(ilUserUtil::START_REPOSITORY_OBJ, (int) "216", $this->userObj);
+//fim. fau. ili.
+		
 		$birthday_obj = $this->form->getItemByPostVar("usr_birthday");
 		if ($birthday_obj)
 		{

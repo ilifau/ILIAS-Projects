@@ -944,6 +944,12 @@ class ilRegistrationSettingsGUI
 		$pwgen->setValue(1);
 		$pwgen->setChecked($codeObj->password_generation);
 		$this->form_gui->addItem($pwgen);
+		// startref
+		$cstartref = new ilNumberInputGUI($this->lng->txt('reg_code_startref'), 'code_startref');
+		$cstartref->setDecimals(0);
+		$cstartref->setSize(4);
+		$cstartref->setValue($codeObj->code_startref);
+		$this->form_gui->addItem($cstartref);
 		// captcha
 		require_once 'Services/Captcha/classes/class.ilCaptchaUtil.php';
 		$captcha = new ilCheckboxInputGUI($this->lng->txt('adm_captcha_anonymous_short'), 'captcha_required');
@@ -1112,6 +1118,7 @@ class ilRegistrationSettingsGUI
 		$codeObj->email_verification = (bool) $this->form_gui->getInput('email_verification');
 		$codeObj->email_verification_time = (integer) $this->form_gui->getInput('email_verification_time');
 		$codeObj->setNotificationLogins($this->form_gui->getInput('notification_logins'));
+		$codeObj->code_startref = $this->form_gui->getInput('code_startref');
 		// global role
 		$codeObj->global_role = $this->form_gui->getInput('reg_codes_role');
 		// local roles

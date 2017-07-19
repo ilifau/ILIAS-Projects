@@ -100,6 +100,10 @@ class ilRegistrationCode
      * @var array $notification_users
      */
     public $notification_users;
+    /**
+     * @var integer $startref
+     */
+    public $code_startref;
 
 // fau.
 
@@ -338,6 +342,7 @@ class ilRegistrationCode
         $this->email_verification = false;
         $this->email_verification_time = 1800;
         $this->notification_users = array();
+        $this->code_startref = 0;
     }
 
     /**
@@ -383,6 +388,7 @@ class ilRegistrationCode
             $this->email_verification = (bool)$row['email_verification'];
             $this->email_verification_time = (integer)$row['email_verification_time'];
             $this->notification_users = explode(';', (string)$row['notification_users']);
+            $this->code_startref = (int)$row['code_startref'];
         }
     }
 
@@ -428,6 +434,7 @@ class ilRegistrationCode
                 'role_local' => array('text', implode(';', $this->local_roles)),
                 'alimit' => array('text', $this->limit_type),
                 'alimitdt' => array('text', $alimitdt),
+                'code_startref' => array('integer', $this->code_startref),
                 'reg_enabled' => array('integer', $this->reg_enabled),
                 'ext_enabled' => array('integer', $this->ext_enabled),
                 'login_generation_type' => array('text', $this->login_generation_type),

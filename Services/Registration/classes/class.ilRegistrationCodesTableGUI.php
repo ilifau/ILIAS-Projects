@@ -126,6 +126,7 @@ class ilRegistrationCodesTableGUI extends ilTable2GUI
 				$result[$k]["generated"] = ilDatePresentation::formatDate(new ilDateTime($code["generated"], IL_CAL_UNIX));
 				$result[$k]["use_limit"] = empty($code["use_limit"]) ? $this->lng->txt('reg_code_use_unlimited') : $code["use_limit"];
 				$result[$k]["use_count"] = $code["use_count"];
+				$result[$k]["code_startref"] = $code["code_startref"];
 				$logins = array();
 				foreach (explode(";", $code["notification_users"]) as $id) {
 					if ($login = ilObjUser::_lookupLogin(trim($id))) {
@@ -327,6 +328,10 @@ class ilRegistrationCodesTableGUI extends ilTable2GUI
 				),
 				'notification_logins' => array(
 					'txt' => $this->lng->txt("reg_notification"),
+					'default' => false
+				),
+                'code_startref' => array(
+					'txt' => $this->lng->txt("reg_code_startref"),
 					'default' => false
 				),
 			);
