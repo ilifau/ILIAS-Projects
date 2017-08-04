@@ -90,6 +90,9 @@
 <xsl:param name="enable_amd_page_list"/>
 <xsl:param name="current_ts"/>
 <xsl:param name="enable_html_mob"/>
+<!-- fim: ili: fau: [colorbox] add parameter to show fullscreen media with colorbox -->
+<xsl:param name="fullscreen_in_colorbox"/>
+<!-- fim. ili. fau. -->
 
 <xsl:template match="PageObject">
 	<xsl:if test="$mode != 'edit'">
@@ -3110,7 +3113,15 @@
 		</xsl:when>
 		<xsl:otherwise>
 			<a target="_blank">
-			<xsl:attribute name="href"><xsl:value-of select="$fullscreen_link"/>&amp;mob_id=<xsl:value-of select="substring-after($cmobid,'mob_')"/>&amp;pg_id=<xsl:value-of select="$pg_id"/></xsl:attribute>
+<!-- fim: ili: fau: [colorbox] open fullscreen media in colorbox
+			<xsl:if test="$fullscreen_in_colorbox">
+-->
+			<xsl:attribute name="onclick">$.colorbox({width:window.innerWidth-100, height:window.innerHeight-100, iframe:true, href:'<xsl:value-of select="$fullscreen_link"/>&amp;mob_id=<xsl:value-of select="substring-after($cmobid,'mob_')"/>&amp;pg_id=<xsl:value-of select="$pg_id"/>'});return false;</xsl:attribute>
+
+<!-- 		</xsl:if>
+
+				<xsl:attribute name="href"><xsl:value-of select="$fullscreen_link"/&amp;mob_id=<xsl:value-of select="substring-after($cmobid,'mob_')"/>&amp;pg_id=<xsl:value-of select="$pg_id"/></xsl:attribute>
+ fim. ili. fau. -->
 			<img border="0" align="right">
 			<xsl:attribute name="src"><xsl:value-of select="$enlarge_path"/></xsl:attribute>
 			</img>

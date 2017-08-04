@@ -99,5 +99,22 @@ class iljQueryUtil
 		return "./Services/jQuery/js/maphilight_".self::$maphilight_ver."/maphilight.js";
  	}
 
+	// fim: ili: fau: [colorbox] init the colorbox functionality
+	// fim: [trash] ignore missing template (cron job line)
+	static function initColorbox()
+	{
+		require_once('Services/Context/classes/class.ilContext.php');
+		if (!ilContext::usesTemplate())
+		{
+			return;
+		}
+
+		global $tpl;
+
+		$tpl->addJavaScript("./Services/jQuery/js/colorbox/jquery.colorbox-min.js", true, 1);
+		$tpl->addCss("./Services/jQuery/js/colorbox/example4/colorbox.css");
+	}
+	// fim. ili. fau.
+
 }
 ?>

@@ -1770,6 +1770,22 @@ return;
 		// ensure no cache hit, if included files/media objects have been changed
 		$params["incl_elements_date"] = $this->obj->getLastUpdateOfIncludedElements();
 
+// fim: ili: fau: [colorbox] init colorbox and add parameter to open fullscreen in box
+/*		global $ilCust;
+		if ($ilCust->getSetting('fullscreen_in_colorbox')
+			or $this instanceof ilLMPresentationGUI)
+		if ($this instanceof ilLMPresentationGUI)
+		{
+*/
+			iljQueryUtil::initColorbox();
+			$params["fullscreen_in_colorbox"] = true;
+/*		}
+        else
+        {
+            $params["fullscreen_in_colorbox"] = false;
+        }
+*/
+// fim. ili. fau.
 
 		// should be modularized
 		include_once("./Services/COPage/classes/class.ilPCSection.php");
