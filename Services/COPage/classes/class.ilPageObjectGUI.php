@@ -1778,7 +1778,7 @@ return;
 		{
 */
 			iljQueryUtil::initColorbox();
-			$params["fullscreen_in_colorbox"] = true;
+//			$params["fullscreen_in_colorbox"] = true;
 /*		}
         else
         {
