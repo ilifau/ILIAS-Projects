@@ -1709,6 +1709,11 @@ class ilUserImportParser extends ilSaxParser
 				ilUserUtil::setPersonalStartingPoint(ilUserUtil::START_REPOSITORY_OBJ, (int) $this->cdata, $this->userObj);
 				break;
 // fim.
+/* fim: ili: fau: [TopForumLink]
+			case 'ForumLink':
+					$this->userObj->setTopForumLink($this->cdata);
+				break;
+*/
 		}
 	}
 

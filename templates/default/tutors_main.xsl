@@ -28,33 +28,45 @@
     body {
       height: 94%; /* 100% */
     }
- -->
+
+    .ilFixedTopSpacer,
+    .ilFixedTopSpacerBarOnly {
+        margin-top: 100px;
+    }
+    -->
 
     <!-- PNG logo in the top bar -->
     <xsl:template match="div[@id='ilTopBar']//div[@class='row']" >
         <xsl:copy>
+            <xsl:attribute name="style">border-bottom: 2px solid #F59C00; margin-bottom: 5px; </xsl:attribute>
             <xsl:apply-templates select="@*" />
             <div class="ilTopTitle">
-                <img alt="Logo" src="templates/default/images-custom/HeaderIcon.svg" height="50"/>
+                <img alt="Logo" src="templates/default/images-custom/HeaderIcon.svg" height="100"/>
             </div>
             <xsl:apply-templates select="node()" />
         </xsl:copy>
     </xsl:template>
 
-    <!-- "Back" and "Overview" button beneath the user drop down -->
+    <!-- "Back", "Overview" and "Forum" button beneath the user drop down -->
     <xsl:template match="ul[@id='ilTopBarNav']" >
         <xsl:copy>
+            <xsl:attribute name="style">margin-right: 0px; padding: 25px</xsl:attribute>
             <xsl:apply-templates select="@*" />
             <!-- if user is logged in -->
             <xsl:if test="li[@id='userlog']">
                 <li>
                     <a onclick="history.back();return false;">
-                        &#9664;
+                      &#9664; Zurück
                     </a>
                 </li>
                 <li>
-                    <a onclick="window.location='index.php?senappHome=1';return false;">
+                    <a onclick="window.location='index.php?';return false;">
                         <xsl:value-of select="php:function('ilSkinTransformer::getTxt','content')" />
+                    </a>
+                </li>
+                <li>
+                    <a onclick="window.location='index.php?';return false;">
+                        <xsl:value-of select="php:function('ilSkinTransformer::getTxt','forum')" />
                     </a>
                 </li>
             </xsl:if>
@@ -110,7 +122,10 @@
 
     <!-- Show "ilTab" and hide some not needed -->
     <xsl:template match="ul[@id='ilTab']">
-        <xsl:copy><xsl:apply-templates select="@*|node()" /></xsl:copy>
+        <xsl:copy>
+            <xsl:attribute name="style">border: 0px;</xsl:attribute>
+            <xsl:apply-templates select="@*|node()" />
+        </xsl:copy>
     </xsl:template>
     <xsl:template match="li[@id='tab_view_content']" />
     <xsl:template match="li[@id='tab_info_short']" />
@@ -162,17 +177,18 @@
     <xsl:template match="a" >
 
         <xsl:copy>
-            <xsl:copy-of select="@*" />
 
             <xsl:choose>
                 <!-- rename settings link in user dropdown -->
                 <xsl:when test="contains(@href,'jumpToProfile')">
+                    <xsl:copy-of select="@*" />
                     <xsl:attribute name="onclick">window.location=this.getAttribute("href");return false;</xsl:attribute>
                     <xsl:value-of select="php:function('ilSkinTransformer::getTxt','personal_data')" />
                 </xsl:when>
 
                 <!-- change settings link to password in user dropdown -->
                 <xsl:when test="contains(@href,'jumpToSettings')">
+                    <xsl:copy-of select="@*" />
                     <xsl:attribute name="onclick">window.location='ilias.php?cmd=jumpToPassword&amp;baseClass=ilPersonalDesktopGUI';return false;</xsl:attribute>
                     <xsl:value-of select="php:function('ilSkinTransformer::getTxt','chg_password')" />
                 </xsl:when>
@@ -186,8 +202,13 @@
                     <xsl:copy-of select="node()" />
                 </xsl:when> -->
 
+                <!-- hide public link -->
+                <xsl:when test="contains(@href,'index.php')">
+                </xsl:when>
+
                 <!-- links without href are just anchors -->
                 <xsl:otherwise>
+                    <xsl:copy-of select="@*" />
                     <xsl:copy-of select="node()" />
                 </xsl:otherwise>
             </xsl:choose>

@@ -889,7 +889,7 @@ class ilObjUserGUI extends ilObjectGUI
 				$this->object->setPref('chat_osc_accept_msg', $_POST['chat_osc_accept_msg'] ? 'y' : 'n');
 			}
 
-// fim: update prsonal starting point
+// fim: startref - update personal starting point
 			require_once('Services/User/classes/class.ilUserUtil.php');
 			ilUserUtil::setPersonalStartingPoint($_POST['usr_start'], $_POST['usr_start_ref_id'], $this->object);
 // fim.
@@ -1084,6 +1084,10 @@ class ilObjUserGUI extends ilObjectGUI
 		$data["usr_start"] = ilUserUtil::getPersonalStartingPoint($this->object);
 		$data["usr_start_ref_id"] = ilUserUtil::getPersonalStartingObject($this->object);
 // fim.
+
+//fim: ili: fau: [TopForumLink]
+		$data["top_forum_link"] = $this->object->prefs["top_forum_link"];
+//fim. ili. fau.
 
 		$this->form_gui->setValuesByArray($data);
 	}
@@ -1828,6 +1832,12 @@ class ilObjUserGUI extends ilObjectGUI
 		}
 		// fim.
 
+		// ili: fau: fim: [TopForumLink] init, lng hardcoded
+		// TopForumLink
+		$top_forum_link = new ilTextInputGUI("Forum-Link", "top_forum_link");
+		$top_forum_link->setSize(40);
+		$top_forum_link->setMaxLength(255);
+		$this->form_gui->addItem($top_forum_link);
 
 		// Options
 		if($this->isSettingChangeable('send_mail'))

@@ -993,7 +993,7 @@ textarea {
   line-height: inherit;
 }
 a {
-  color: #882796;
+  color: #0D406E;
   text-decoration: none;
 }
 a:hover,
@@ -8780,7 +8780,7 @@ input.ilOpenIDBox {
 }
 #ilTopBar.ilTopBar {
   padding: 0;
-  height: 40px;
+  height: 100px;
   top: 0;
   z-index: 1040;
 }
@@ -10691,9 +10691,9 @@ button.btn:not(.btn-link) > span:first-child:not(:empty) {
 }
 */
 .btn-default {
-  color: white;
-  background-color: #ad32bf;
-  border-color: #ad32bf;
+  color: black;
+  background-color: rgba(245, 156, 0, 0.76);
+  border-color: #000;
 }
 .btn-default:hover,
 .btn-default:focus,
@@ -10814,14 +10814,14 @@ fieldset[disabled] .btn-info.active {
   background-color: #882796;
 }
 .btn-link {
-  color: #882796;
+  color: #0D406E;
   border: none;
   background-color: transparent;
 }
 .btn-link:hover,
 .btn-link:focus,
 .btn-link:active {
-  color: #51175a;
+  color: #0D406E;
   text-decoration: none;
   background-color: transparent;
 }
@@ -11486,7 +11486,7 @@ table.mceToolbar td {
   }
   .ilFixedTopSpacer,
   .ilFixedTopSpacerBarOnly {
-    margin-top: 40px;
+    margin-top: 100px;
   }
   nav#ilTopNav {
     min-height: 0px;
@@ -11622,10 +11622,10 @@ table.mceToolbar td {
   }
 }
 div.ilTopBar {
-  background-color: #f0f0f0!important;
+  background-color: #f0f0f0;
 }
 .ilFixedTopSpacer {
-  margin-top: 40px;
+  margin-top: 100px;
   padding-top: 0;
 }
 .ilTopTitle {

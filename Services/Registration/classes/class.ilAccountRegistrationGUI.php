@@ -700,10 +700,10 @@ elseif ($_SESSION['ilAccountRegistrationGUI:code'])
 							break;
 					}
 				}
-				//fim: fau: ili: RegCodes - add startref (hard coded)
+	//fim: fau: ili: RegCodes - add startref
 				require_once "./Services/User/classes/class.ilUserUtil.php";
 				ilUserUtil::setPersonalStartingPoint(ilUserUtil::START_REPOSITORY_OBJ, (int) $this->codeObj->code_startref, $this->userObj);
-//fim. fau. ili.
+	//fim. fau. ili.
 			}
 		}
 // fim. ili. fau.

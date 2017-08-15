@@ -1360,7 +1360,7 @@
 							</xsl:if>
 <!-- fim: ili: fau: colorbox -->
 							<xsl:if test="@Type = 'MediaObject'">
-								<xsl:attribute name="onclick">$.colorbox({width:window.innerWidth-100, height:window.innerHeight-100, iframe:true, href:'<xsl:value-of select="substring-before($fullscreen_link,'cmd=')"/>frame=_blank&amp;obj_type=MediaObject&amp;cmd=media&amp;cmdClass=illmpresentationgui&amp;cmdNode=cn&amp;baseClass=ilLMPresentationGUI&amp;mob_id=<xsl:value-of select="substring-after(@Target, 'mob_')"/>&amp;back_pg=<xsl:value-of select="$pg_id"/>'});return false;</xsl:attribute>
+								<xsl:attribute name="onclick">$.colorbox({maxWidth:'100%', maxHeight:'100%', width:window.innerWidth-100, height:window.innerHeight-100, iframe:true, href:'<xsl:value-of select="substring-before($fullscreen_link,'cmd=')"/>frame=_blank&amp;obj_type=MediaObject&amp;cmd=media&amp;cmdClass=illmpresentationgui&amp;cmdNode=cn&amp;baseClass=ilLMPresentationGUI&amp;mob_id=<xsl:value-of select="substring-after(@Target, 'mob_')"/>&amp;back_pg=<xsl:value-of select="$pg_id"/>'});return false;</xsl:attribute>
 							</xsl:if>
 							<xsl:value-of select="@LinkHref"/>
 <!-- fim. ili. fau. -->
