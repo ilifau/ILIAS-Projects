@@ -61,14 +61,18 @@
                 </li>
                 <li>
                     <a onclick="window.location='index.php?';return false;">
-                        <xsl:value-of select="php:function('ilSkinTransformer::getTxt','content')" />
+                      <!--  <xsl:value-of select="php:function('ilSkinTransformer::getTxt','content')" />
+                    -->
+                    Übersicht über ihre Kurse
                     </a>
                 </li>
+                <!-- Nonsense for multiple courses
                 <li>
                     <a onclick="window.location='index.php?';return false;">
                         <xsl:value-of select="php:function('ilSkinTransformer::getTxt','forum')" />
                     </a>
                 </li>
+                -->
             </xsl:if>
             <xsl:apply-templates select="node()" />
         </xsl:copy>
@@ -292,9 +296,18 @@
     <!-- hide search function -->
     <xsl:template match="li[@id='ilMMSearch']" />
 
-    <!-- hide search function -->
+    <!--  -->
     <xsl:template match="input[@id='usr_email']/@style" />
     <xsl:template match="input[@id='usr_email_retype']/@style" />
+
+    <!-- stronger border for dynamic frame
+    <xsl:template match="div[@id='bot_center_area']">
+        <xsl:copy>
+            <xsl:attribute name="style">border-top: 5px solid #0D406E; !important</xsl:attribute>
+            <xsl:apply-templates select="@*|node()" />
+        </xsl:copy>
+    </xsl:template>
+    -->
 
     <!-- hide public Area Links
     <xsl:template match="p[@class='ilStartupSection']/a[2]" />
