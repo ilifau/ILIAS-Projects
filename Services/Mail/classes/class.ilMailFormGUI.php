@@ -660,7 +660,8 @@ class ilMailFormGUI
 			->setForm('form_' . $form_gui->getName())
 			->setCaption('mail_my_courses');
 		$ilToolbar->addButtonInstance($btn);
-
+/*
+fim: ili: fau: hide, did not work with skintransformer
 		$btn = ilButton::getInstance();
 		$btn->setButtonType(ilButton::BUTTON_TYPE_SUBMIT)
 			->setName('searchGroupsTo')
@@ -674,7 +675,8 @@ class ilMailFormGUI
 			->setForm('form_' . $form_gui->getName())
 			->setCaption('mail_my_mailing_lists');
 		$ilToolbar->addButtonInstance($btn);
-
+fim. ili. fau.
+*/
 		$dsDataLink = $ilCtrl->getLinkTarget($this, 'lookupRecipientAsync', '', true);
 		
 		// RECIPIENT

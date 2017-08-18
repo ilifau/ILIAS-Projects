@@ -16,7 +16,7 @@
     <!-- Webapp style with zoom -->
     <!--
     <xsl:template match="meta[@name='viewport']">
-        <meta name="viewport" content="initial-scale=1.5, user-scalable=0" />
+        <meta name="viewport" content="initial-scale=500, user-scalable=0" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black" />
     </xsl:template>
@@ -56,14 +56,14 @@
             <xsl:if test="li[@id='userlog']">
                 <li>
                     <a onclick="history.back();return false;">
-                      &#9664; Zurück
+                      &#9664;
                     </a>
                 </li>
                 <li>
                     <a onclick="window.location='index.php?';return false;">
                       <!--  <xsl:value-of select="php:function('ilSkinTransformer::getTxt','content')" />
                     -->
-                    Übersicht über ihre Kurse
+                    Übersicht
                     </a>
                 </li>
                 <!-- Nonsense for multiple courses
@@ -77,6 +77,9 @@
             <xsl:apply-templates select="node()" />
         </xsl:copy>
     </xsl:template>
+
+    <!-- hide right col on overview startpage -->
+    <xsl:template match="div[@id='il_right_col']" />
 
     <!-- hide email function in upper bar and some more things...-->
     <!-- <xsl:template match="ul[@id='ilTopBarNav']/li[1]" /> -->
@@ -162,9 +165,10 @@
     </xsl:template>
 
     <!-- hide learning progress -->
+    <!-- <xsl:template match="li[@id='subtab_trac_matrix']" /> -->
     <xsl:template match="li[@id='subtab_trac_summary']" />
-    <xsl:template match="li[@id='subtab_trac_matrix']" />
     <xsl:template match="li[@id='subtab_trac_settings']" />
+    <xsl:template match="li[@id='tab_learning_progress']" />
 
     <!-- No head and list actions -->
     <!-- <xsl:template match="div[@class='ilHeadAction']"  /> -->
@@ -173,6 +177,15 @@
     <!-- reduce personal settings -->
     <xsl:template match="li[@id='tab_general_settings']"  />
     <!-- <xsl:template match="li[@id='tab_mail_settings']"  /> -->
+
+    <!-- Profile adjustment layout -->
+    <xsl:template match="table">
+        <xsl:copy>
+            <xsl:copy-of select="@*" />
+            <xsl:attribute name="width">100%</xsl:attribute>
+            <xsl:copy-of select="node()" />
+        </xsl:copy>
+    </xsl:template>
 
     <!-- No footer -->
     <xsl:template match="footer" />
@@ -225,8 +238,9 @@
 
     <!-- hide some email functions -->
     <xsl:template match="button[@name='cmd[searchUsers]']" />
-    <!-- <xsl:template match="button[@name='cmd[searchGroupsTo]']" />
-    <xsl:template match="button[@name='cmd[searchMailingListsTo]']" /> -->
+    <xsl:template match="button[@name='cmd[searchGroupsTo]']" />
+    <xsl:template match="button[@name='cmd[searchMailingListsTo]']" />
+    <xsl:template match="li[@class='ilToolbarGroup']"/>
 
     <!-- hide some member functions -->
     <xsl:template match="input[@name='cmd[editMembers]']" />
