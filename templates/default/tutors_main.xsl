@@ -151,6 +151,18 @@
     <xsl:template match="form[contains(@action,'ilobjcoursegui')]/div[@class='ilTableNav'][1]" />
     <xsl:template match="form[contains(@action,'ilobjcoursegui')]/div[@class='ilTableNav yui-skin-sam'][1]" />
 
+    <xsl:template match="select[@name='selected_cmd']/option[@value='editParticipants']" />
+    <xsl:template match="select[@name='selected_cmd']/option[@value='confirmDeleteParticipants']" />
+    <xsl:template match="select[@name='selected_cmd']/option[@value='addToClipboard']" />
+    <xsl:template match="select[@name='selected_cmd2']/option[@value='editParticipants']" />
+    <xsl:template match="select[@name='selected_cmd2']/option[@value='confirmDeleteParticipants']" />
+    <xsl:template match="select[@name='selected_cmd2']/option[@value='addToClipboard']" />
+
+    <!--
+    <xsl:template match="a[contains(@href, 'cmd=editMember')]" />
+    <xsl:template match="a[@class='ilContainerItemCommand2']" />
+    <xsl:template match="td[@class='std']" />
+-->
     <!-- Hide personal startpage in user settings -->
     <xsl:template match="div[@id='il_prop_cont_usr_start']" />
 
