@@ -39,4 +39,24 @@
         </xsl:copy>
     </xsl:template>
 
+    <!-- EDIT OF LOGINPAGE -->
+    <!-- resize elements startpage -->
+    <xsl:template match="p[@class='ilStartupSection']" >
+        <xsl:copy>
+            <xsl:attribute name="style">font-size: 20px;</xsl:attribute>
+            <xsl:apply-templates select="@*|node()" />
+        </xsl:copy>
+    </xsl:template>
+
+    <!-- delete public area -->
+    <xsl:template match="p[@class='ilStartupSection']/a[2]" />
+
+    <!-- move login-button -->
+    <xsl:template match="div[@class='ilFormFooter clearfix']/div[@class='col-sm-6 ilFormCmds']" >
+        <xsl:copy>
+            <xsl:attribute name="style">width: 45%;</xsl:attribute>
+            <xsl:apply-templates select="@*|node()" />
+        </xsl:copy>
+    </xsl:template>
+
 </xsl:stylesheet>

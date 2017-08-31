@@ -7566,7 +7566,7 @@ select {
 }
 .form-horizontal {
   margin-bottom: 20px;
-  background-color: #fdfdfd;
+  background-color: #FFFFFF;
 }
 form.form-inline {
   margin-bottom: 20px;
@@ -7633,7 +7633,7 @@ input[type="file"].form-control {
 .ilFormFooter {
   color: #4d4d4d;
   /* background-color: lighten(@ilFormColor, 45%); */
-  background-color: #f0f0f0;
+  background-color: #FFFFFF;
 }
 .ilSubForm {
   background-color: #f8f8f8;
@@ -10577,8 +10577,9 @@ div#il_startup_content {
   padding-top: 25px;
 }
 div.ilStartupSection form.form-horizontal {
-  text-align: left;
+/*  text-align: left;
   width: 40em;
+*/
 }
 div#il_startup_logo img {
   height:75px

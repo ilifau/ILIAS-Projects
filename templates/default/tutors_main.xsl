@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:php="http://php.net/xsl">
-<xsl:output method="html" version="4.0" encoding="UTF-8"/>
+    <xsl:output method="html" version="4.0" encoding="UTF-8"/>
 
-<!-- Variables -->
-<xsl:variable name="skinDirectory" select="php:function('ilSkinTransformer::getSkinDirectory','')" />
+    <!-- Variables -->
+    <xsl:variable name="skinDirectory" select="php:function('ilSkinTransformer::getSkinDirectory','')" />
 
     <!--  Basic rule: copy everything not specified and process the childs -->
     <xsl:template match="@*|node()">
@@ -56,14 +56,14 @@
             <xsl:if test="li[@id='userlog']">
                 <li>
                     <a onclick="history.back();return false;">
-                      &#9664;
+                        &#9664;
                     </a>
                 </li>
                 <li>
                     <a onclick="window.location='index.php?';return false;">
-                      <!--  <xsl:value-of select="php:function('ilSkinTransformer::getTxt','content')" />
-                    -->
-                    Übersicht
+                        <!--  <xsl:value-of select="php:function('ilSkinTransformer::getTxt','content')" />
+                      -->
+                        Übersicht
                     </a>
                 </li>
                 <!-- Nonsense for multiple courses
@@ -97,7 +97,7 @@
 
     <!-- Empty headline (keep space) -->
     <xsl:template match="div[contains(@class,'media il_HeaderInner')]">
-        <div class="media il_HeaderInner"></div> 
+        <div class="media il_HeaderInner"></div>
     </xsl:template>
 
     <!-- No locator, No tree view -->
@@ -293,7 +293,7 @@
     <!-- fixing text under picture -->
     <xsl:template match="div[@class='ilc_media_caption_MediaCaption']" >
         <xsl:copy>
-                <xsl:attribute name="style">margin-left: 10px</xsl:attribute>
+            <xsl:attribute name="style">margin-left: 10px</xsl:attribute>
             <xsl:apply-templates select="@*|node()" />
         </xsl:copy>
     </xsl:template>
