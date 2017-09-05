@@ -2784,7 +2784,7 @@ select[multiple].input-lg {
   .form-horizontal .control-label {
     text-align: right;
     margin-bottom: 0;
-    padding-top: 4px;
+  /*  padding-top: 4px; fim ili fau */
   }
 }
 .form-horizontal .has-feedback .form-control-feedback {
@@ -7223,7 +7223,9 @@ div#bot_center_area {
   position: fixed;
   padding: 5px;
   background-color: #f0f0f0;
-  border-top: 3px solid #E9E9E9;
+  border-top: 5px solid #F59C00;
+  border-left: 5px solid #F59C00;
+  border-right: 5px solid #F59C00;
   -webkit-overflow-scrolling: touch;
   /* Bug 11209 */
   overflow: auto;
@@ -7241,7 +7243,7 @@ div#bot_center_area iframe {
 div#bot_center_area_drag {
   left: 0;
   right: 0;
-  height: 4px;
+  height: 7.5px;
   cursor: row-resize;
   margin-top: -8px;
   position: absolute;

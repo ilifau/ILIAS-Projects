@@ -514,7 +514,12 @@ il.UICore = {
 		if (bc && sm) {
 			sm_reg = il.Util.getRegion(sm);
 			bc_reg = il.Util.getRegion(bc);
-			$(bc).css("width", parseInt(sm_reg.right - bc_reg.left) + "px");
+		//	$(bc).css("width", parseInt(sm_reg.right - bc_reg.left) + "px");
+			//fim: ili: fau: changed position of bot_center_area
+			$(bc).css("width", "90%");
+			$(bc).css("margin-left", "5%");
+			$(bc).css("margin-right", "5%");
+			//fim. ili. fau.
 		}
 
 		// footer vs. left nav

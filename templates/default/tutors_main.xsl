@@ -81,6 +81,17 @@
     <!-- hide right col on overview startpage -->
     <xsl:template match="div[@id='il_right_col']" />
 
+    <!-- hide course and group memberships settings
+    <xsl:template match="button[@id='ilAdvSelListAnchorText_block_dd_pditems_0']" />
+    -->
+
+    <!-- adjust buttons in personal profile -->
+    <xsl:template match="span[@class='input-group-btn']" >
+        <xsl:copy>
+            <xsl:attribute name="style">padding-right: 5px;</xsl:attribute>
+            <xsl:apply-templates select="@*|node()" />
+        </xsl:copy>
+    </xsl:template>
     <!-- hide email function in upper bar and some more things...-->
     <!-- <xsl:template match="ul[@id='ilTopBarNav']/li[1]" /> -->
     <!-- <xsl:template match="li[@id='tab_fold']" /> -->
@@ -325,16 +336,7 @@
     <!--  -->
     <xsl:template match="input[@id='usr_email']/@style" />
     <xsl:template match="input[@id='usr_email_retype']/@style" />
-
-    <!-- stronger border for dynamic frame
-    <xsl:template match="div[@id='bot_center_area']">
-        <xsl:copy>
-            <xsl:attribute name="style">border-top: 5px solid #0D406E; !important</xsl:attribute>
-            <xsl:apply-templates select="@*|node()" />
-        </xsl:copy>
-    </xsl:template>
-    -->
-
+    
     <!-- hide public Area Links
     <xsl:template match="p[@class='ilStartupSection']/a[2]" />
     <xsl:template match="div[@class='ilStartupSection']//a[2]" />
