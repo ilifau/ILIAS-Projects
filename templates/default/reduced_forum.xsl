@@ -14,23 +14,6 @@
        Forum transformations
     -->
 
-    <!-- Hide post related actions -->
-    <!-- <xsl:template match="div[@class='ilFrmPostCommands']" /> -->
-    <!--<xsl:template match="div[@class='ilFrmPostCommands']//span[@class='split-btn-default']" />-->
-
-    <!-- Hide table navigation settings (e.g. changing of displayed rows)
-    <xsl:template match="div[contains(@class,'ilTableNav')]//td[contains(@class,'ilRight')]" />
--->
-    <!-- Hide thread commands
-    <xsl:template match="div[contains(@class,'ilTableCommandRow')]" />
-    <xsl:template match="div[contains(@class,'ilTableSelectAll')]" />
-    <xsl:template match="input[contains(@id,'thread_ids')]" />
-    -->
-
-    <!-- Hide the quote button in the reply form -->
-    <xsl:template match="input[@name='cmd[quoteTopLevelPost]']" />
-    <xsl:template match="div[@id='il_prop_cont_userfile']" />
-
 <!-- Reduce the visit card -->
     <xsl:template match="div[./div/@class='ilProfile']">
         <xsl:copy>

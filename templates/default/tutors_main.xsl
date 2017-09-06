@@ -311,6 +311,29 @@
         </xsl:copy>
     </xsl:template>
 
+    <!-- adjusting look of tabs and subtabs -->
+    <xsl:template match="li[@id='tab_members']//a" >
+        <xsl:copy>
+            <xsl:attribute name="style">color: #FFF; background-color: #0D406E</xsl:attribute>
+            <xsl:apply-templates select="@*|node()" />
+        </xsl:copy>
+    </xsl:template>
+
+    <xsl:template match="li[@id='subtab_crs_member_administration']//a" >
+        <xsl:copy>
+            <xsl:attribute name="style">color: #FFF; background-color: #0D406E; font-size: 13px</xsl:attribute>
+            <xsl:apply-templates select="@*|node()" />
+        </xsl:copy>
+    </xsl:template>
+
+    <xsl:template match="li[@id='subtab_crs_members_gallery']//a" >
+        <xsl:copy>
+            <xsl:attribute name="style">color: #FFF; background-color: #0D406E; font-size: 13px</xsl:attribute>
+            <xsl:apply-templates select="@*|node()" />
+        </xsl:copy>
+    </xsl:template>
+
+
     <!-- hide "back to magazin"-button after survey -->
     <xsl:template match="nav[@id='2']" >
         <xsl:if test="not(..//a[contains(@href,'cmd=exitSurvey')])">
@@ -347,10 +370,13 @@
     <!-- hide public Area Links
     <xsl:template match="p[@class='ilStartupSection']/a[2]" />
     <xsl:template match="div[@class='ilStartupSection']//a[2]" />
--->
-    <!-- hide Itemproperties
-    <xsl:template match="div[@class='il_ContainerListItem']//div[@class='ilListItemSection il_ItemProperties']" />
+    -->
 
+    <!-- hide Itemproperties -->
+    <xsl:template match="div[@class='il_ContainerListItem']//div[@class='ilListItemSection il_ItemProperties']" />
+    <xsl:template match="div[@class='il_ContainerListItem']//div[@class='ilListItemSection il_Description']" />
+
+    <!--
     work in progress
         <xsl:template match="div[@class='il_ContainerListItem']" >
             <xsl:if test="not(..//div[@class='ilListItemSection il_ItemProperties'][contains(text,'verfügbar')])">

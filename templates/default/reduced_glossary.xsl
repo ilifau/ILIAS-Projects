@@ -21,7 +21,7 @@
 <xsl:template match="div[@class='ilTableFilterSec']" />
 <xsl:template match="div[contains(@class,'ilTableNav')]//td[contains(@class,'ilRight')]" />
 
-<!-- Hide the locator -->
+<!-- Hide the locator - Link to the side -->
 <xsl:template match="div[@class='il_info']" />
 
 </xsl:stylesheet>
