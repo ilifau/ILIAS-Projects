@@ -38,10 +38,12 @@
     <!-- PNG logo in the top bar -->
     <xsl:template match="div[@id='ilTopBar']//div[@class='row']" >
         <xsl:copy>
-            <xsl:attribute name="style">border-bottom: 2px solid #F59C00; margin-bottom: 5px; </xsl:attribute>
+            <xsl:attribute name="style">border-bottom: 5px solid #F59C00; margin-bottom: 5px; </xsl:attribute>
             <xsl:apply-templates select="@*" />
             <div class="ilTopTitle">
-                <img alt="Logo" src="templates/default/images-custom/HeaderIcon.svg" height="100"/>
+                <a onClick="window.location='index.php?';return false;">
+                    <img alt="Logo" src="templates/default/images-custom/HeaderIcon.svg" height="100"/>
+                </a>
             </div>
             <xsl:apply-templates select="node()" />
         </xsl:copy>
@@ -336,7 +338,12 @@
     <!--  -->
     <xsl:template match="input[@id='usr_email']/@style" />
     <xsl:template match="input[@id='usr_email_retype']/@style" />
-    
+
+    <!-- nicer profil picture upload screen -->
+    <xsl:template match="div[@id='il_prop_cont_userfile']//div[@class='input-group']">
+        <input id="userfile" name="userfile" type="file" />
+    </xsl:template>
+
     <!-- hide public Area Links
     <xsl:template match="p[@class='ilStartupSection']/a[2]" />
     <xsl:template match="div[@class='ilStartupSection']//a[2]" />
