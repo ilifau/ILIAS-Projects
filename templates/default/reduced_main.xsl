@@ -19,6 +19,9 @@
     <!-- hide mail to members in membergallery -->
     <xsl:template match="a[contains(@href,'ilmailmembersearchgui')]" />
 
+    <!-- hide mail settings in user settings -->
+    <xsl:template match="li[@id='tab_mail_settings']" />
+
     <!-- ONLY FOR REGISTRATION VIA CODE: regCodes - looks smoother -->
     <xsl:template match="div[@id='il_prop_cont_usr_registration_code']" >
         <xsl:copy>
