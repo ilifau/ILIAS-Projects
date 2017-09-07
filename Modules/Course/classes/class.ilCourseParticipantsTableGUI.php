@@ -92,8 +92,10 @@ class ilCourseParticipantsTableGUI extends ilParticipantTableGUI
 		{
 			$this->addColumn($this->lng->txt('last_access'), 'access_ut', '16em');
 		}
-		
-		$this->addColumn($this->lng->txt('crs_member_passed'), 'passed');
+
+
+//fim: ili: fau: deleted heading of membership fim. ili. fau.
+		//$this->addColumn($this->lng->txt('crs_member_passed'), 'passed');
 		if($this->show_lp_status_sync)
 		{
 			$this->addColumn($this->lng->txt('crs_member_passed_status_changed'), 'passed_info');
@@ -102,7 +104,8 @@ class ilCourseParticipantsTableGUI extends ilParticipantTableGUI
 		
 		$this->setSelectAllCheckbox('participants');
 		$this->addColumn($this->lng->txt('crs_mem_contact'),'contact');
-		$this->addColumn($this->lng->txt('crs_blocked'), 'blocked');
+//fim: ili: fau: deleted heading of membership fim. ili. fau.
+		//$this->addColumn($this->lng->txt('crs_blocked'), 'blocked');
 		$this->addColumn($this->lng->txt('crs_notification_list_title'), 'notification');
 		
 		$this->addColumn($this->lng->txt(''), 'optional');
@@ -321,9 +324,11 @@ class ilCourseParticipantsTableGUI extends ilParticipantTableGUI
 		}
 		
 		// blocked only for real members
-		if(
-			!$this->getParticipants()->isAdmin($a_set['usr_id']) &&
-			!$this->getParticipants()->isTutor($a_set['usr_id'])
+//fim: ili: fau: no blocking fim. ili. fau.
+		if(false
+//		if(
+//			!$this->getParticipants()->isAdmin($a_set['usr_id'])
+//			&& !$this->getParticipants()->isTutor($a_set['usr_id'])
 		)
 		{
 			$this->tpl->setCurrentBlock('with_blocked');

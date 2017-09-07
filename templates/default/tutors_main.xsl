@@ -314,24 +314,36 @@
     <!-- adjusting look of tabs and subtabs -->
     <xsl:template match="li[@id='tab_members']//a" >
         <xsl:copy>
-            <xsl:attribute name="style">color: #FFF; background-color: #0D406E</xsl:attribute>
+            <xsl:attribute name="style">color: #FFF; background-color: #0D406E; font-size: 14px</xsl:attribute>
             <xsl:apply-templates select="@*|node()" />
         </xsl:copy>
     </xsl:template>
 
     <xsl:template match="li[@id='subtab_crs_member_administration']//a" >
         <xsl:copy>
-            <xsl:attribute name="style">color: #FFF; background-color: #0D406E; font-size: 13px</xsl:attribute>
+            <xsl:attribute name="style">color: #FFF; background-color: #0D406E; font-size: 12px</xsl:attribute>
             <xsl:apply-templates select="@*|node()" />
         </xsl:copy>
     </xsl:template>
 
     <xsl:template match="li[@id='subtab_crs_members_gallery']//a" >
         <xsl:copy>
-            <xsl:attribute name="style">color: #FFF; background-color: #0D406E; font-size: 13px</xsl:attribute>
+            <xsl:attribute name="style">color: #FFF; background-color: #0D406E; font-size: 12px</xsl:attribute>
             <xsl:apply-templates select="@*|node()" />
         </xsl:copy>
     </xsl:template>
+
+    <!-- minheight
+    <xsl:template match="div[@id='minheight']" />
+
+    <xsl:template match="body" >
+        <xsl:copy>
+            <xsl:attribute name="style">height: 97%</xsl:attribute>
+            <xsl:apply-templates select="@*|node()" />
+        </xsl:copy>
+    </xsl:template>
+-->
+
 
 
     <!-- hide "back to magazin"-button after survey -->
