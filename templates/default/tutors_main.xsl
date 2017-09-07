@@ -333,18 +333,13 @@
         </xsl:copy>
     </xsl:template>
 
-    <!-- minheight
-    <xsl:template match="div[@id='minheight']" />
-
-    <xsl:template match="body" >
+    <!-- minheight -->
+    <xsl:template match="div[@id='minheight']" >
         <xsl:copy>
-            <xsl:attribute name="style">height: 97%</xsl:attribute>
+            <xsl:attribute name="style">height: 25px</xsl:attribute>
             <xsl:apply-templates select="@*|node()" />
         </xsl:copy>
     </xsl:template>
--->
-
-
 
     <!-- hide "back to magazin"-button after survey -->
     <xsl:template match="nav[@id='2']" >
