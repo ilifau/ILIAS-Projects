@@ -34,10 +34,10 @@
     <!-- delete public area -->
     <xsl:template match="p[@class='ilStartupSection']/a[2]" />
 
-    <!-- move login-button -->
-    <xsl:template match="div[@class='ilFormFooter clearfix']/div[@class='col-sm-6 ilFormCmds']" >
+    <!-- move login button -->
+    <xsl:template match="input[@name='cmd[doStandardAuthentication]']" >
         <xsl:copy>
-            <xsl:attribute name="style">width: 45%;</xsl:attribute>
+            <xsl:attribute name="style">width: 150px; margin-right: 50px</xsl:attribute>
             <xsl:apply-templates select="@*|node()" />
         </xsl:copy>
     </xsl:template>
