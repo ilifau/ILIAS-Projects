@@ -1086,7 +1086,7 @@ class ilObjUserGUI extends ilObjectGUI
 // fim.
 
 //fim: ili: fau: [TopForumLink]
-		$data["top_forum_link"] = $this->object->prefs["top_forum_link"];
+//		$data["top_forum_link"] = $this->object->prefs["top_forum_link"];
 //fim. ili. fau.
 
 		$this->form_gui->setValuesByArray($data);
@@ -1834,11 +1834,11 @@ class ilObjUserGUI extends ilObjectGUI
 
 		// ili: fau: fim: [TopForumLink] init, lng hardcoded
 		// TopForumLink
-		$top_forum_link = new ilTextInputGUI("Forum-Link", "top_forum_link");
+/*		$top_forum_link = new ilTextInputGUI("Forum-Link", "top_forum_link");
 		$top_forum_link->setSize(40);
 		$top_forum_link->setMaxLength(255);
 		$this->form_gui->addItem($top_forum_link);
-
+*/
 		// Options
 		if($this->isSettingChangeable('send_mail'))
 		{
