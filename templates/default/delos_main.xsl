@@ -42,4 +42,12 @@
         </xsl:copy>
     </xsl:template>
 
+    <!-- nicer login page -->
+    <xsl:template match="form[@name='formlogin']/div" >
+        <xsl:copy>
+            <xsl:attribute name="style">width:82%; position: center; margin-left: auto; margin-right: auto;</xsl:attribute>
+            <xsl:apply-templates select="@*|node()" />
+        </xsl:copy>
+    </xsl:template>
+
 </xsl:stylesheet>
