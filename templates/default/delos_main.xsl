@@ -34,21 +34,34 @@
     <!-- delete public area -->
     <xsl:template match="p[@class='ilStartupSection']/a[2]" />
 
-    <!-- move login button -->
-    <xsl:template match="input[@name='cmd[doStandardAuthentication]']" >
+    <!-- move/resize login button -->
+    <xsl:template match="div[@class='ilStartupSection']//div[@class='col-sm-6 ilFormCmds']" >
         <xsl:copy>
-            <xsl:attribute name="style">width: 150px; margin-right: 50px</xsl:attribute>
+            <xsl:attribute name="style">width: 100%; text-align: center</xsl:attribute>
+            <xsl:apply-templates select="@*|node()" />
+        </xsl:copy>
+    </xsl:template>
+    <xsl:template match="div[@class='ilStartupSection']//input[@name='cmd[doStandardAuthentication]']" >
+        <xsl:copy>
+            <xsl:attribute name="style">width: 50%;</xsl:attribute>
             <xsl:apply-templates select="@*|node()" />
         </xsl:copy>
     </xsl:template>
 
     <!-- nicer login page -->
-    <xsl:template match="form[@name='formlogin']/div" >
+    <xsl:template match="div[@class='ilStartupSection']//form[@name='formlogin']/div" >
         <xsl:copy>
-            <xsl:attribute name="style">width:82%; position: center; margin-left: auto; margin-right: auto;</xsl:attribute>
+            <xsl:attribute name="style">width:65%; position: center; margin-left: auto; margin-right: auto;</xsl:attribute>
             <xsl:apply-templates select="@*|node()" />
         </xsl:copy>
     </xsl:template>
+    <xsl:template match="div[@id='left_nav']" />
+
+    <!-- nicer login page -->
+    <xsl:template match="form[@name='formlogin']//span[@class='asterisk']" />
+    <xsl:template match="form[@name='formlogin']//div[@class='col-sm-6 ilFormRequired']" />
+
+    <!-- hide left nav (for bot_center_area) -->
     <xsl:template match="div[@id='left_nav']" />
 
 </xsl:stylesheet>
