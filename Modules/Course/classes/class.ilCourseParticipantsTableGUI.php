@@ -103,10 +103,10 @@ class ilCourseParticipantsTableGUI extends ilParticipantTableGUI
 		
 		
 		$this->setSelectAllCheckbox('participants');
-		$this->addColumn($this->lng->txt('crs_mem_contact'),'contact');
+		//$this->addColumn($this->lng->txt('crs_mem_contact'),'contact');
 //fim: ili: fau: deleted heading of membership fim. ili. fau.
 		//$this->addColumn($this->lng->txt('crs_blocked'), 'blocked');
-		$this->addColumn($this->lng->txt('crs_notification_list_title'), 'notification');
+		//$this->addColumn($this->lng->txt('crs_notification_list_title'), 'notification');
 		
 		$this->addColumn($this->lng->txt(''), 'optional');
 
@@ -310,25 +310,25 @@ class ilCourseParticipantsTableGUI extends ilParticipantTableGUI
 		)
 		{
 			// cognos-blu-patch: begin
-			$this->tpl->setCurrentBlock('with_contact');
+/*			$this->tpl->setCurrentBlock('with_contact');
 			$this->tpl->setVariable('VAL_CONTACT_ID',$a_set['usr_id']);
 			$this->tpl->setVariable('VAL_CONTACT_CHECKED',$a_set['contact'] ? 'checked="checked"' : '');
 			$this->tpl->parseCurrentBlock();
-			// cognos-blu-patch: end
+*/			// cognos-blu-patch: end
 
-			$this->tpl->setCurrentBlock('with_notification');
-			$this->tpl->setVariable('VAL_NOTIFICATION_ID', $a_set['usr_id']);
+			//$this->tpl->setCurrentBlock('with_notification');
+/*			$this->tpl->setVariable('VAL_NOTIFICATION_ID', $a_set['usr_id']);
 			$this->tpl->setVariable('VAL_NOTIFICATION_CHECKED', ($a_set['notification'] ? 'checked="checked"' : ''));
 			$this->tpl->parseCurrentBlock();
-			
+*/
 		}
 		
 		// blocked only for real members
 //fim: ili: fau: no blocking fim. ili. fau.
-		if(false
-//		if(
-//			!$this->getParticipants()->isAdmin($a_set['usr_id'])
-//			&& !$this->getParticipants()->isTutor($a_set['usr_id'])
+/*
+		if(
+			!$this->getParticipants()->isAdmin($a_set['usr_id'])
+			&& !$this->getParticipants()->isTutor($a_set['usr_id'])
 		)
 		{
 			$this->tpl->setCurrentBlock('with_blocked');
@@ -336,7 +336,7 @@ class ilCourseParticipantsTableGUI extends ilParticipantTableGUI
 			$this->tpl->setVariable('VAL_BLOCKED_CHECKED', ($a_set['blocked'] ? 'checked="checked"' : ''));
 			$this->tpl->parseCurrentBlock();
 		}
-		
+*/
 				
 		if($this->show_lp_status_sync)
 		{			
