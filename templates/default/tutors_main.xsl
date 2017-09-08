@@ -379,6 +379,21 @@
     <xsl:template match="div[@class='ilStartupSection']//a[2]" />
     -->
 
+    <!-- change fontsize LM subtab -->
+    <xsl:template match="ul[@id='ilTab']/li/a" >
+        <xsl:copy>
+            <xsl:attribute name="style">font-size: 130%</xsl:attribute>
+            <xsl:apply-templates select="@*|node()" />
+        </xsl:copy>
+    </xsl:template>
+    <!-- change fontsize LM subtab -->
+    <xsl:template match="ul[@id='ilSubTab']/li/a" >
+        <xsl:copy>
+            <xsl:attribute name="style">font-size: 130%</xsl:attribute>
+            <xsl:apply-templates select="@*|node()" />
+        </xsl:copy>
+    </xsl:template>
+
     <!-- hide Itemproperties -->
     <xsl:template match="div[@class='il_ContainerListItem']//div[@class='ilListItemSection il_ItemProperties']" />
     <xsl:template match="div[@class='il_ContainerListItem']//div[@class='ilListItemSection il_Description']" />

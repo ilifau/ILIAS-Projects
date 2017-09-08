@@ -49,5 +49,6 @@
             <xsl:apply-templates select="@*|node()" />
         </xsl:copy>
     </xsl:template>
+    <xsl:template match="div[@id='left_nav']" />
 
 </xsl:stylesheet>

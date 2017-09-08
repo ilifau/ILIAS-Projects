@@ -7223,9 +7223,6 @@ div#bot_center_area {
   position: fixed;
   padding: 5px;
   background-color: #f0f0f0;
-  border-top: 5px solid #F59C00;
-  border-left: 5px solid #F59C00;
-  border-right: 5px solid #F59C00;
   -webkit-overflow-scrolling: touch;
   /* Bug 11209 */
   overflow: auto;
@@ -9000,10 +8997,8 @@ div.ilTopMemberView h3 {
 #ilSubTab > li > a {
   border-radius: 0;
   padding: 3px 7px;
-  font-size: 130%; /* fim cf */
-
-  /* font-size: 11.64px; */
-  /* font-weight: 600; */
+  font-size: 11.64px;
+  font-weight: 600;
 }
 #ilSubTab > li > a:hover {
   color: #51175a;
@@ -10124,6 +10119,10 @@ button.ilAreaClose {
   height: 20px;
   position: absolute;
   top: 0;
+  /*fim: ili: fau: */
+  right: 1%;
+  font-size: 20px;
+  /*fim. ili. fau. */
   cursor: pointer;
 }
 div.ilRightAreaSpace {
@@ -11645,10 +11644,3 @@ div.ilTopBar {
 .btn {
   margin: 1px;
 }
-/* fim cf */
-.ilc_page_rnav_RightNavigation {
-   font-size: 100% !important;
- }
-.ilc_page_lnav_LeftNavigation {
-  font-size: 100% !important;
-} /* fim cf */

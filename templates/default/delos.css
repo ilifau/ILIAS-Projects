@@ -8963,7 +8963,7 @@ input.ilOpenIDBox {
 .ilMainHeader > header > .row > a.navbar-brand > img {
   display: inline-block;
   height: 50px;
-  /*width: 50px; fim ili fau */
+  width: 50px;
 }
 .ilMainMenu {
   background-color: white;
@@ -10178,6 +10178,10 @@ button.ilAreaClose {
   height: 20px;
   position: absolute;
   top: 0;
+  /*fim: ili: fau: */
+  right: 1%;
+  font-size: 20px;
+  /*fim. ili. fau. */
   cursor: pointer;
 }
 div.ilRightAreaSpace {
@@ -10582,10 +10586,10 @@ div.ilStartupSection form.form-horizontal {
 */
 }
 div#il_startup_logo img {
-  height:75px
-  /*width: 50px;
+  height:75px;
+  width: 50px;
   height: 50px;
-  margin: 15px; fim ili fau */
+  margin: 15px;
 }
 /* Services/Bookmarks */
 #block_pdbookm_0 #tree_div {

@@ -519,6 +519,8 @@ il.UICore = {
 			$(bc).css("width", "70%");
 			$(bc).css("margin-left", "15%");
 			$(bc).css("margin-right", "15%");
+			$(bc).css("top", "30%");
+			$(bc).css("border", "5px solid #F59C00");
 			//fim. ili. fau.
 		}
 
