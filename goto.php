@@ -75,8 +75,11 @@ if(!ilStartUpGUI::_checkGoto($_GET["target"]))
 			ilUtil::sendFailure(sprintf($lng->txt("msg_no_perm_read_item"),
 				ilObject::_lookupTitle(ilObject::_lookupObjId($tarr[1]))), true);
 		}
-	
-		ilUtil::redirect('ilias.php?baseClass=ilPersonalDesktopGUI');
+
+		//fim: ili: fau: no redirect to overview (as starting point is manually set)
+		//ilUtil::redirect('ilias.php?baseClass=ilPersonalDesktopGUI');
+		ilUtil::redirect('index.php?');
+		//fim. ili. fau.
 	}
 }
 
