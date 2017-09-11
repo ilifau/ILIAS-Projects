@@ -11,7 +11,7 @@
     </xsl:template>
 
 <!--
-    Main transformations
+       Main transformations
 -->
 
     <!-- Webapp style with zoom -->
@@ -23,18 +23,19 @@
     </xsl:template>
     -->
 
-    <!-- remove scroll by css
-       /* ILIAS part candidates */
-    html,
-    body {
-      height: 94%; /* 100% */
-    }
-
-    .ilFixedTopSpacer,
-    .ilFixedTopSpacerBarOnly {
-        margin-top: 100px;
-    }
-    -->
+    <!-- remove scroll  -->
+    <xsl:template match="body[@class='std']" >
+        <xsl:copy>
+            <xsl:attribute name="style">height: 0;</xsl:attribute>
+            <xsl:apply-templates select="@*|node()" />
+        </xsl:copy>
+    </xsl:template>
+    <xsl:template match="div[@id='mainspacekeeper']" >
+        <xsl:copy>
+            <xsl:attribute name="style">margin-top: 100px;</xsl:attribute>
+            <xsl:apply-templates select="@*|node()" />
+        </xsl:copy>
+    </xsl:template>
 
     <!-- PNG logo in the top bar -->
     <xsl:template match="div[@id='ilTopBar']//div[@class='row']" >
