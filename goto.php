@@ -76,7 +76,7 @@ if(!ilStartUpGUI::_checkGoto($_GET["target"]))
 				ilObject::_lookupTitle(ilObject::_lookupObjId($tarr[1]))), true);
 		}
 
-		//fim: ili: fau: no redirect to overview (as starting point is manually set)
+		//fim: ili: fau: differentRedirect - no redirect to overview (as starting point is manually set)
 		//ilUtil::redirect('ilias.php?baseClass=ilPersonalDesktopGUI');
 		ilUtil::redirect('index.php?');
 		//fim. ili. fau.

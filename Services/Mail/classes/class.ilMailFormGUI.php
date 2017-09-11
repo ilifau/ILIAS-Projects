@@ -661,7 +661,7 @@ class ilMailFormGUI
 			->setCaption('mail_my_courses');
 		$ilToolbar->addButtonInstance($btn);
 /*
-fim: ili: fau: hide, did not work with skintransformer
+fim: ili: fau: mailChanges - hide, did not work with skintransformer
 		$btn = ilButton::getInstance();
 		$btn->setButtonType(ilButton::BUTTON_TYPE_SUBMIT)
 			->setName('searchGroupsTo')

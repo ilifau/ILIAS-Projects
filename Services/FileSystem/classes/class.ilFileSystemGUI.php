@@ -600,7 +600,7 @@ class ilFileSystemGUI
 			$ilToolbar->addFormButton($lng->txt("copy"), "uploadFile");
 		}
 
-//fim: ili: fau: buggy, throws exception
+//fim: ili: fau: bugFix - buggy, throws exception
 // fim: add a custom toolbar button
 //		foreach ($this->additionalToolbarCommands as $command)
 //		{
@@ -951,7 +951,7 @@ class ilFileSystemGUI
 
 //fim: ili: fau: fixHtmlObjects - fix for html files
 			// unlink forbidden file types
-/**/			foreach ($diff_r as $f => $d)
+			foreach ($diff_r as $f => $d)
 			{
 				$pi = pathinfo($f);
 				if (!is_dir($f) && !$this->isValidSuffix(strtolower($pi["extension"])))

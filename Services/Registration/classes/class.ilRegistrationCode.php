@@ -476,7 +476,7 @@ class ilRegistrationCode
 				'description' => array('text', $this->description),
 				'use_limit' => array('integer', $this->use_limit),
 				'use_count' => array('integer', $this->use_count),
-                //fim: ili: fau: last_use->get(IL_CAL_UNIX) is NULL
+                //fim: ili: fau: bugFix - "last_use->get(IL_CAL_UNIX)" is NULL
 				//'used' =>array('integer', $this->last_use->get(IL_CAL_UNIX)),
 				'used' =>array('integer', '1'),
                 //fim. ili. fau.

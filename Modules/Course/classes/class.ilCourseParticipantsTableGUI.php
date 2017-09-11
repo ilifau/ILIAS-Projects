@@ -94,7 +94,7 @@ class ilCourseParticipantsTableGUI extends ilParticipantTableGUI
 		}
 
 
-//fim: ili: fau: deleted heading of membership fim. ili. fau.
+//fim: ili: fau: changedParticipantsTable - deleted heading of membership fim. ili. fau.
 		//$this->addColumn($this->lng->txt('crs_member_passed'), 'passed');
 		if($this->show_lp_status_sync)
 		{
@@ -104,7 +104,7 @@ class ilCourseParticipantsTableGUI extends ilParticipantTableGUI
 		
 		$this->setSelectAllCheckbox('participants');
 		//$this->addColumn($this->lng->txt('crs_mem_contact'),'contact');
-//fim: ili: fau: deleted heading of membership fim. ili. fau.
+//fim: ili: fau: changedParticipantsTable - deleted heading of membership fim. ili. fau.
 		//$this->addColumn($this->lng->txt('crs_blocked'), 'blocked');
 		//$this->addColumn($this->lng->txt('crs_notification_list_title'), 'notification');
 		
@@ -324,7 +324,7 @@ class ilCourseParticipantsTableGUI extends ilParticipantTableGUI
 		}
 		
 		// blocked only for real members
-//fim: ili: fau: no blocking fim. ili. fau.
+//fim: ili: fau: changedParticipantsTable - no blocking fim. ili. fau.
 /*
 		if(
 			!$this->getParticipants()->isAdmin($a_set['usr_id'])

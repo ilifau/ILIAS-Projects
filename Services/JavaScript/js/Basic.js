@@ -515,7 +515,7 @@ il.UICore = {
 			sm_reg = il.Util.getRegion(sm);
 			bc_reg = il.Util.getRegion(bc);
 		//	$(bc).css("width", parseInt(sm_reg.right - bc_reg.left) + "px");
-			//fim: ili: fau: changed position of bot_center_area
+			//fim: ili: fau: BCAChanges - changed position of bot_center_area
 			$(bc).css("width", "70%");
 			$(bc).css("margin-left", "15%");
 			$(bc).css("margin-right", "15%");

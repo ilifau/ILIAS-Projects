@@ -83,7 +83,7 @@ class ilForumExportGUI
 			$ilias->raiseError($lng->txt('permission_denied'), $ilias->error_obj->MESSAGE);
 		}
 		
-        // fau: call prepare to init mathjax rendering
+        // fim: ili: fau: call prepare to init mathjax rendering
 		$this->prepare();
 
 		ilDatePresentation::setUseRelativeDates(false);

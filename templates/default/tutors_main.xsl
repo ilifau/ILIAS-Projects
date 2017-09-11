@@ -10,9 +10,10 @@
         <xsl:copy><xsl:apply-templates select="@*|node()" /></xsl:copy>
     </xsl:template>
 
-    <!--
-       Main transformations
-    -->
+<!--
+    Main transformations
+-->
+
     <!-- Webapp style with zoom -->
     <!--
     <xsl:template match="meta[@name='viewport']">
