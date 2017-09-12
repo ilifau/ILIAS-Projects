@@ -320,14 +320,12 @@
             <xsl:apply-templates select="@*|node()" />
         </xsl:copy>
     </xsl:template>
-
     <xsl:template match="li[@id='subtab_crs_member_administration']//a" >
         <xsl:copy>
             <xsl:attribute name="style">color: #FFF; background-color: #0D406E; font-size: 12px</xsl:attribute>
             <xsl:apply-templates select="@*|node()" />
         </xsl:copy>
     </xsl:template>
-
     <xsl:template match="li[@id='subtab_crs_members_gallery']//a" >
         <xsl:copy>
             <xsl:attribute name="style">color: #FFF; background-color: #0D406E; font-size: 12px</xsl:attribute>

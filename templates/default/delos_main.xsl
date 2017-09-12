@@ -55,7 +55,6 @@
             <xsl:apply-templates select="@*|node()" />
         </xsl:copy>
     </xsl:template>
-    <xsl:template match="div[@id='left_nav']" />
 
     <!-- nicer login page -->
     <xsl:template match="form[@name='formlogin']//span[@class='asterisk']" />
