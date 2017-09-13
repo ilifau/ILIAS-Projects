@@ -7869,6 +7869,7 @@ a.ilTreeView:focus {
 }
 .jstree .jstree-leaf > ins {
   background-position: -36px 0;
+  margin-bottom: 15px;
 }
 .jstree .jstree-hovered {
   background: #E7F4F9;

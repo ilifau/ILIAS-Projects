@@ -191,6 +191,29 @@
         </xsl:copy>
     </xsl:template>
 
+    <!-- adjusting table of content -->
+    <xsl:template match="div[@id='il_center_col']">
+        <xsl:copy>
+            <xsl:attribute name="style">font-size: 20px; font-weight: normal</xsl:attribute>
+            <xsl:apply-templates select="@*|node()" />
+        </xsl:copy>
+    </xsl:template>
+    <xsl:template match="li[contains(id, 'exp_node_lm')]">
+        <xsl:copy>
+            <xsl:attribute name="style">padding: 10px</xsl:attribute>
+            <xsl:apply-templates select="@*|node()" />
+        </xsl:copy>
+    </xsl:template>
+
+    <!-- adjusting LM display
+    <xsl:template match="div[@id='ilLMPageContent']">
+        <xsl:copy>
+            <xsl:attribute name="style">font-size: 20px</xsl:attribute>
+            <xsl:apply-templates select="@*|node()" />
+        </xsl:copy>
+    </xsl:template>
+    -->
+
     <!-- hide learning progress -->
     <!-- <xsl:template match="li[@id='subtab_trac_matrix']" /> -->
     <xsl:template match="li[@id='subtab_trac_summary']" />

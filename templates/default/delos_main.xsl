@@ -60,7 +60,8 @@
     <xsl:template match="form[@name='formlogin']//span[@class='asterisk']" />
     <xsl:template match="form[@name='formlogin']//div[@class='col-sm-6 ilFormRequired']" />
 
-    <!-- hide left nav (for bot_center_area) -->
+    <!-- hide left nav (for bot_center_area)
     <xsl:template match="div[@id='left_nav']" />
+    -->
 
 </xsl:stylesheet>
