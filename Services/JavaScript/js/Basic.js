@@ -516,11 +516,14 @@ il.UICore = {
 			bc_reg = il.Util.getRegion(bc);
 		//	$(bc).css("width", parseInt(sm_reg.right - bc_reg.left) + "px");
 			//fim: ili: fau: BCAChanges - changed position of bot_center_area
-			$(bc).css("width", "70%");
-			$(bc).css("margin-left", "15%");
-			$(bc).css("margin-right", "15%");
-			$(bc).css("top", "30%");
-			$(bc).css("border", "5px solid #F59C00");
+			$(bc).css("width", "60%");
+			$(bc).css("margin-left", "20%");
+			$(bc).css("margin-right", "20%");
+			$(bc).css("top", "200px");
+			$(bc).css("border", "5px solid #0D406E");
+			$(bc).css("box-shadow", "10px 10px 5px rgb(136, 136, 136)");
+			$(bc).css("z-index", "9999");
+			$(bc).css("height", "250px");
 			//fim. ili. fau.
 		}
 
@@ -622,7 +625,7 @@ il.UICore = {
 		});
 
 	},
-	
+
 	showRightPanel: function () {
 		var n = document.getElementById('ilRightPanel');
 		if (!n) {

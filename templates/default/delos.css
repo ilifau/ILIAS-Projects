@@ -7232,7 +7232,7 @@ div#bot_center_area iframe {
 div#bot_center_area_drag {
   left: 0;
   right: 0;
-  height: 4px;
+  height: 0px;
   cursor: row-resize;
   margin-top: -8px;
   position: absolute;
@@ -10177,9 +10177,9 @@ button.ilAreaClose {
   width: 20px;
   height: 20px;
   position: absolute;
-  top: 0;
   /*fim: ili: fau: */
-  right: 1%;
+  top: 2%;
+  right: 2%;
   font-size: 20px;
   /*fim. ili. fau. */
   cursor: pointer;

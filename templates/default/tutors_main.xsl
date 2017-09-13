@@ -205,7 +205,7 @@
     <xsl:template match="li[@id='tab_general_settings']"  />
     <!-- <xsl:template match="li[@id='tab_mail_settings']"  /> -->
 
-    <!-- Profile adjustment layout -->
+    <!-- Profile adjustment layout
     <xsl:template match="table">
         <xsl:copy>
             <xsl:copy-of select="@*" />
@@ -213,7 +213,7 @@
             <xsl:copy-of select="node()" />
         </xsl:copy>
     </xsl:template>
-
+-->
     <!-- No footer -->
     <xsl:template match="footer" />
 
