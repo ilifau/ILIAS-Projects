@@ -54,7 +54,7 @@
     <!-- "Back", "Overview" and "Forum" button beneath the user drop down -->
     <xsl:template match="ul[@id='ilTopBarNav']" >
         <xsl:copy>
-            <xsl:attribute name="style">margin-right: 0px; padding: 25px</xsl:attribute>
+            <xsl:attribute name="style">margin-right: 0px; padding: 25px; font-size: 16px</xsl:attribute>
             <xsl:apply-templates select="@*" />
             <!-- if user is logged in -->
             <xsl:if test="li[@id='userlog']">

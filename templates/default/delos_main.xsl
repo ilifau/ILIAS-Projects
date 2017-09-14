@@ -35,7 +35,7 @@
     <xsl:template match="p[@class='ilStartupSection']/a[2]" />
 
     <!-- move/resize login button -->
-    <xsl:template match="div[@class='ilStartupSection']//div[@class='col-sm-6 ilFormCmds']" >
+    <xsl:template match="div[@class='ilStartupSection']//form[contains(action, 'cmdClass=ilstartupgui')]//div[@class='col-sm-6 ilFormCmds']" >
         <xsl:copy>
             <xsl:attribute name="style">width: 100%; text-align: center</xsl:attribute>
             <xsl:apply-templates select="@*|node()" />
@@ -63,5 +63,28 @@
     <!-- hide left nav (for bot_center_area)
     <xsl:template match="div[@id='left_nav']" />
     -->
+
+    <!-- nicer Registrationform -->
+    <xsl:template match="input[@id='usr_interests_general']" >
+        <xsl:copy>
+            <xsl:attribute name="style">width:85%;</xsl:attribute>
+            <xsl:apply-templates select="@*|node()" />
+        </xsl:copy>
+    </xsl:template>
+    <xsl:template match="input[@id='usr_interests_help_offered']" >
+        <xsl:copy>
+            <xsl:attribute name="style">width:85%;</xsl:attribute>
+            <xsl:apply-templates select="@*|node()" />
+        </xsl:copy>
+    </xsl:template>
+    <xsl:template match="input[@id='usr_interests_help_looking']" >
+        <xsl:copy>
+            <xsl:attribute name="style">width:85%;</xsl:attribute>
+            <xsl:apply-templates select="@*|node()" />
+        </xsl:copy>
+    </xsl:template>
+
+    <xsl:template match="input[@id='usr_email']/@style" />
+    <xsl:template match="input[@id='usr_email_retype']/@style" />
 
 </xsl:stylesheet>

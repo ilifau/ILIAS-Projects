@@ -108,7 +108,7 @@ class ilCourseParticipantsTableGUI extends ilParticipantTableGUI
 		//$this->addColumn($this->lng->txt('crs_blocked'), 'blocked');
 		//$this->addColumn($this->lng->txt('crs_notification_list_title'), 'notification');
 		
-		$this->addColumn($this->lng->txt(''), 'optional');
+		//$this->addColumn($this->lng->txt(''), 'optional');
 
 		$this->setRowTemplate("tpl.show_participants_row.html", "Modules/Course");
 
@@ -299,7 +299,7 @@ class ilCourseParticipantsTableGUI extends ilParticipantTableGUI
 			}
 			$this->tpl->parseCurrentBlock();
 		}
-		
+
 		$this->tpl->setVariable('VAL_POSTNAME', 'participants');
 		$this->tpl->setVariable('VAL_PASSED_ID',$a_set['usr_id']);
 		$this->tpl->setVariable('VAL_PASSED_CHECKED',($a_set['passed'] ? 'checked="checked"' : ''));
