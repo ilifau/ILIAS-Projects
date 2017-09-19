@@ -42,9 +42,9 @@
         <xsl:copy>
             <xsl:attribute name="style">border-bottom: 5px solid #F59C00; margin-bottom: 5px; </xsl:attribute>
             <xsl:apply-templates select="@*" />
-            <div class="ilTopTitle">
+            <div class="ilTopTitle" style="height: 100px">
                 <a onClick="window.location='index.php?';return false;">
-                    <img alt="Logo" src="templates/default/images-custom/HeaderIcon.svg" height="100"/>
+                    <img alt="Logo" src="templates/default/images-custom/HeaderIcon.svg" height="100%"/>
                 </a>
             </div>
             <xsl:apply-templates select="node()" />

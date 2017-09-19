@@ -11480,6 +11480,7 @@ table.mceToolbar td {
   }
   #ilTopBar.ilTopBar {
     z-index: 1030;
+    max-height: 40px;
   }
   .ilMainMenu.ilTopFixed {
     position: fixed;

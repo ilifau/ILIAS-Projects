@@ -12425,6 +12425,7 @@ table.mceToolbar td {
   }
   .ilMainHeader {
     height: auto;
+    max-height: 100px; //fau: ili: fim: added
   }
   .ilMainHeader.ilTopFixed {
     height: 0;
