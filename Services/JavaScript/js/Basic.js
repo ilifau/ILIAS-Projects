@@ -520,10 +520,10 @@ il.UICore = {
 			$(bc).css("margin-left", "20%");
 			$(bc).css("margin-right", "20%");
 			$(bc).css("top", "200px");
-			$(bc).css("border", "5px solid #0D406E");
+			$(bc).css("border", "4px solid #0D406E");
 			$(bc).css("box-shadow", "10px 10px 5px rgb(136, 136, 136)");
 			$(bc).css("z-index", "9999");
-			$(bc).css("height", "250px");
+			$(bc).css("height", "300px");
 			//fim. ili. fau.
 		}
 

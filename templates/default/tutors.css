@@ -6700,10 +6700,11 @@ body#tinymce {
   width: 700px;
 }
 .ilFixedTopSpacer {
-  padding-top: 117px;
+  margin-top: 100px;
+  padding-top: 0;
 }
 .ilFixedTopSpacerBarOnly {
-  padding-top: 40px;
+  padding-top: 100px;
 }
 .fullwidth {
   width: 100%;
@@ -7367,7 +7368,7 @@ div.ilBox {
 }
 /* Top-Bar */
 div.ilTopBar {
-  background-color: #444;
+  background-color: #f0f0f0;
   color: white;
   padding: 5px 10px;
 }
@@ -8762,6 +8763,7 @@ li.ilWikiBlockItem {
   padding: 0 0 0 15px;
   white-space: nowrap;
   line-height: 40px;
+  display: block;
   /*letter-spacing: 0.05em;*/
   /*word-spacing: -0.1em;*/
 }
@@ -8796,8 +8798,11 @@ input.ilOpenIDBox {
   float: right;
   margin: 0;
   padding: 0;
-  margin-right: 14px;
   list-style: none outside none;
+  margin-right: 0px;
+  padding-right: 1%;
+  padding-top: 25px;
+  font-size: 16px;
 }
 #ilTopBarNav .badge {
   font-size: 9px;
@@ -10116,13 +10121,13 @@ body.ilLMNoMenu .ilLeftNav {
   top: 0px;
 }
 button.ilAreaClose {
-  width: 20px;
-  height: 20px;
+  width: 40px;
+  height: 40px;
   position: absolute;
-  top: 2%;
+  top: 0%;
   /*fim: ili: fau: */
-  right: 2%;
-  font-size: 20px;
+  right: 0%;
+  font-size: 30px;
   /*fim. ili. fau. */
   cursor: pointer;
 }
@@ -11456,8 +11461,9 @@ table.mceToolbar td {
   /* Services/MainMenu */
   #il_screen_id,
   .ilTopTitle {
-    display: none;
+    display: none !important;
   }
+
   .ilTopTitleVisible {
     display: block;
   }
@@ -11480,7 +11486,8 @@ table.mceToolbar td {
   }
   #ilTopBar.ilTopBar {
     z-index: 1030;
-    max-height: 40px;
+    max-height: 100px;
+    height: 40px;
   }
   .ilMainMenu.ilTopFixed {
     position: fixed;
@@ -11498,6 +11505,7 @@ table.mceToolbar td {
   }
   #ilTopBarNav {
     margin-right: 0px;
+    padding-top: 0px;
   }
   #ilTopNav {
     margin: 0;
@@ -11624,16 +11632,7 @@ table.mceToolbar td {
     content: "";
   }
 }
-div.ilTopBar {
-  background-color: #f0f0f0;
-}
-.ilFixedTopSpacer {
-  margin-top: 100px;
-  padding-top: 0;
-}
-.ilTopTitle {
-  display: block!important;
-}
+
 /* prvented stacking of toolbar */
 @media only screen and (max-width: 768px) {
   .navbar-form {

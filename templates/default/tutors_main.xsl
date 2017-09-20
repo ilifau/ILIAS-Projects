@@ -10,9 +10,9 @@
         <xsl:copy><xsl:apply-templates select="@*|node()" /></xsl:copy>
     </xsl:template>
 
-<!--
-       Main transformations
--->
+    <!--
+           Main transformations
+    -->
 
     <!-- Webapp style with zoom -->
     <!--
@@ -27,12 +27,6 @@
     <xsl:template match="body[@class='std']" >
         <xsl:copy>
             <xsl:attribute name="style">height: 0;</xsl:attribute>
-            <xsl:apply-templates select="@*|node()" />
-        </xsl:copy>
-    </xsl:template>
-    <xsl:template match="div[@id='mainspacekeeper']" >
-        <xsl:copy>
-            <xsl:attribute name="style">margin-top: 100px;</xsl:attribute>
             <xsl:apply-templates select="@*|node()" />
         </xsl:copy>
     </xsl:template>
@@ -51,10 +45,10 @@
         </xsl:copy>
     </xsl:template>
 
-    <!-- "Back", "Overview" and "Forum" button beneath the user drop down -->
+
+    <!-- "Back" and "Overview" button beneath the user drop down -->
     <xsl:template match="ul[@id='ilTopBarNav']" >
         <xsl:copy>
-            <xsl:attribute name="style">margin-right: 0px; padding: 25px; font-size: 16px</xsl:attribute>
             <xsl:apply-templates select="@*" />
             <!-- if user is logged in -->
             <xsl:if test="li[@id='userlog']">
@@ -96,6 +90,7 @@
             <xsl:apply-templates select="@*|node()" />
         </xsl:copy>
     </xsl:template>
+
     <!-- hide email function in upper bar and some more things...-->
     <!-- <xsl:template match="ul[@id='ilTopBarNav']/li[1]" /> -->
     <!-- <xsl:template match="li[@id='tab_fold']" /> -->
@@ -105,14 +100,26 @@
     <!-- <xsl:template match="div[@class='container-fluid']" /> -->
     <!-- shows mailentry; delete in Mailsettings user ticks or profile gets lost by "/li[1]" -->
 
-    <!-- No main header, no main menu -->
-    <xsl:template match="nav[@id='ilTopNav']" />
-    <xsl:template match="div[contains(@class,'ilMainHeader')]" />
+    <!-- No main header, no main menu
+    <xsl:template match="nav[@id='ilTopNav']" /> -->
     <xsl:template match="div[contains(@class,'ilMainMenu')]" />
+    <xsl:template match="div[contains(@class,'ilMainHeader')]" />
 
     <!-- Empty headline (keep space) -->
-    <xsl:template match="div[contains(@class,'media il_HeaderInner')]">
-        <div class="media il_HeaderInner"></div>
+    <xsl:template match="div[contains(@class,'media il_HeaderInner')]/div[@id='il_head_action']" />
+    <xsl:template match="div[contains(@class,'media il_HeaderInner')]/img" />
+    <xsl:template match="div[contains(@class,'media il_HeaderInner')]/div[@class='media-body']" />
+    <xsl:template match="div[contains(@class,'media il_HeaderInner')]/h1" >
+        <xsl:copy>
+            <xsl:attribute name="style">text-align: center;</xsl:attribute>
+            <xsl:apply-templates select="@*|node()" />
+        </xsl:copy>
+    </xsl:template>
+    <xsl:template match="div[contains(@class,'media il_HeaderInner')]//a[@id='il_mhead_t_focus']" >
+        <xsl:copy>
+            <xsl:attribute name="style">color: #0D406E; font-weight: bold; font-size: 30px; cursor: default</xsl:attribute>
+            <xsl:apply-templates select="@*|node()" />
+        </xsl:copy>
     </xsl:template>
 
     <!-- No locator, No tree view -->
