@@ -2784,7 +2784,7 @@ select[multiple].input-lg {
   .form-horizontal .control-label {
     text-align: right;
     margin-bottom: 0;
-    /*  padding-top: 4px; fim ili fau */
+  /*  padding-top: 4px; fim ili fau */
   }
 }
 .form-horizontal .has-feedback .form-control-feedback {
@@ -6428,7 +6428,7 @@ span.ilAlert {
 /* ILIAS part candidates */
 html,
 body {
-  height: 94%; /* 100% */
+  height: 100%;
 }
 /* see bug ILIAS bug #17589 and http://stackoverflow.com/questions/17045132/scrollbar-overlay-in-ie10-how-do-you-stop-that */
 body {
@@ -6580,7 +6580,7 @@ b {
 a {
   text-decoration: none;
   cursor: pointer;
-  /* BEGIN WebDAV: Enable links with AnchorClick behavior for Internet Explorer.
+  /* BEGIN WebDAV: Enable links with AnchorClick behavior for Internet Explorer. 
  * All skins which want to support mounting of Webfolders using Internet Explorer
  * must explicitly enable AnchorClick behavior.
  */
@@ -6700,10 +6700,11 @@ body#tinymce {
   width: 700px;
 }
 .ilFixedTopSpacer {
-  padding-top: 117px;
+  margin-top: 100px;
+  padding-top: 0;
 }
 .ilFixedTopSpacerBarOnly {
-  padding-top: 40px;
+  padding-top: 100px;
 }
 .fullwidth {
   width: 100%;
@@ -6973,9 +6974,11 @@ div.il_info {
 }
 /* ---------------- headlines ------------------ */
 a#il_mhead_t_focus {
-  color: #fcbe0e;
+  color: #0D406E;
   vertical-align: middle;
-  font-size: 26px;
+  font-size: 30px;
+  font-weight: bold;
+  cursor: default
 }
 h1.ilHeader {
   padding: 10px 0 0;
@@ -7223,9 +7226,6 @@ div#bot_center_area {
   position: fixed;
   padding: 5px;
   background-color: #f0f0f0;
-  border-top: 5px solid #F59C00;
-  border-left: 5px solid #F59C00;
-  border-right: 5px solid #F59C00;
   -webkit-overflow-scrolling: touch;
   /* Bug 11209 */
   overflow: auto;
@@ -7243,7 +7243,7 @@ div#bot_center_area iframe {
 div#bot_center_area_drag {
   left: 0;
   right: 0;
-  height: 7.5px;
+  height: 0px;
   cursor: row-resize;
   margin-top: -8px;
   position: absolute;
@@ -7370,7 +7370,7 @@ div.ilBox {
 }
 /* Top-Bar */
 div.ilTopBar {
-  background-color: #444;
+  background-color: #f0f0f0;
   color: white;
   padding: 5px 10px;
 }
@@ -7872,6 +7872,7 @@ a.ilTreeView:focus {
 }
 .jstree .jstree-leaf > ins {
   background-position: -36px 0;
+  margin-bottom: 15px;
 }
 .jstree .jstree-hovered {
   background: #E7F4F9;
@@ -8764,6 +8765,7 @@ li.ilWikiBlockItem {
   padding: 0 0 0 15px;
   white-space: nowrap;
   line-height: 40px;
+  display: block;
   /*letter-spacing: 0.05em;*/
   /*word-spacing: -0.1em;*/
 }
@@ -8798,8 +8800,11 @@ input.ilOpenIDBox {
   float: right;
   margin: 0;
   padding: 0;
-  margin-right: 14px;
   list-style: none outside none;
+  margin-right: 0px;
+  padding-right: 1%;
+  padding-top: 25px;
+  font-size: 16px;
 }
 #ilTopBarNav .badge {
   font-size: 9px;
@@ -8983,6 +8988,14 @@ div.ilTopMemberView h3 {
   border: none;
   border-bottom: 2px solid #7c7c7c;
 }
+#ilTab > li > a{
+  background-color: #0D406E;
+  color: #FFF;
+}
+#ilTab > li > a:hover{
+  background-color: #aeaeae;
+}
+
 .ilSetupContent #ilTab {
   margin: 7px 0px 23px 0px;
 }
@@ -9000,19 +9013,19 @@ div.ilTopMemberView h3 {
 #ilSubTab > li > a {
   border-radius: 0;
   padding: 3px 7px;
-  font-size: 130%; /* fim cf */
-
-  /* font-size: 11.64px; */
-  /* font-weight: 600; */
+  font-size: 130%;
+  font-weight: 600;
+  background-color: #0D406E;
+  color: #FFF;
 }
 #ilSubTab > li > a:hover {
-  color: #51175a;
+  background-color: #aeaeae;
 }
 #ilSubTab > li.active > a,
 #ilSubTab > li.active > a:hover,
 #ilSubTab > li.active > a:focus {
-  color: #0D406E;
-  background-color: transparent;
+  color: #FFF;
+  background-color: #0D406E;
   text-decoration: underline;
 }
 /* Services/UIComponent/GroupedLists */
@@ -10120,10 +10133,14 @@ body.ilLMNoMenu .ilLeftNav {
   top: 0px;
 }
 button.ilAreaClose {
-  width: 20px;
-  height: 20px;
+  width: 40px;
+  height: 40px;
   position: absolute;
-  top: 0;
+  top: 0%;
+  /*fim: ili: fau: */
+  right: 0%;
+  font-size: 30px;
+  /*fim. ili. fau. */
   cursor: pointer;
 }
 div.ilRightAreaSpace {
@@ -10678,7 +10695,7 @@ ol.breadcrumb {
 }
 /* Services/UIComponent/Button */
 .btn {
-  font-size: 12px;
+  font-size: 18px;
 }
 input.btn,
 button.btn:not(.btn-link) > span:first-child:not(:empty) {
@@ -11456,8 +11473,9 @@ table.mceToolbar td {
   /* Services/MainMenu */
   #il_screen_id,
   .ilTopTitle {
-    display: none;
+    display: none !important;
   }
+
   .ilTopTitleVisible {
     display: block;
   }
@@ -11480,6 +11498,8 @@ table.mceToolbar td {
   }
   #ilTopBar.ilTopBar {
     z-index: 1030;
+    max-height: 100px;
+    height: 40px;
   }
   .ilMainMenu.ilTopFixed {
     position: fixed;
@@ -11488,7 +11508,7 @@ table.mceToolbar td {
   }
   .ilFixedTopSpacer,
   .ilFixedTopSpacerBarOnly {
-    margin-top: 100px;
+    margin-top: 40px;
   }
   nav#ilTopNav {
     min-height: 0px;
@@ -11497,6 +11517,7 @@ table.mceToolbar td {
   }
   #ilTopBarNav {
     margin-right: 0px;
+    padding-top: 0px;
   }
   #ilTopNav {
     margin: 0;
@@ -11623,16 +11644,7 @@ table.mceToolbar td {
     content: "";
   }
 }
-div.ilTopBar {
-  background-color: #f0f0f0;
-}
-.ilFixedTopSpacer {
-  margin-top: 100px;
-  padding-top: 0;
-}
-.ilTopTitle {
-  display: block!important;
-}
+
 /* prvented stacking of toolbar */
 @media only screen and (max-width: 768px) {
   .navbar-form {
@@ -11645,10 +11657,3 @@ div.ilTopBar {
 .btn {
   margin: 1px;
 }
-/* fim cf */
-.ilc_page_rnav_RightNavigation {
-  font-size: 100% !important;
-}
-.ilc_page_lnav_LeftNavigation {
-  font-size: 100% !important;
-} /* fim cf */

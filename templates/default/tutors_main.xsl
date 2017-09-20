@@ -103,7 +103,12 @@
     <!-- No main header, no main menu
     <xsl:template match="nav[@id='ilTopNav']" /> -->
     <xsl:template match="div[contains(@class,'ilMainMenu')]" />
-    <xsl:template match="div[contains(@class,'ilMainHeader')]" />
+    <xsl:template match="div[contains(@class,'ilMainHeader')]" >
+        <xsl:copy>
+            <xsl:attribute name="style">background-color: #F0F0F0;</xsl:attribute>
+            <xsl:apply-templates select="@*|node()" />
+        </xsl:copy>
+    </xsl:template>
 
     <!-- Empty headline (keep space) -->
     <xsl:template match="div[contains(@class,'media il_HeaderInner')]/div[@id='il_head_action']" />
@@ -112,12 +117,6 @@
     <xsl:template match="div[contains(@class,'media il_HeaderInner')]/h1" >
         <xsl:copy>
             <xsl:attribute name="style">text-align: center;</xsl:attribute>
-            <xsl:apply-templates select="@*|node()" />
-        </xsl:copy>
-    </xsl:template>
-    <xsl:template match="div[contains(@class,'media il_HeaderInner')]//a[@id='il_mhead_t_focus']" >
-        <xsl:copy>
-            <xsl:attribute name="style">color: #0D406E; font-weight: bold; font-size: 30px; cursor: default</xsl:attribute>
             <xsl:apply-templates select="@*|node()" />
         </xsl:copy>
     </xsl:template>

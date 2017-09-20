@@ -6974,9 +6974,11 @@ div.il_info {
 }
 /* ---------------- headlines ------------------ */
 a#il_mhead_t_focus {
-  color: #fcbe0e;
+  color: #0D406E;
   vertical-align: middle;
-  font-size: 26px;
+  font-size: 30px;
+  font-weight: bold;
+  cursor: default
 }
 h1.ilHeader {
   padding: 10px 0 0;
@@ -8986,6 +8988,14 @@ div.ilTopMemberView h3 {
   border: none;
   border-bottom: 2px solid #7c7c7c;
 }
+#ilTab > li > a{
+  background-color: #0D406E;
+  color: #FFF;
+}
+#ilTab > li > a:hover{
+  background-color: #aeaeae;
+}
+
 .ilSetupContent #ilTab {
   margin: 7px 0px 23px 0px;
 }
@@ -9003,17 +9013,19 @@ div.ilTopMemberView h3 {
 #ilSubTab > li > a {
   border-radius: 0;
   padding: 3px 7px;
-  font-size: 11.64px;
+  font-size: 130%;
   font-weight: 600;
+  background-color: #0D406E;
+  color: #FFF;
 }
 #ilSubTab > li > a:hover {
-  color: #51175a;
+  background-color: #aeaeae;
 }
 #ilSubTab > li.active > a,
 #ilSubTab > li.active > a:hover,
 #ilSubTab > li.active > a:focus {
-  color: #0D406E;
-  background-color: transparent;
+  color: #FFF;
+  background-color: #0D406E;
   text-decoration: underline;
 }
 /* Services/UIComponent/GroupedLists */
@@ -10683,7 +10695,7 @@ ol.breadcrumb {
 }
 /* Services/UIComponent/Button */
 .btn {
-  font-size: 12px;
+  font-size: 18px;
 }
 input.btn,
 button.btn:not(.btn-link) > span:first-child:not(:empty) {

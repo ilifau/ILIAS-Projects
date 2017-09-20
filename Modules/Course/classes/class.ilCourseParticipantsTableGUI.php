@@ -90,7 +90,7 @@ class ilCourseParticipantsTableGUI extends ilParticipantTableGUI
 
 		if($this->privacy->enabledCourseAccessTimes())
 		{
-			$this->addColumn($this->lng->txt('last_access'), 'access_ut', '16em');
+			$this->addColumn($this->lng->txt('last_access'), 'access_ut', '200px');
 		}
 
 
