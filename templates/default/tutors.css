@@ -8803,7 +8803,7 @@ input.ilOpenIDBox {
   list-style: none outside none;
   margin-right: 0px;
   padding-right: 1%;
-  padding-top: 25px;
+  padding-top: 30px;
   font-size: 16px;
 }
 #ilTopBarNav .badge {
@@ -11480,6 +11480,7 @@ table.mceToolbar td {
     display: block;
   }
   .ilMainHeader {
+    display: none;
     height: auto;
   }
   .ilMainHeader.ilTopFixed {

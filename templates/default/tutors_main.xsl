@@ -204,9 +204,9 @@
             <xsl:apply-templates select="@*|node()" />
         </xsl:copy>
     </xsl:template>
-    <xsl:template match="li[contains(id, 'exp_node_lm')]">
+    <xsl:template match="div[@id='il_center_col']//ul">
         <xsl:copy>
-            <xsl:attribute name="style">padding: 10px</xsl:attribute>
+            <xsl:attribute name="style">padding-top:10px</xsl:attribute>
             <xsl:apply-templates select="@*|node()" />
         </xsl:copy>
     </xsl:template>
