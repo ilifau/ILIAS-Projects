@@ -54,14 +54,16 @@
             <xsl:if test="li[@id='userlog']">
                 <li>
                     <a onclick="history.back();return false;">
-                        &#9664;
+                          &#9664;
                     </a>
                 </li>
                 <li>
                     <a onclick="window.location='index.php?';return false;">
                         <!--  <xsl:value-of select="php:function('ilSkinTransformer::getTxt','content')" />
                       -->
-                        Übersicht
+                        <span style="font-weight: bold;">
+                            Übersicht
+                        </span>
                     </a>
                 </li>
                 <!-- Nonsense for multiple courses
