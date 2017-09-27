@@ -10,7 +10,7 @@
     <!--
        Main transformations
     -->
-    <!-- getting a gap in questions between markspot and answertext-->
+    <!-- getting a gap in questions between markspot and answertext -->
     <xsl:template match="span[@class='answertext']" >
         <xsl:copy>
             <xsl:attribute name="style">padding: 5px;</xsl:attribute>
@@ -31,9 +31,9 @@
         </xsl:copy>
     </xsl:template>
 
-    <!-- delete public area -->
+    <!-- delete public area
     <xsl:template match="p[@class='ilStartupSection']/a[2]" />
-
+-->
     <!-- move/resize login button -->
     <xsl:template match="div[@class='ilStartupSection']//form//div[@class='col-sm-6 ilFormCmds']" >
         <xsl:copy>
@@ -49,7 +49,7 @@
     </xsl:template>
     <xsl:template match="div[@class='ilStartupSection']//form//div[@class='ilFormHeader']" />
 
-    <!-- nicer login page -->
+    <!-- login page (no required marks) -->
     <xsl:template match="form[@name='formlogin']//span[@class='asterisk']" />
     <xsl:template match="form[@name='formlogin']//div[@class='col-sm-6 ilFormRequired']" />
 
@@ -77,7 +77,15 @@
         </xsl:copy>
     </xsl:template>
 
+    <!-- longer e-mail-input fields -->
     <xsl:template match="input[@id='usr_email']/@style" />
     <xsl:template match="input[@id='usr_email_retype']/@style" />
+    <!-- shorter ZIPcode field -->
+    <xsl:template match="input[@id='usr_zipcode']" >
+        <xsl:copy>
+            <xsl:attribute name="style">width:auto;</xsl:attribute>
+            <xsl:apply-templates select="@*|node()" />
+        </xsl:copy>
+    </xsl:template>
 
 </xsl:stylesheet>
