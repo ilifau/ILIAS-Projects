@@ -10,18 +10,7 @@
         <xsl:copy><xsl:apply-templates select="@*|node()" /></xsl:copy>
     </xsl:template>
 
-    <!--
-           Main transformations
-    -->
-
-    <!-- Webapp style with zoom -->
-    <!--
-    <xsl:template match="meta[@name='viewport']">
-        <meta name="viewport" content="initial-scale=500, user-scalable=0" />
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-    </xsl:template>
-    -->
+<!-- Main transformations -->
 
     <!-- remove scroll -->
     <xsl:template match="body[@class='std']" >
@@ -34,11 +23,11 @@
     <!-- PNG logo in the top bar AND border beneath topbar -->
     <xsl:template match="div[@id='ilTopBar']//div[@class='row']" >
         <xsl:copy>
-            <xsl:attribute name="style">border-bottom: 5px solid #F59C00; margin-bottom: 5px; </xsl:attribute>
+            <xsl:attribute name="style">border-bottom: 5px solid #F59C00; margin-bottom: 5px; max-height: 100px; background-image: url('https://course.lernhaus.odl.org/ilias/data/lernhaus-v2/sty/sty_3975/images/newsletter_zeichnung_small_for_bg_grau.png'); background-repeat: repeat-x; background-color: #000000</xsl:attribute>
             <xsl:apply-templates select="@*" />
-            <div class="ilTopTitle" style="height: 100px">
+            <div class="ilTopTitle" style="height: 100px; background-color: #9D9D9D; padding-right: 10px; border-bottom: 5px solid #F59C00;" >
                 <a onClick="window.location='index.php?';return false;">
-                    <img alt="Logo" src="templates/default/images-custom/HeaderIcon.svg" height="100%"/>
+                    <img alt="Logo" src="templates/default/images-custom/HeaderIcon.svg"  height="100%"/>
                 </a>
             </div>
             <xsl:apply-templates select="node()" />
@@ -58,8 +47,7 @@
                 </li>
                 <li>
                     <a onclick="window.location='index.php?';return false;">
-                        <!--<xsl:value-of select="php:function('ilSkinTransformer::getTxt','content')" />
-                        -->
+                        <!--<xsl:value-of select="php:function('ilSkinTransformer::getTxt','content')" /> -->
                         <span style="font-weight: bold;">
                             Übersicht
                         </span>
@@ -70,33 +58,11 @@
         </xsl:copy>
     </xsl:template>
 
-    <!-- hide right col on overview startpage
-    <xsl:template match="div[@id='il_right_col']" />
-    -->
-
-    <!-- hide course and group memberships settings
-    <xsl:template match="button[@id='ilAdvSelListAnchorText_block_dd_pditems_0']" />
-    -->
-
-    <!-- adjust buttons in personal profile
-    <xsl:template match="span[@class='input-group-btn']" >
-        <xsl:copy>
-            <xsl:attribute name="style">padding-right: 5px;</xsl:attribute>
-            <xsl:apply-templates select="@*|node()" />
-        </xsl:copy>
-    </xsl:template>
-    -->
     <!-- hide email function in upper bar and some more things...-->
-    <!-- <xsl:template match="ul[@id='ilTopBarNav']/li[1]" /> -->
-    <!-- <xsl:template match="li[@id='tab_fold']" />-->
     <xsl:template match="li[@id='tab_mail_addressbook']" />
-    <!-- <xsl:template match="li[@id='tab_options']" />
-    <xsl:template match="div[@id='il_prop_cont_m_type____']" /> -->
-    <!-- <xsl:template match="div[@class='container-fluid']" /> -->
-    <!-- shows mailentry; delete in Mailsettings user ticks or profile gets lost by "/li[1]" -->
+    <xsl:template match="li[@id='ilMMSearch']" />
 
-    <!-- No main header, no main menu
-    <xsl:template match="nav[@id='ilTopNav']" />-->
+    <!-- No main header, no main menu -->
     <xsl:template match="div[contains(@class,'ilMainMenu')]" />
     <xsl:template match="div[contains(@class,'ilMainHeader')]" >
         <xsl:copy>
@@ -118,7 +84,6 @@
 
     <!-- No locator, No tree view (Navigation and LM) -->
     <xsl:template match="ol[@class='breadcrumb hidden-print']" />
-    <!--<xsl:template match="a[@class='ilTreeView']" />-->
     <xsl:template match="a[@id='imgtree']"/>
     <xsl:template match="div[@id='left_nav']" />
 
@@ -129,19 +94,13 @@
 
     <!-- Adjust menu of learning modules -->
     <xsl:template match="li[@id='subtab_content']" />
-    <!-- <xsl:template match="li[@id='subtab_cont_print_view']" /> -->
     <xsl:template match="li[@id='subtab_info_short']" />
 
     <!-- adjust menu of course -->
     <xsl:template match="li[@id='subtab_view_content']" />
     <xsl:template match="li[@id='subtab_manage']" />
     <xsl:template match="li[@id='subtab_ordering']" />
-    <!--<xsl:template match="li[@id='subtab_crs_member_administration']" />
-    --><xsl:template match="li[@id='subtab_crs_members_groups']" />
-
-    <!-- hide survey container, especially heading
-    <xsl:template match="div[@id='bl_cntr_4']" />
-    -->
+    <xsl:template match="li[@id='subtab_crs_members_groups']" />
 
     <!-- Show "ilTab" and hide some not needed -->
     <xsl:template match="ul[@id='ilTab']">
@@ -162,21 +121,16 @@
 
     <!-- change member view for tutors -->
     <xsl:template match="form[contains(@action,'ilrepositorysearchgui')]" />
-<!--    <xsl:template match="form[contains(@action,'ilobjcoursegui')]/div[@class='ilTableOuter'][1]" />
-    <xsl:template match="form[contains(@action,'ilobjcoursegui')]/div[@class='ilTableHeaderTitle'][1]" />
-    <xsl:template match="form[contains(@action,'ilobjcoursegui')]/div[@class='ilTableNav'][1]" />
-    <xsl:template match="form[contains(@action,'ilobjcoursegui')]/div[@class='ilTableNav yui-skin-sam'][1]" />
--->
     <xsl:template match="option[@value='confirmDeleteParticipants']" />
     <xsl:template match="option[@value='addToClipboard']" />
     <xsl:template match="option[@value='editParticipants']" />
-    <!--
-    <xsl:template match="a[contains(@href, 'cmd=editMember')]" />
-    <xsl:template match="a[@class='ilContainerItemCommand2']" />
-    <xsl:template match="td[@class='std']" />
--->
+
     <!-- Hide personal startpage in user settings -->
     <xsl:template match="div[@id='il_prop_cont_usr_start']" />
+    <!-- nicer profil picture upload screen -->
+    <xsl:template match="div[@id='il_prop_cont_userfile']//div[@class='input-group']">
+        <input id="userfile" name="userfile" type="file" />
+    </xsl:template>
 
     <!-- Prevent collapsing of the navbar -->
     <xsl:template match="button[@class='navbar-toggle']" />
@@ -202,38 +156,19 @@
         </xsl:copy>
     </xsl:template>
 
-    <!-- adjusting LM display
-    <xsl:template match="div[@id='ilLMPageContent']">
-        <xsl:copy>
-            <xsl:attribute name="style">font-size: 20px</xsl:attribute>
-            <xsl:apply-templates select="@*|node()" />
-        </xsl:copy>
-    </xsl:template>
--->
-
-    <!-- hide learning progress -->
-    <!-- <xsl:template match="li[@id='subtab_trac_matrix']" />
-    <xsl:template match="li[@id='subtab_trac_summary']" />
-    <xsl:template match="li[@id='subtab_trac_settings']" />
-    <xsl:template match="li[@id='tab_learning_progress']" />
--->
     <!-- No head and list actions -->
-    <!-- <xsl:template match="div[@class='ilHeadAction']"  /> -->
     <xsl:template match="div[@class='il_ContainerListItem']/div[@class='ilFloatRight']"  />
 
     <!-- reduce personal settings -->
     <xsl:template match="li[@id='tab_general_settings']"  />
-    <!-- <xsl:template match="li[@id='tab_mail_settings']"  /> -->
 
-    <!-- Profile adjustment layout
-    <xsl:template match="table">
+    <xsl:template match="div[@class='ilFormCmds']//input[contains(@name, 'cmd[savePersonalData]')]">
         <xsl:copy>
-            <xsl:copy-of select="@*" />
-            <xsl:attribute name="width">100%</xsl:attribute>
-            <xsl:copy-of select="node()" />
+            <xsl:attribute name="style">margin-top: -15px;</xsl:attribute>
+            <xsl:apply-templates select="@*|node()" />
         </xsl:copy>
     </xsl:template>
--->
+
     <!-- No footer -->
     <xsl:template match="footer" />
 
@@ -255,15 +190,6 @@
                     <xsl:value-of select="php:function('ilSkinTransformer::getTxt','chg_password')" />
                 </xsl:when>
 
-                <!--  Prevent switching to safari in webapp mode -->
-                <!-- fim: #cf not necessary, but destroys external links
-                <xsl:when test="@href">
-                    <xsl:attribute name="onclick">
-                        window.location=this.getAttribute("href");return false;
-                    </xsl:attribute>
-                    <xsl:copy-of select="node()" />
-                </xsl:when> -->
-
                 <!-- hide public area link -->
                 <xsl:when test="contains(@href,'index.php')">
                 </xsl:when>
@@ -277,20 +203,9 @@
         </xsl:copy>
     </xsl:template>
 
-    <!-- hide subtab - seite gestalten
-    <xsl:template match="li[@id='subtab_page_editor']" />
--->
     <!-- hide some email functions -->
     <xsl:template match="button[@name='cmd[searchUsers]']" />
-    <!-- <xsl:template match="button[@name='cmd[searchGroupsTo]']" />
-    <xsl:template match="button[@name='cmd[searchMailingListsTo]']" />
-    <xsl:template match="li[@class='ilToolbarGroup']"/>
--->
-    <!-- hide some member functions
-    <xsl:template match="input[@name='cmd[editMembers]']" />
-    <xsl:template match="input[@name='cmd[deleteMembers]']" />
-    <xsl:template match="input[@name='blocked[]']" />
--->
+
     <!-- hide some forum functions -->
     <xsl:template match="option[@value='makesticky']" />
     <xsl:template match="option[@value='unmakesticky']" />
@@ -301,14 +216,6 @@
     <xsl:template match="option[@value='html']" />
     <xsl:template match="option[@value='confirmDeleteThreads']" />
     <xsl:template match="option[@value='merge']" />
-
-    <!-- getting a gap in questions between markspot and answertext-->
-    <xsl:template match="span[@class='answertext']" >
-        <xsl:copy>
-            <xsl:attribute name="style">padding-left: 5px;</xsl:attribute>
-            <xsl:apply-templates select="@*|node()" />
-        </xsl:copy>
-    </xsl:template>
 
     <!-- assuring some space between pictures and text, looks nicer -->
     <xsl:template match="td[@class='ilc_Mob']" >
@@ -365,10 +272,6 @@
         </xsl:if>
     </xsl:template>
 
-    <!-- hide advertising buttons in bottom bar
-    <xsl:template match="div[@id='ilLMPageContent']//div[@class='btn-group']" />
-    <xsl:template match="div[@div='ilFooterContainer']div[@class='btn-group']" />
--->
     <!-- hide LM menu -->
     <xsl:template match="div[@class='row ilContainerBlockHeader']//div[@class='btn-group']" />
 
@@ -376,34 +279,20 @@
     <xsl:template match="label[@for='current_perma_link']" />
     <xsl:template match="input[@id='current_perma_link']" />
 
-    <!-- hide printview in general for LMs
-    <xsl:template match="li[@id='tab_cont_print_view']" />
-    -->
-    <!-- hide search function -->
-    <xsl:template match="li[@id='ilMMSearch']" />
-
-    <!-- nicer profil picture upload screen -->
-    <xsl:template match="div[@id='il_prop_cont_userfile']//div[@class='input-group']">
-        <input id="userfile" name="userfile" type="file" />
-    </xsl:template>
-
-    <!-- hide public Area Links
-    <xsl:template match="p[@class='ilStartupSection']/a[2]" />
-    <xsl:template match="div[@class='ilStartupSection']//a[2]" />
--->
     <xsl:template match="div[@class='ilStartupSection']/p[2]/a[2]" />
 
-    <!-- change fontsize LM Tab -->
+    <!-- change fontsize LM Tab/Subtab -->
     <xsl:template match="ul[@id='ilTab']/li/a" >
-        <xsl:copy>
-            <xsl:attribute name="style">font-size: 130%</xsl:attribute>
-            <xsl:apply-templates select="@*|node()" />
-        </xsl:copy>
+        <xsl:if test="../..//li[@id='tab_members']">
+            <xsl:copy>
+                <xsl:attribute name="style">font-size: 130%; border-radius: 5px 5px 5px 5px;</xsl:attribute>
+                <xsl:apply-templates select="@*|node()" />
+            </xsl:copy>
+        </xsl:if>
     </xsl:template>
-    <!-- change fontsize LM subtab -->
     <xsl:template match="ul[@id='ilSubTab']/li/a" >
         <xsl:copy>
-            <xsl:attribute name="style">font-size: 130%</xsl:attribute>
+            <xsl:attribute name="style">font-size: 130%; border-radius: 5px 5px 5px 5px;</xsl:attribute>
             <xsl:apply-templates select="@*|node()" />
         </xsl:copy>
     </xsl:template>
@@ -411,14 +300,5 @@
     <!-- hide Itemproperties -->
     <xsl:template match="div[@class='il_ContainerListItem']//div[@class='ilListItemSection il_ItemProperties']" />
     <xsl:template match="div[@class='il_ContainerListItem']//div[@class='ilListItemSection il_Description']" />
-
-    <!--
-    work in progress
-        <xsl:template match="div[@class='il_ContainerListItem']" >
-            <xsl:if test="not(..//div[@class='ilListItemSection il_ItemProperties'][contains(text,'verfügbar')])">
-                <xsl:apply-templates select="node()" />
-            </xsl:if>
-        </xsl:template>
-    -->
 
 </xsl:stylesheet>
