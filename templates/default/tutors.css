@@ -6475,6 +6475,8 @@ div.ilFrame {
 */
 #il_center_col {
   /* max-width: 1028px; */
+  padding-top: 20px;
+  background-color: #f0f0f0;
 }
 /* left navigation area (used, e.g. for explorer trees) */
 .ilLeftNav {
@@ -8999,7 +9001,7 @@ div.ilTopMemberView h3 {
   margin: 7px 0px 23px 0px;
 }
 .ilTabsContentOuter {
-  /* background-color: #FFFFFF; */
+  background-color: #FFFFFF;
   padding: 0;
 }
 /* Sub Tabs */
@@ -10384,7 +10386,8 @@ table.il_Block {
   padding: 5px;
 }
 #il_center_col div.il_Block {
-  background-color: #ffffff;
+  /* background-color: #ffffff; */
+  background-color: #f0f0f0;
 }
 div.ilBlockHeader,
 div.ilBlockHeaderBig,
