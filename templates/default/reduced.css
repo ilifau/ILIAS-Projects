@@ -8804,8 +8804,11 @@ input.ilOpenIDBox {
   list-style: none outside none;
   margin-right: 0px;
   padding-right: 1%;
+  padding-left: 1%;
   padding-top: 30px;
+  padding-bottom: 25px;
   font-size: 16px;
+  background-color: #CDCDCD;
 }
 #ilTopBarNav .badge {
   font-size: 9px;
@@ -9001,7 +9004,7 @@ div.ilTopMemberView h3 {
   margin: 7px 0px 23px 0px;
 }
 .ilTabsContentOuter {
-  background-color: #FFFFFF;
+  /* background-color: #FFFFFF; */
   padding: 0;
 }
 /* Sub Tabs */
@@ -11521,6 +11524,7 @@ table.mceToolbar td {
   #ilTopBarNav {
     margin-right: 0px;
     padding-top: 0px;
+    padding-bottom: 0px;
   }
   #ilTopNav {
     margin: 0;

@@ -23,7 +23,7 @@
     <!-- PNG logo in the top bar AND border beneath topbar -->
     <xsl:template match="div[@id='ilTopBar']//div[@class='row']" >
         <xsl:copy>
-            <xsl:attribute name="style">border-bottom: 5px solid #F59C00; margin-bottom: 5px; max-height: 100px; background-image: url('https://course.lernhaus.odl.org/ilias/data/lernhaus-v2/sty/sty_3975/images/newsletter_zeichnung_small_for_bg_grau_2.png'); background-repeat: repeat-x; background-color: #000000</xsl:attribute>
+            <xsl:attribute name="style">border-bottom: 5px solid #F59C00; margin-bottom: 5px; max-height: 100px; background-image: url('https://course.lernhaus.odl.org/ilias/data/lernhaus-v2/sty/sty_3975/images/newsletter_zeichnung_small_for_bg_grau_2.png'); background-repeat: repeat-x; </xsl:attribute>
             <xsl:apply-templates select="@*" />
             <div class="ilTopTitle" style="height: 100px; background-color: #CDCDCD; padding-right: 10px; border-bottom: 5px solid #F59C00;" >
                 <a onClick="window.location='index.php?';return false;">
@@ -37,6 +37,7 @@
     <!-- "Back" and "Overview" button beneath the user drop down -->
     <xsl:template match="ul[@id='ilTopBarNav']" >
         <xsl:copy>
+            <xsl:attribute name="style"></xsl:attribute>
             <xsl:apply-templates select="@*" />
             <!-- if user is logged in -->
             <xsl:if test="li[@id='userlog']">
