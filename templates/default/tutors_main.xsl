@@ -23,9 +23,9 @@
     <!-- PNG logo in the top bar AND border beneath topbar -->
     <xsl:template match="div[@id='ilTopBar']//div[@class='row']" >
         <xsl:copy>
-            <xsl:attribute name="style">border-bottom: 5px solid #F59C00; margin-bottom: 5px; max-height: 100px; background-image: url('https://course.lernhaus.odl.org/ilias/data/lernhaus-v2/sty/sty_3975/images/newsletter_zeichnung_small_for_bg_grau_2.png'); background-repeat: repeat-x; </xsl:attribute>
+            <xsl:attribute name="style">border-bottom: 5px solid #F59C00; margin-bottom: 5px; max-height: 100px; background-image: url('https://course.lernhaus.odl.org/ilias/data/lernhaus-v2/sty/sty_3975/images/newsletter_zeichnung_small_for_bg_grau_3.png'); background-repeat: repeat-x; </xsl:attribute>
             <xsl:apply-templates select="@*" />
-            <div class="ilTopTitle" style="height: 100px; background-color: #CDCDCD; padding-right: 10px; border-bottom: 5px solid #F59C00;" >
+            <div class="ilTopTitle" style="height: 100px; background-color: #E5E5E5; padding-right: 60px; border-bottom: 5px solid #F59C00;" >
                 <a onClick="window.location='index.php?';return false;">
                     <img alt="Logo" src="templates/default/images-custom/HeaderIcon.svg"  height="100%"/>
                 </a>
