@@ -48,10 +48,10 @@
                 </li>
                 <li>
                     <a onclick="window.location='index.php?';return false;">
-                        <!--<xsl:value-of select="php:function('ilSkinTransformer::getTxt','content')" /> -->
-                        <span style="font-weight: bold;">
+                       <xsl:value-of select="php:function('ilSkinTransformer::getTxt','content')" />
+                      <!--  <span style="font-weight: bold;">
                             Übersicht
-                        </span>
+                        </span> -->
                     </a>
                 </li>
             </xsl:if>
