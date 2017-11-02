@@ -15,6 +15,14 @@
     -->
 
     <!-- Hide the tabs in Forum entry -->
+    <xsl:template match="div[@id='tb-collapse-1']" >
+        <xsl:copy>
+            <xsl:attribute name="style">margin-left: 0px;</xsl:attribute>
+            <xsl:apply-templates select="@*|node()" />
+        </xsl:copy>
+    </xsl:template>
+
+    <!-- Hide the tabs in Forum entry -->
     <xsl:template match="ul[@id='ilTab']" />
 
     <!-- Hide the right column -->
@@ -77,8 +85,10 @@
                 <xsl:when test="not($createthread_link)">
                     <li>
                         <div class="navbar-form">
-                            <button class="btn btn-default" type="button" onclick="location.href='{$back_link/@href}'">
-                                <xsl:value-of select ="$back_link/text()" />
+                           <!-- <button class="btn btn-default" type="button" onclick="location.href='{$back_link/@href}'"> -->
+                            <button class="btn btn-default" type="button" onclick="history.back();return false;">
+                                <!--<xsl:value-of select ="$back_link/text()" />-->
+                                Alle Themen
                             </button>
                         </div>
                     </li>
