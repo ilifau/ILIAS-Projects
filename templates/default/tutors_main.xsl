@@ -59,6 +59,14 @@
         </xsl:copy>
     </xsl:template>
 
+    <!-- TEMP english
+    <xsl:template match="a[@id='il_mhead_t_focus']" >
+        <xsl:copy>
+            <xsl:attribute name="style">font-size: 30px; font-weight: bold;</xsl:attribute>
+            <xsl:value-of select="php:function('ilSkinTransformer::getTxt','groupings_assigned_obj_crs')" />
+        </xsl:copy>
+    </xsl:template>-->
+
     <!-- hide email function in upper bar and some more things...-->
     <xsl:template match="li[@id='tab_mail_addressbook']" />
     <xsl:template match="li[@id='ilMMSearch']" />
