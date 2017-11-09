@@ -1265,7 +1265,10 @@ class ilObjUserFolderGUI extends ilObjectGUI
 				$this->tpl->setVariable("TXT_ACCOUNT_MAIL", $lng->txt("mail_account_mail"));
 				if (true)
 				{
-					$this->tpl->setVariable("SEND_MAIL", " checked=\"checked\"");
+					//ili: fau: fim: remove standard send email with import
+					//$this->tpl->setVariable("SEND_MAIL", " checked=\"checked\"");
+					$this->tpl->setVariable("SEND_MAIL", "");
+					//ili. fau. fim.
 				}
 				$this->tpl->setVariable("TXT_INFORM_USER_MAIL",
 					$this->lng->txt("user_send_new_account_mail"));
