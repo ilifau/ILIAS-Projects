@@ -524,6 +524,7 @@ il.UICore = {
 			$(bc).css("box-shadow", "10px 10px 5px rgb(136, 136, 136)");
 			$(bc).css("z-index", "9999");
 			$(bc).css("height", "300px");
+			$(bc).css("left", "0px");
 			//fim. ili. fau.
 		}
 
