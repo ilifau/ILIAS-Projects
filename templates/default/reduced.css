@@ -6617,10 +6617,10 @@ code {
   color: #858585;
 }
 ::selection {
-  background: #e3afea;
+  background: #e0e0e0;
 }
 ::-moz-selection {
-  background: #e3afea;
+  background: #e0e0e0;
 }
 @media print {
   h1,
@@ -7845,7 +7845,7 @@ a.ilTreeView:focus {
 }
 /* Explorer2, jsTree */
 .jstree a {
-  color: #882796 !important;
+  color: #0D406E  !important;
 }
 .jstree a.disabled {
   color: #303030 !important;
