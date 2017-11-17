@@ -154,7 +154,7 @@
     <!-- adjusting table of content -->
     <xsl:template match="div[@id='il_center_col']">
         <xsl:copy>
-            <xsl:attribute name="style">font-size: 20px; font-weight: normal</xsl:attribute>
+            <xsl:attribute name="style">font-size: 20px; font-weight: normal; width: 100%</xsl:attribute>
             <xsl:apply-templates select="@*|node()" />
         </xsl:copy>
     </xsl:template>

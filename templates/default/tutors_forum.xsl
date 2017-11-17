@@ -41,6 +41,7 @@
 
     <!-- Show the thread title above the posts instead of in the posts -->
     <xsl:template match="//div[@class='ilFrmPostTitle']" />
+    <!--
     <xsl:template match="div[@id='il_center_col']">
         <xsl:variable name="title" select="//div[@class='ilFrmPostTitle'][1]" />
         <xsl:copy>
@@ -52,7 +53,7 @@
             <xsl:apply-templates select="node()" />
         </xsl:copy>
     </xsl:template>
-
+-->
 <!--     BROKEN tries to upload a file that extends size?!
     <xsl:template match="div[@id='il_prop_cont_userfile']" />
 -->
