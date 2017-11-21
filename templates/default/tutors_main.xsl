@@ -70,6 +70,7 @@
     <!-- hide email function in upper bar and some more things...-->
     <xsl:template match="li[@id='tab_mail_addressbook']" />
     <xsl:template match="li[@id='ilMMSearch']" />
+    <xsl:template match="li[@class='ilOnScreenChatMenuDropDown']" />
 
     <!-- No main header, no main menu -->
     <xsl:template match="div[contains(@class,'ilMainMenu')]" />
@@ -125,6 +126,10 @@
     <xsl:template match="li[@id='tab_export']" />
     <xsl:template match="li[@id='tab_crs_unsubscribe']" />
     <xsl:template match="li[@id='nontab_members_view']" />
+
+    <!-- no need in forum -->
+    <xsl:template match="li[@id='tab_sort_by_posts']" />
+    <xsl:template match="li[@id='tab_order_by_date']" />
 
     <xsl:template match="div[@class='ilNewObjectSelector']" />
 
@@ -291,14 +296,13 @@
     <xsl:template match="div[@class='ilStartupSection']/p[2]/a[2]" />
 
     <!-- change fontsize LM Tab/Subtab -->
-    <xsl:template match="ul[@id='ilTab']/li/a" >
-        <xsl:if test="../..//li[@id='tab_members']">
+    <xsl:template match="ul[@id='ilTab']//li[@id='tab_members']/a" >
             <xsl:copy>
                 <xsl:attribute name="style">font-size: 130%; border-radius: 5px 5px 5px 5px;</xsl:attribute>
                 <xsl:apply-templates select="@*|node()" />
             </xsl:copy>
-        </xsl:if>
     </xsl:template>
+
     <xsl:template match="ul[@id='ilSubTab']/li/a" >
         <xsl:copy>
             <xsl:attribute name="style">font-size: 130%; border-radius: 5px 5px 5px 5px;</xsl:attribute>
