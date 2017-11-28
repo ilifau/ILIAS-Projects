@@ -2648,7 +2648,7 @@ class ilObjForumGUI extends ilObjectGUI implements ilDesktopItemHandling
 				$this->object->markPostRead($ilUser->getId(), (int) $this->objCurrentTopic->getId(), (int) $this->objCurrentPost->getId());
 
 				// copy temporary media objects (frm~)
-				ilForumUtil::moveMediaObjects($oReplyEditForm->getInput('message'), 'frm~:html', $ilUser->getId(), 'frm:html', $ilUser->getId());
+				ilForumUtil::moveMediaObjects($oReplyEditForm->getInput('message'), 'frm~:html', $ilUser->getId(), 'frm:html', $newPost);
 
 				if($this->objProperties->isFileUploadAllowed())
 				{
@@ -2721,7 +2721,10 @@ class ilObjForumGUI extends ilObjectGUI implements ilDesktopItemHandling
 						}
 					}
 				}
-					
+				
+				// save old activation status for send_notification decision
+				$old_status_was_active = $this->objCurrentPost->isActivated();
+				
 				// if post has been edited posting mus be activated again by moderator
 				$status = 1;
 				$send_activation_mail = 0;
@@ -2798,7 +2801,8 @@ class ilObjForumGUI extends ilObjectGUI implements ilDesktopItemHandling
 						array(
 							'ref_id'            => $this->object->getRefId(),
 							'post'              => $this->objCurrentPost,
-							'notify_moderators' => (bool)$send_activation_mail
+							'notify_moderators' => (bool)$send_activation_mail,
+							'old_status_was_active' => (bool)$old_status_was_active
 						)
 					);
 	
@@ -3305,7 +3309,7 @@ class ilObjForumGUI extends ilObjectGUI implements ilDesktopItemHandling
 					if(!$this->isTopLevelReplyCommand() && $this->objCurrentPost->getId() == $node->getId())
 					{
 						# actions for "active" post
-						if($this->is_moderator || $node->isActivated())
+						if($this->is_moderator || $node->isActivated() || $node->isOwner($ilUser->getId()))
 						{
 							// reply/edit
 							if(
@@ -6661,7 +6665,7 @@ class ilObjForumGUI extends ilObjectGUI implements ilDesktopItemHandling
 					!$this->displayConfirmPostActivation())
 			)
 			{
-				if($this->is_moderator || $node->isActivated())
+				if($this->is_moderator || $node->isActivated() || $node->isOwner($ilUser->getId()))
 				{
 					// button: reply
 					if(!$this->objCurrentTopic->isClosed() && $node->isActivated() &&
@@ -6684,7 +6688,7 @@ class ilObjForumGUI extends ilObjectGUI implements ilDesktopItemHandling
 					}
 					
 					// button: edit article
-					if(!$this->objCurrentTopic->isClosed() && $node->isActivated() &&
+					if(!$this->objCurrentTopic->isClosed() && 
 						($node->isOwner($ilUser->getId()) || $this->is_moderator) &&
 						!$node->isCensored() &&
 						$ilUser->getId() != ANONYMOUS_USER_ID

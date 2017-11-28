@@ -3391,6 +3391,18 @@ function getAnswerFeedbackPoints()
 		return false;
 	}
 	
+	/**
+	 * @param array $removeQuestionIds
+	 */
+	public function removeQuestions($removeQuestionIds)
+	{
+		foreach ($removeQuestionIds as $value) {
+			$this->removeQuestion($value);
+		}
+		
+		$this->reindexFixedQuestionOrdering();
+	}
+	
 /**
 * Removes a question from the test object
 *
@@ -5619,7 +5631,7 @@ function getAnswerFeedbackPoints()
 		{
 			while ($row = $ilDB->fetchAssoc($query_result))
 			{
-				$row = ilAssQuestionType::conmpleteMissingPluginName($row);
+				$row = ilAssQuestionType::completeMissingPluginName($row);
 				
 				if( !$row['plugin'] )
 				{
@@ -7202,6 +7214,11 @@ function getAnswerFeedbackPoints()
 		$newObj->setResultFilterTaxIds($this->getResultFilterTaxIds());
 		$newObj->setInstantFeedbackAnswerFixationEnabled($this->isInstantFeedbackAnswerFixationEnabled());
 		$newObj->setForceInstantFeedbackEnabled($this->isForceInstantFeedbackEnabled());
+		$newObj->setAutosave($this->getAutosave());
+		$newObj->setAutosaveIval($this->getAutosaveIval());
+		$newObj->setOfferingQuestionHintsEnabled($this->isOfferingQuestionHintsEnabled());
+		$newObj->setSpecificAnswerFeedback($this->getSpecificAnswerFeedback());
+		$newObj->setObligationsEnabled($this->areObligationsEnabled());
 		$newObj->saveToDb();
 		
 		// clone certificate
@@ -10852,6 +10869,22 @@ function getAnswerFeedbackPoints()
 	public function setPoolUsage($usage) {
 	    $this->poolUsage = (boolean)$usage;
 	}
+	
+	public function reindexFixedQuestionOrdering()
+	{
+		$tree = isset($GLOBALS['DIC']) ? $GLOBALS['DIC']['tree'] : $GLOBALS['tree'];
+		$db = isset($GLOBALS['DIC']) ? $GLOBALS['DIC']['ilDB'] : $GLOBALS['ilDB'];
+		$pluginAdmin = isset($GLOBALS['DIC']) ? $GLOBALS['DIC']['ilPluginAdmin'] : $GLOBALS['ilPluginAdmin'];
+		
+		require_once 'Modules/Test/classes/class.ilTestQuestionSetConfigFactory.php';
+		$qscFactory = new ilTestQuestionSetConfigFactory($tree, $db, $pluginAdmin, $this);
+		$questionSetConfig = $qscFactory->getQuestionSetConfig();
+		
+		/* @var ilTestFixedQuestionSetConfig $questionSetConfig */
+		$questionSetConfig->reindexQuestionOrdering();
+		
+		$this->loadQuestions();
+	}
 
 	public function setQuestionOrderAndObligations($orders, $obligations)
 	{
@@ -10911,6 +10944,7 @@ function getAnswerFeedbackPoints()
 	    $values = array($row['sequence'] + 1, $question_to_move);
 	    $ilDB->manipulateF($update, $types, $values);
 
+	    $this->reindexFixedQuestionOrdering();
 	}
 
 	public function hasQuestionsWithoutQuestionpool()

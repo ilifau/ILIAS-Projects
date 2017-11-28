@@ -1019,7 +1019,10 @@ abstract class assQuestion
 						ilUtil::prepareFormOutput($solution['value']['name']),
 						$this->lng->txt('tst_show_solution_suggested')
 					)));
-					array_push($output, '<a href="' . $this->getSuggestedSolutionPathWeb() . $solution["value"]["name"] . '">' . $possible_texts[0] . '</a>');
+
+					require_once 'Services/WebAccessChecker/classes/class.ilWACSignedPath.php';
+					ilWACSignedPath::setTokenMaxLifetimeInSeconds(60);
+					array_push($output, '<a href="' . ilWACSignedPath::signFile($this->getSuggestedSolutionPathWeb() . $solution["value"]["name"]) . '">' . $possible_texts[0] . '</a>');
 					break;
 				case "text":
 					$solutionValue = $solution["value"];
@@ -4349,21 +4352,18 @@ abstract class assQuestion
 	 * @param
 	 * @return
 	 */
-	function formatSAQuestion($a_q)
+	public function formatSAQuestion($a_q)
 	{
-		include_once("./Services/RTE/classes/class.ilRTE.php");
-		$a_q = nl2br((string) ilRTE::_replaceMediaObjectImageSrc($a_q, 0));
-		$a_q = str_replace("</li><br />", "</li>", $a_q);
-		$a_q = str_replace("</li><br>", "</li>", $a_q);
+		return $this->getSelfAssessmentFormatter()->format($a_q);
+	}
 
-		include_once './Services/MathJax/classes/class.ilMathJax.php';
-		$a_q = ilMathJax::getInstance()->insertLatexImages($a_q, "\[tex\]", "\[\/tex\]");
-		$a_q = ilMathJax::getInstance()->insertLatexImages($a_q, "\<span class\=\"latex\">", "\<\/span>");
-
-		$a_q = str_replace('{', '&#123;', $a_q);
-		$a_q = str_replace('}', '&#125;', $a_q);
-		
-		return $a_q;
+	/**
+	 * @return \ilAssSelfAssessmentQuestionFormatter
+	 */
+	protected function getSelfAssessmentFormatter()
+	{
+		require_once 'Modules/TestQuestionPool/classes/questions/class.ilAssSelfAssessmentQuestionFormatter.php';
+		return new \ilAssSelfAssessmentQuestionFormatter();
 	}
 
 	// scorm2004-start ???
@@ -4982,8 +4982,110 @@ abstract class assQuestion
 		
 		return $ilDB->update('tst_solutions', $fieldData, $whereData);
 	}
-// fau.
-
+	// fau.
+	
+	// hey: prevPassSolutions - motivation slowly decreases on imagemap
+	const KEY_VALUES_IMPLOSION_SEPARATOR = ':';
+	protected static function getKeyValuesImplosionSeparator()
+	{
+		return self::KEY_VALUES_IMPLOSION_SEPARATOR;
+	}
+	public static function implodeKeyValues($keyValues)
+	{
+		return implode(self::getKeyValuesImplosionSeparator(), $keyValues);
+	}
+	public static function explodeKeyValues($keyValues)
+	{
+		return explode(self::getKeyValuesImplosionSeparator(), $keyValues);
+	}
+	
+	protected function deleteDummySolutionRecord($activeId, $passIndex)
+	{
+		foreach( $this->getSolutionValues($activeId, $passIndex, false) as $solutionRec )
+		{
+			if( 0 == strlen($solutionRec['value1']) && 0 == strlen($solutionRec['value2']) )
+			{
+				$this->removeSolutionRecordById($solutionRec['solution_id']);
+			}
+		}
+	}
+	
+	protected function deleteSolutionRecordByValues($activeId, $passIndex, $authorized, $matchValues)
+	{
+		$ilDB = isset($GLOBALS['DIC']) ? $GLOBALS['DIC']['ilDB'] : $GLOBALS['ilDB'];
+		
+		$types = array("integer", "integer", "integer", "integer");
+		$values = array($activeId, $this->getId(), $passIndex, (int)$authorized);
+		$valuesCondition = array();
+		
+		foreach($matchValues as $valueField => $value)
+		{
+			switch($valueField)
+			{
+				case 'value1':
+				case 'value2':
+					$valuesCondition[] = "{$valueField} = %s";
+					$types[] = 'text';
+					$values[] = $value;
+					break;
+				
+				default:
+					require_once 'Modules/TestQuestionPool/exceptions/class.ilTestQuestionPoolException.php';
+					throw new ilTestQuestionPoolException('invalid value field given: '.$valueField);
+			}
+		}
+		
+		$valuesCondition = implode(' AND ', $valuesCondition);
+		
+		$query = "
+			DELETE FROM tst_solutions
+			WHERE active_fi = %s
+			AND question_fi = %s
+			AND pass = %s
+			AND authorized = %s
+			AND $valuesCondition
+		";
+		
+		if( $this->getStep() !== NULL )
+		{
+			$query .= " AND step = %s ";
+			$types[] = 'integer';
+			$values[] = $this->getStep();
+		}
+		
+		$ilDB->manipulateF($query, $types, $values);
+	}
+	
+	protected function duplicateIntermediateSolutionAuthorized($activeId, $passIndex)
+	{
+		foreach($this->getSolutionValues($activeId, $passIndex, false) as $rec)
+		{
+			$this->saveCurrentSolution($activeId, $passIndex, $rec['value1'], $rec['value2'], true, $rec['tstamp']);
+		}
+	}
+	
+	protected function forceExistingIntermediateSolution($activeId, $passIndex, $considerDummyRecordCreation)
+	{
+		$intermediateSolution = $this->getSolutionValues($activeId, $passIndex, false);
+		
+		if( !count($intermediateSolution) )
+		{
+			// make the authorized solution intermediate (keeping timestamps)
+			// this keeps the solution_ids in synch with eventually selected in $_POST['deletefiles']
+			$this->updateCurrentSolutionsAuthorization($activeId, $passIndex, false, true);
+			
+			// create a backup as authorized solution again (keeping timestamps)
+			$this->duplicateIntermediateSolutionAuthorized($activeId, $passIndex);
+			
+			if( $considerDummyRecordCreation )
+			{
+				// create an additional dummy record to indicate the existence of an intermediate solution
+				// even if all entries are deleted from the intermediate solution later
+				$this->saveCurrentSolution($activeId, $passIndex, null, null, false, null);
+			}
+		}
+	}
+	// hey.
 
 	/**
 	 * @param \ilObjTestGateway $resultGateway
@@ -5189,6 +5291,38 @@ abstract class assQuestion
 		));
 
 		return $row['cnt'] < count($questionIds);
+	}
+	
+	public static function getQuestionsMissingResultRecord($activeId, $pass, $questionIds)
+	{
+		global $ilDB;
+		
+		$IN_questionIds = $ilDB->in('question_fi', $questionIds, false, 'integer');
+		
+		$query = "
+			SELECT question_fi
+			FROM tst_test_result
+			WHERE active_fi = %s
+			AND pass = %s
+			AND $IN_questionIds
+		";
+
+		$res = $ilDB->queryF(
+			$query, array('integer', 'integer'), array($activeId, $pass)
+		);
+		
+		$questionsHavingResultRecord = array();
+		
+		while($row = $ilDB->fetchAssoc($res))
+		{
+			$questionsHavingResultRecord[] = $row['question_fi'];
+		}
+		
+		$questionsMissingResultRecordt = array_diff(
+			$questionIds, $questionsHavingResultRecord
+		);
+
+		return $questionsMissingResultRecordt;
 	}
 
 	public static function lookupResultRecordExist($activeId, $questionId, $pass)

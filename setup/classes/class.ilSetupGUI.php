@@ -533,13 +533,6 @@ echo "<br>+".$client_id;
 			$num++;
 		}
 
-		if (count($languages) % 2)
-		{
-			// fim: ili: fau: fixedSetup - removed for setup access
-			// $this->tpl->touchBlock("lng_empty_cell");
-			// fim. ili. fau.
-		}
-
 		if ($this->cmd != "logout" and $this->setup->isInstalled() and $this->setup->isAuthenticated())
 		{
 			// add client link

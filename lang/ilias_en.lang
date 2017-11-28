@@ -23,6 +23,7 @@ forum#:#autosave_post_draft_info#:#<span class="asterisk">This post will be save
 forum#:#edit_thread_draft#:#Edit thread draft
 common#:#pd_enable_pdfrmpostdraft#:#Enabled 'My Posting Drafts'
 common#:#pd_enable_pdfrmpostdraft_info#:#If enabled, a block 'My Posting Drafts' can be placed on the user's Personal Desktop. This block contains drafts of postings created in forums.
+forum#:#forums_thread_drafts_deleted#:#The selected thread including all postings and drafts have been deleted.
 pd#:#block_show_pdfrmpostdraft#:#Show 'My Posting Drafts'###deprecated 
 forum#:#forums_threads_drafts_deleted#:#The selected threads including all postings and drafts have been deleted.
 forum#:#save_draft_successfully#:#The draft was saved successfully.
@@ -226,6 +227,7 @@ assessment#:#ass_mc_sel_lim_hint#:#Please select %s of %s answers!
 assessment#:#ass_mc_sel_lim_exhausted_hint#:#Please do not select more than %s of %s answers!
 assessment#:#ass_mc_sel_lim_setting#:#Answering Limitation
 assessment#:#ass_mc_sel_lim_setting_desc#:#With this setting the number of answers choosable by the participants can be limited.
+assessment#:#ass_txt_char_lim_exhausted_hint#:#Your answer has %s characters and exceeds the character limit of %s characters!
 assessment#:#essay_scoring_mode#:#Scoring Mode
 assessment#:#essay_scoring_mode_without_keywords#:#No Automatic Scoring
 assessment#:#essay_scoring_mode_without_keywords_desc#:#No points are granted unless the tutor's manual scoring.
@@ -275,7 +277,7 @@ assessment#:#answer_types#:#Editor for Answers
 assessment#:#gap_combination#:#Gap Combination
 assessment#:#answer#:#Answer
 assessment#:#tst_failed_imp_skl_thresholds#:#The Import of thresholds for the following competences were skipped, because the according competences within the local system are configured with a different list of levels.
-assessment#:#tst_failed_imp_qst_skl_assign#:#The question's assignments to the following competences could not be created. The accoring competences could not be identified within the local system.
+assessment#:#tst_failed_imp_qst_skl_assign#:#The question's assignments to the following competences could not be created. The according competences could not be identified within the local system.
 assessment#:#ass_skl_import_fails_remove_btn#:#Remove this Hint
 assessment#:#answers_multiline#:#Multi Line Answers
 assessment#:#answers_singleline#:#Single Line Answers
@@ -922,7 +924,7 @@ assessment#:#qpl_settings_general_form_prop_show_tax_desc#:#Existing taxonomies 
 assessment#:#qpl_settings_general_form_property_show_taxonomies#:#Show Taxonomies
 assessment#:#qpl_paste_no_objects#:#There are no questions in the clipboard. Please copy or move a question into the clipboard.
 assessment#:#qpl_paste_success#:#The question(s) have been pasted into the question pool
-assessment#:#qpl_paste_error#:#At least one question could not pe pasted into the question pool. Possible reason: You tried to move the question into the same question pool.
+assessment#:#qpl_paste_error#:#At least one question could not be pasted into the question pool. Possible reason: You tried to move the question into the same question pool.
 assessment#:#qpl_question_is_in_use#:#The question you are about to edit exists in %s test(s). If you change this question, you will NOT change the question(s) in the test(s), because the system creates a copy of a question when it is inserted in a test!
 assessment#:#qpl_questions_deleted#:#Question(s) removed.
 assessment#:#qpl_select_file_for_import#:#You must select a file for import!###deprecated 
@@ -1444,7 +1446,7 @@ assessment#:#upload_image#:#Upload Image###deprecated
 assessment#:#upload_imagemap#:#Upload an Image Map###deprecated 
 assessment#:#uploaded_material#:#Uploaded Material
 assessment#:#user_not_invited#:#You are not supposed to take this test.
-assessment#:#user_wrong_clientip#:#You don't have the right ip using this test.
+assessment#:#user_wrong_clientip#:#You don't have the right IP address to access this test.
 assessment#:#value_between_x_and_y#:#The value should be between %s and %s
 assessment#:#values#:#Values
 assessment#:#warning_question_not_complete#:#The question is not complete!
@@ -1620,6 +1622,8 @@ assessment#:#sign_submission#:#Digitally Sign Test Submissions
 assessment#:#sign_submission_info#:#If this is activated and a signature plugin is installed and active, participants will be requested to digitally sign their submissions.
 assessment#:#preserve_manscoring#:#Preserve manual scorings
 assessment#:#preserve_manscoring_info#:#Changes in the scoring of a question may make it necessary to void manual scorings. This option allows to void ALL manual scorings in the test and should be used only in rare occasions.
+assessment#:#tst_qst_added_to_pool_s#:#Successfully added the question to the selected pool.
+assessment#:#tst_qst_added_to_pool_p#:#Successfully added the questions to the selected pool.
 auth#:#auth_account_migration_keep#:#Migrate Existing User Account
 auth#:#auth_account_migration_name#:#Migration
 auth#:#auth_account_migration_new#:#Create New User Account
@@ -4461,7 +4465,7 @@ common#:#tst_statistical_evaluation#:#Statistics
 common#:#tst_statistics#:#Statistics
 common#:#tst_upload_file#:#Upload file###deprecated 
 common#:#tst_user_not_invited#:#You are not supposed to take this test.
-common#:#tst_user_wrong_clientip#:#You don't have the right ip using this test
+common#:#tst_user_wrong_clientip#:#You don't have the right IP address to access this test.
 rbac#:#tst_visible#:#Test is visible
 common#:#tst_warning_test_not_complete#:#The test is not complete!
 rbac#:#tst_write#:#User can edit content and settings of test
@@ -9168,7 +9172,7 @@ survey#:#view_phrase#:#View Phrase###deprecated
 survey#:#warning_question_in_use#:#Warning! The question you want to edit is in use by the surveys listed below. If you decide to continue and save/apply the question, all answers of the surveys listed below will be deleted. If you want to change the question and use it in another survey, please choose duplicate in the question browser to create a new instance of this question.###deprecated 
 survey#:#warning_question_not_complete#:#The question is not complete!
 survey#:#wrong_categories_selected_for_insert#:#ILIAS could not perform the desired action. Please check exactly one answer as target position!###deprecated 
-survey#:#wrong_survey_code_used#:#You cannot enter the survey, because you tried to start it with an unauthorized survey code.
+survey#:#wrong_survey_code_used#:#No access to survey. Your survey code is invalid or has already been used.
 tagging#:#tagging_all_users#:#All Users
 tagging#:#tagging_edit_settings#:#Edit Settings
 tagging#:#tagging_enable_all_users_info#:#Adds a section ‘All Users’ to the info screens that lists all tags of all users attached to a resource.
@@ -9329,6 +9333,7 @@ trac#:#vm_access_of_users#:#Access of Users###deprecated
 trac#:#vm_days_of_period#:#Days of Period###deprecated 
 trac#:#vm_times_of_day#:#Times of Days###deprecated 
 user#:#clipboard_add_btn#:#Add to Clipboard
+user#:#clipboard_add_from_btn#:#Add from Clipboard
 user#:#clipboard_user_added#:#Added selected users to clipboard.
 user#:#clipboard_table_title#:#Clipboard (User Accounts)
 user#:#clipboard_remove_btn#:#Remove from Clipboard
@@ -9915,7 +9920,7 @@ rbac#:#perm_protected_local_role#:#Protected Local Role
 rbac#:#perm_role_path_info_created#:#Created in %1$s "%2$s"
 rbac#:#perm_role_path_info_inheritance#:#using local policy from %1$s "%2$s"
 book#:#book_public_log#:#Public Reservations
-book#:#book_public_log_info#:#The list of reservations can be viewed by all users.
+book#:#book_public_log_info#:#Users having the "read" permission only will also see reservations of other users.
 book#:#book_fromto#:#Date Range
 book#:#book_all#:#Show all
 book#:#book_earlier#:#Earlier###deprecated 
@@ -9972,7 +9977,7 @@ dateplaner#:#cal_ch_manager#:#Consultation Hour Manager
 dateplaner#:#cal_ch_manager_info#:#Login of the user who will manage your consultation hours.
 dateplaner#:#cal_ch_unknown_user#:#The given login does not match any user.
 dateplaner#:#cal_ch_target_object#:#Repository Object
-dateplaner#:#cal_ch_target_object_info#:#Consultation hours will be displayed in a block to the right of the course / group content. To restrict the display of consultation hours to specific courses or groups, please enter the Ref-ID of the said objects. You find the Ref-ID in the URL of the respective objects. Add more than one Ref-ID separated by comma.
+dateplaner#:#cal_ch_target_object_info#:#Consultation hours will be displayed in a block to the right of the course / group content. To restrict the display of consultation hours to specific courses or groups, please enter the Ref-ID of the said objects. You find the Ref-ID in the URL of the respective objects. Add more than one Ref-ID separated by comma. Regardless of that, consultation hours may also appear in your e-portfolios.
 dateplaner#:#cal_ch_unknown_repository_object#:#The given repository object ref-id is not valid.
 rbac#:#push_desktop_items#:#Push Items on the Personal Desktop
 rbac#:#smtp_mail#:#SMTP E-Mail
@@ -12589,6 +12594,8 @@ dcl#:#dcl_export_finished#:#Export finished
 dcl#:#dcl_supported_filetypes#:#Allowed file-extensions
 dcl#:#dcl_supported_filetypes_desc#:#You can set the allowed extensions comma seperated. For example: pdf, docx
 dcl#:#dcl_no_export_data_available#:#No data or fields available for export.
+dcl#:#dcl_no_export_content_available#:#No data available for export.
+dcl#:#dcl_no_export_fields_available#:#No fields activated for export. Mark at least one field as exportable in the <a href="%s">table settings</a>.
 rbac#:#dcl_edit_content#:#Edit entries
 common#:#obj_bibl#:#Bibliography
 common#:#objs_bibl#:#Bibliographies
@@ -14507,8 +14514,8 @@ scormtrac#:#counter#:#counter
 scormtrac#:#student_response#:#student_response: Response
 scormtrac#:#ostatus#:#Status of the objective
 prtf#:#prtf_blog_page_created#:#Blog has been added.
-wiki#:#wiki_adv_md_hidden#:#This block is currently hidden.###deprecated 
-wiki#:#wiki_page_list_form_info#:#Adds a list of pages of this wiki that are all assigned to the selected metadata below.
+wiki#:#wiki_adv_md_hidden#:#This block is currently hidden.
+wiki#:#wiki_page_list_form_info#:#Adds a list of pages of this wiki that are all assigned to the selected metadata below. Only searchable meta data fields are listed.
 content#:#cont_pc_amdpl#:#Page List
 meta#:#udf_type_selectmulti#:#Selection List (Multiple Choice)
 wiki#:#wiki_no_page_found#:#No wiki page has been found for search term '$1'.
@@ -15036,7 +15043,7 @@ awrn#:#awareness_settings#:#Settings
 awrn#:#awrn_enable#:#Enable ‘Who is online?’-Tool
 crs#:#crs_mem_contacts#:#Tutorial Support
 user#:#user_awrn_all_users#:#All Users
-user#:#user_awrn_all_users_info#:#All users of the platform are listed.
+user#:#user_awrn_all_users_info#:#All users of the platform are listed. Please not that the setting "Online and Offline" can reduce performance greatly on installations with a large number of users.
 crs#:#crs_awrn_support_contacts#:#Tutorial Support
 crs#:#crs_awrn_support_contacts_info#:#All tutorial support contacts of courses with membership of the current user are listed. Users are defined as tutorial support contacts in the Members tab of the respective course.
 awrn#:#awrn_inactive#:#Not Listed
@@ -15053,7 +15060,7 @@ awrn#:#awrn_caching_period#:#Caching Period
 awrn#:#awrn_caching_period_info#:#Time that is waited before the number of users in the top bar is updated and new online users are determined.
 awrn#:#awrn_seconds#:#sec
 awrn#:#awrn_max_nr_entries#:#Max. Number of Items
-awrn#:#awrn_max_nr_entries_info#:#Maximum number of items in the ‘Who is online?’ list.
+awrn#:#awrn_max_nr_entries_info#:#Maximum number of items in the ‘Who is online?’ list. This setting has only minimal performance influence when displaying the tool in the top bar.
 awrn#:#awrn_hide_from_awareness#:#Hide Me From ‘Who is online?’-Tool
 awrn#:#awrn_hide_from_awareness_info#:#The ‘Who is online?’-Tool is in the top bar and listing selected users (e.g. contacts or members of your courses).
 common#:#contact_sysadmin#:#Contact Technical Support
@@ -15208,7 +15215,7 @@ wsp#:#wsp_shared_filter_reset_button#:#Reset Search
 wsp#:#wsp_shared_filter_button#:#Search
 wiki#:#wiki_page_title_too_long#:#Sorry, the title of the wiki page is too long. Please replace it with a shorter title.
 exc#:#exc_direct_submit#:#Submit
-membership#:#mem_error_preconditions#:#A registration is not possible, since minimum one precondition is not fullfilled.
+membership#:#mem_error_preconditions#:#A registration is not possible, since minimum one setting prevents this.
 export#:#no_file#:#No file
 content#:#lm_no_download_files#:#There are currently no files for download available.
 rbac#:#feed_copy#:#User can copy webfeed
@@ -15789,6 +15796,7 @@ exc#:#exc_tbl_filter_submission#:#Submission
 exc#:#exc_tbl_filter_has_submission#:#Has submitted
 exc#:#exc_tbl_filter_has_no_submission#:#Has not submitted yet
 iass#:#general#:#General Information
+iass#:#iass_copy#:#Copy Individual Assessment
 iass#:#iass_content#:#Assessment content description
 iass#:#iass_record_template#:#Record template
 iass#:#iass_graded_by#:#Graded by
@@ -15882,6 +15890,9 @@ chatroom#:#chat_osc_leave_grp_conv#:#Leave Conversation
 chatroom#:#chat_osc_user_left_grp_conv#:#User '%s' has left the group conversation.
 chatroom#:#chat_osc_dont_accept_msg#:#You currently cannot be invited to conversations. If desired you can change this in your <a href="%s">'Personal Settings'</a>.
 chatroom#:#chat_osc_doesnt_accept_msg#:#Conversations not possible
+chatroom#:#chat_osc_subs_rej_msgs#:#Currently it is not possible to continue this conversation. Your chat-partner must activate chats in the chat-settings.
+chatroom#:#chat_osc_subs_rej_msgs_p#:#The following chat partners of your conversation do not want to receive messages anymore: %s
+chatroom#:#chat_osc_self_rej_msgs#:#You currently cannot take part in this conversation because you suppressed receiving messages in your settings.
 usr#:#user_actions#:#User Actions
 usr#:#user_action#:#User Action
 buddysystem#:#buddy_handle_contact_request#:#Contact Request
@@ -15899,6 +15910,7 @@ chatroom#:#chat_deletion_interval_info#:#If chosen, messages in the repository c
 chatroom#:#chat_deletion_interval_unit#:#Unit
 chatroom#:#chat_deletion_interval_value#:#Value
 chatroom#:#chat_deletion_ival_max_val#:#The maximum value for the chose unit '%s' is: %s
+chatroom#:#chat_deletion_interval_run_at#:#Time
 chatroom#:#chat_deletion_interval_run_at_info#:#Please define the time (format: HH:MM) when the server should process the message deletion.
 prg#:#prg_points_reachable#:#Points Obtainable
 mail#:#mail_members_search_continue#:#Continue
@@ -15935,3 +15947,5 @@ rbac#:#book_copy#:#User can copy booking pool
 exc#:#exc_settings_feedback_mail_info#:#Tutors enter their evaluation into a mail form. The evaluation is sent to participants.
 exc#:#exc_settings_feedback_file_info#:#Tutors upload a file. The participant receives a notification about it and can access the file at the assignment overview.
 exc#:#exc_settings_feedback_text_info#:#Tutors type their evaluation in a text field. The participant receives a notification about it and the text is displayed at the assignment overview.
+wiki#:#wiki_pg_list_no_search_fields#:#No searchable meta data fields found in the metadata sets of the wiki.
+content#:#cont_transl_master_language_not_allowed#:#To import a translation you need to activate at least one additional language under Settings > Multilingualism
