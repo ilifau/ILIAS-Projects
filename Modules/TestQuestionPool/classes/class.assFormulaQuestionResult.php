@@ -360,8 +360,17 @@ class assFormulaQuestionResult
 				{
 					$frac_value = $value;
 				}
+				
+				$frac_value =  ilMath::_round($frac_value, $this->getPrecision());
 
-				$frac_value = ilMath::_round($frac_value, $this->getPrecision());
+				if(substr_count($value, '/') >= 1)
+				{
+					$check_fraction = FALSE;
+				}
+				else
+				{
+					$check_fraction = TRUE;	
+				}	
 				break;
 			
 			case assFormulaQuestionResult::RESULT_FRAC: 
@@ -425,6 +434,38 @@ class assFormulaQuestionResult
 			break;
 		}
 
+		// result unit!!
+		if(is_object($this->getUnit()))
+		{
+			//there is a "fix" result_unit defined!
+			
+			// if expected resultunit != baseunit convert to "fix" result_unit
+			if($this->getUnit()->getBaseUnit() != -1)
+			{
+				$result = ilMath::_div($result, $this->getUnit()->getFactor(), $this->getPrecision());
+			}
+			else
+			{
+				//if resultunit == baseunit calculate to get correct precision
+				$result = ilMath::_mul($result, $this->getUnit()->getFactor(), $this->getPrecision());
+			}
+		}
+		else if($this->getUnit() == NULL && $unit != NULL)
+		{
+			// there is no "fix" result_unit defined, but the user has selected a unit ... 
+			// so .... there are "available resultunits" in multi-selectbox selected
+			// -> check if selected user-unit is baseunit
+			
+			if((int)$unit->getFactor() == 1)
+			{
+				// result is already calculated to baseunit.... -> get correct precision..
+				$result = ilMath::_mul($result, 1, $this->getPrecision());
+			}
+			else
+			{
+				$result = ilMath::_div($result, $unit->getFactor(), 100);
+			}
+		}
 		if(is_object($unit))
 		{
 			if(isset($frac_value))
