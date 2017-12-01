@@ -678,11 +678,12 @@ class ilInitialisation
 		$_GET["ref_id"] = ROOT_FOLDER_ID;
 		$_GET["cmd"] = "frameset";
 
-//broken fim: ili: fau: changedLogin - prevent "enabled anonymous" to switch to public section
-//			ilUtil::redirect("login.php?target=".$orig_target);
+// fim: ili: fau: changedLogin - prevent "enabled anonymous" to switch to public section
+//broken	ilUtil::redirect("login.php?target=".$orig_target);
 		self::redirect(
-			"ilias.php?baseClass=ilrepositorygui&reloadpublic=1&cmd=".
-			$_GET["cmd"]."&ref_id=".$_GET["ref_id"]);
+//			"ilias.php?baseClass=ilrepositorygui&reloadpublic=1&cmd=".
+//			$_GET["cmd"]."&ref_id=".$_GET["ref_id"]);
+			"login.php?target=&client_id=grandexperts&cmd=force_login");
 //fim. ili. fau.
 	}
 

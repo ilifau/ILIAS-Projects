@@ -20,7 +20,7 @@
         </xsl:copy>
     </xsl:template>
 
-    <!-- PNG logo in the top bar AND border beneath topbar -->
+    <!-- PNG logo in the top bar AND border beneath topbar
     <xsl:template match="div[@id='ilTopBar']//div[@class='row']" >
         <xsl:copy>
             <xsl:attribute name="style">border-bottom: 5px solid #F59C00; margin-bottom: 5px; max-height: 100px; background-image: url('https://course.lernhaus.odl.org/ilias/data/lernhaus-v2/sty/sty_3975/images/newsletter_zeichnung_small_for_bg_grau_3.png'); background-repeat: repeat-x; </xsl:attribute>
@@ -32,7 +32,9 @@
             </div>
             <xsl:apply-templates select="node()" />
         </xsl:copy>
-    </xsl:template>
+    </xsl:template>-->
+
+    <xsl:template match="div[@class='row']//a[@class='navbar-brand']" />
 
     <!-- "Back" and "Overview" button beneath the user drop down -->
     <xsl:template match="ul[@id='ilTopBarNav']" >
@@ -47,7 +49,7 @@
                     </a>
                 </li>
                 <li>
-                    <a onclick="window.location='index.php?';return false;">
+                    <a onclick="window.location='index.php?';return false;" style="font-weight: 600">
                        <xsl:value-of select="php:function('ilSkinTransformer::getTxt','content')" />
                       <!--  <span style="font-weight: bold;">
                             Übersicht
@@ -115,14 +117,14 @@
     <!-- Show "ilTab" and hide some not needed -->
     <xsl:template match="ul[@id='ilTab']">
         <xsl:copy>
-            <xsl:attribute name="style">border: 0px;</xsl:attribute>
+            <xsl:attribute name="style">border-bottom: 0px;</xsl:attribute>
             <xsl:apply-templates select="@*|node()" />
         </xsl:copy>
     </xsl:template>
     <xsl:template match="li[@id='tab_view_content']" />
     <xsl:template match="li[@id='tab_info_short']" />
-    <xsl:template match="li[@id='tab_settings']" />
-    <xsl:template match="li[@id='tab_meta_data']" />
+<!--    <xsl:template match="li[@id='tab_settings']" />
+-->    <xsl:template match="li[@id='tab_meta_data']" />
     <xsl:template match="li[@id='tab_export']" />
     <xsl:template match="li[@id='tab_crs_unsubscribe']" />
     <xsl:template match="li[@id='nontab_members_view']" />
@@ -131,7 +133,8 @@
     <xsl:template match="li[@id='tab_sort_by_posts']" />
     <xsl:template match="li[@id='tab_order_by_date']" />
 
-    <xsl:template match="div[@class='ilNewObjectSelector']" />
+<!-- added for experts -->
+<!--    <xsl:template match="div[@class='ilNewObjectSelector']" /> -->
 
     <!-- change member view for tutors -->
     <xsl:template match="form[contains(@action,'ilrepositorysearchgui')]" />
@@ -170,8 +173,27 @@
         </xsl:copy>
     </xsl:template>
 
-    <!-- No head and list actions -->
-    <xsl:template match="div[@class='il_ContainerListItem']/div[@class='ilFloatRight']"  />
+    <!-- only show delete for LMs -->
+    <xsl:template match="div[@class='il_ContainerListItem']/div[@class='ilFloatRight']" >
+        <xsl:choose>
+            <xsl:when test="../../..//img[contains(@title, 'Module')]">
+                <xsl:copy>
+                    <xsl:apply-templates select="@*|node()" />
+                </xsl:copy>
+            </xsl:when>
+            <xsl:otherwise>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+    <xsl:template match="div[@class='il_ContainerListItem']/div[@class='ilFloatRight']//li[1]"  />
+    <xsl:template match="div[@class='il_ContainerListItem']/div[@class='ilFloatRight']//li[2]"  />
+    <xsl:template match="div[@class='il_ContainerListItem']/div[@class='ilFloatRight']//li[3]"  />
+    <xsl:template match="div[@class='il_ContainerListItem']/div[@class='ilFloatRight']//li[4]"  />
+    <xsl:template match="div[@class='il_ContainerListItem']/div[@class='ilFloatRight']//li[6]"  />
+    <xsl:template match="div[@class='il_ContainerListItem']/div[@class='ilFloatRight']//li[7]"  />
+    <xsl:template match="div[@class='il_ContainerListItem']/div[@class='ilFloatRight']//li[8]"  />
+    <xsl:template match="div[@class='il_ContainerListItem']/div[@class='ilFloatRight']//li[9]"  />
+    <xsl:template match="div[@class='il_ContainerListItem']/div[@class='ilFloatRight']//li[10]"  />
 
     <!-- reduce personal settings -->
     <xsl:template match="li[@id='tab_general_settings']"  />
@@ -310,8 +332,66 @@
         </xsl:copy>
     </xsl:template>
 
+    <xsl:template match="ul[@id='ilTab']/li/a" >
+        <xsl:copy>
+            <xsl:attribute name="style">font-size: 130%; border-radius: 5px 5px 5px 5px;</xsl:attribute>
+            <xsl:apply-templates select="@*|node()" />
+        </xsl:copy>
+    </xsl:template>
+
     <!-- hide Itemproperties -->
     <xsl:template match="div[@class='il_ContainerListItem']//div[@class='ilListItemSection il_ItemProperties']" />
     <xsl:template match="div[@class='il_ContainerListItem']//div[@class='ilListItemSection il_Description']" />
+
+    <xsl:template match="div[@id='accordion__1']//div[@class='il_VAccordionInnerContainer'][2]"/>
+    <xsl:template match="div[@id='accordion__1']//div[@class='il_VAccordionInnerContainer'][3]"/>
+
+    <xsl:template match="div[@class='ilNewObjectSelector']//li[@class='dropdown-header ']"/>
+
+    <!-- hide experts LM settings not needed -->
+    <xsl:template match="li[@id='tab_questions']" />
+    <xsl:template match="li[@id='tab_meta']" />
+    <xsl:template match="li[@id='subtab_internal_links']" />
+    <xsl:template match="li[@id='subtab_link_check']" />
+    <xsl:template match="li[@id='subtab_history']" />
+    <xsl:template match="li[@id='subtab_maintenance']" />
+    <xsl:template match="li[@id='subtab_srt_files']" />
+    <xsl:template match="li[@id='subtab_cont_lm_menu']" />
+    <xsl:template match="li[@id='subtab_import']" />
+    <xsl:template match="li[@id='subtab_obj_multilinguality']" />
+
+    <!-- hide experts LM settings in settings not needed -->
+    <xsl:template match="li[@id='subtab_public_section']" />
+    <xsl:template match="form[contains(@action, 'ilLMEditorGUI')]//div[@class='ilFormHeader']" />
+    <xsl:template match="div[@id='subtab_public_section']" />
+    <xsl:template match="div[@id='il_prop_cont_rating_pages']" />
+    <xsl:template match="div[@id='il_prop_cont_rating']" />
+    <xsl:template match="div[@id='il_prop_cont_cobj_user_comment']" />
+    <xsl:template match="div[@id='il_prop_cont_restrict_forw_nav']" />
+    <xsl:template match="div[@id='il_prop_cont_progr_icons']" />
+    <xsl:template match="div[@id='il_prop_cont_cobj_act_number']" />
+    <xsl:template match="div[@id='il_prop_cont_layout_per_page']" />
+    <xsl:template match="div[@id='il_prop_cont_lm_layout']" />
+    <xsl:template match="div[@id='il_prop_cont_toc_mode']" />
+    <xsl:template match="div[@id='il_prop_cont_lm_pg_header']" />
+    <xsl:template match="div[@id='il_prop_cont_lm_pg_header']" />
+
+    <!-- hide experts LMpage settings not needed -->
+    <xsl:template match="li[@id='tab_content_preview']" />
+    <xsl:template match="li[@id='tab_history']" />
+    <xsl:template match="li[@id='tab_clipboard']" />
+    <xsl:template match="li[@id='tab_cont_activation']" />
+    <xsl:template match="button[@id='ilAdvSelListAnchorText_copage_act']" />
+    <xsl:template match="button[@id='ilAdvSelListAnchorText_copage_ed_mode']" />
+    <xsl:template match="div[@class='ilFloatRight']//a[@class='il_ContainerItemCommand']" />
+
+    <!-- create content on page settings -->
+    <xsl:template match="a[contains(@onclick,'insert_flst')]" />
+    <xsl:template match="a[contains(@onclick,'insert_dtab')]" />
+    <xsl:template match="a[contains(@onclick,'insert_tab')]" />
+    <xsl:template match="a[contains(@onclick,'insert_list')]" />
+    <xsl:template match="a[contains(@onclick,'insert_iim')]" />
+    <xsl:template match="a[contains(@onclick,'insert_src')]" />
+    <xsl:template match="a[contains(@onclick,'insert_incl')]" />
 
 </xsl:stylesheet>

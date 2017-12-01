@@ -23,7 +23,7 @@
     <!-- resize elements startpage -->
     <xsl:template match="div[@class='ilStartupSection']" >
         <xsl:copy>
-            <xsl:attribute name="style">width:65% !important; margin-left:auto; margin-right: auto</xsl:attribute>
+            <xsl:attribute name="style">width: 65% !important; margin-left:auto; margin-right: auto</xsl:attribute>
             <xsl:apply-templates select="@*|node()" />
         </xsl:copy>
     </xsl:template>
@@ -34,12 +34,13 @@
             <xsl:apply-templates select="@*|node()" />
         </xsl:copy>
     </xsl:template>
-    <xsl:template match="div[@class='ilStartupSection']//input[@name='cmd[doStandardAuthentication]']" >
+    <xsl:template match="div[@class='ilStartupSection']//form//input[@name='cmd[doStandardAuthentication]']" >
         <xsl:copy>
             <xsl:attribute name="style">width: 50%; </xsl:attribute>
             <xsl:apply-templates select="@*|node()" />
         </xsl:copy>
     </xsl:template>
+
     <xsl:template match="div[@class='ilStartupSection']//form//div[@class='ilFormHeader']" />
     <!-- login page (no required marks) -->
     <xsl:template match="form[@name='formlogin']//span[@class='asterisk']" />
