@@ -3960,8 +3960,11 @@ class ilObjUser extends ilObject
 			}
 		}
 
-		require_once('./Services/WebAccessChecker/classes/class.ilWACSignedPath.php');
-		return ilWACSignedPath::signFile($file);
+		//fim: ili: fau: fix as no write-access for wac; should be done differently!!
+		//require_once('./Services/WebAccessChecker/classes/class.ilWACSignedPath.php');
+		//return ilWACSignedPath::signFile($file);
+		//fim. ili. fau.
+		return($file);
 	}
 
 	/**
