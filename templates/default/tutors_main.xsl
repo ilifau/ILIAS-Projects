@@ -10,7 +10,7 @@
         <xsl:copy><xsl:apply-templates select="@*|node()" /></xsl:copy>
     </xsl:template>
 
-<!-- Main transformations -->
+    <!-- Main transformations -->
 
     <!-- remove scroll -->
     <xsl:template match="body[@class='std']" >
@@ -45,15 +45,15 @@
             <xsl:if test="li[@id='userlog']">
                 <li>
                     <a onclick="history.back();return false;">
-                          &#9664;
+                        &#9664;
                     </a>
                 </li>
                 <li>
                     <a onclick="window.location='index.php?';return false;" style="font-weight: 600">
-                       <xsl:value-of select="php:function('ilSkinTransformer::getTxt','content')" />
-                      <!--  <span style="font-weight: bold;">
-                            Übersicht
-                        </span> -->
+                        <xsl:value-of select="php:function('ilSkinTransformer::getTxt','content')" />
+                        <!--  <span style="font-weight: bold;">
+                              Übersicht
+                          </span> -->
                     </a>
                 </li>
             </xsl:if>
@@ -123,8 +123,8 @@
     </xsl:template>
     <xsl:template match="li[@id='tab_view_content']" />
     <xsl:template match="li[@id='tab_info_short']" />
-<!--    <xsl:template match="li[@id='tab_settings']" />
--->    <xsl:template match="li[@id='tab_meta_data']" />
+    <!--    <xsl:template match="li[@id='tab_settings']" />
+    -->    <xsl:template match="li[@id='tab_meta_data']" />
     <xsl:template match="li[@id='tab_export']" />
     <xsl:template match="li[@id='tab_crs_unsubscribe']" />
     <xsl:template match="li[@id='nontab_members_view']" />
@@ -133,8 +133,8 @@
     <xsl:template match="li[@id='tab_sort_by_posts']" />
     <xsl:template match="li[@id='tab_order_by_date']" />
 
-<!-- added for experts -->
-<!--    <xsl:template match="div[@class='ilNewObjectSelector']" /> -->
+    <!-- added for experts -->
+    <!--    <xsl:template match="div[@class='ilNewObjectSelector']" /> -->
 
     <!-- change member view for tutors -->
     <xsl:template match="form[contains(@action,'ilrepositorysearchgui')]" />
@@ -319,10 +319,10 @@
 
     <!-- change fontsize LM Tab/Subtab -->
     <xsl:template match="ul[@id='ilTab']//li[@id='tab_members']/a" >
-            <xsl:copy>
-                <xsl:attribute name="style">font-size: 130%; border-radius: 5px 5px 5px 5px;</xsl:attribute>
-                <xsl:apply-templates select="@*|node()" />
-            </xsl:copy>
+        <xsl:copy>
+            <xsl:attribute name="style">font-size: 130%; border-radius: 5px 5px 5px 5px;</xsl:attribute>
+            <xsl:apply-templates select="@*|node()" />
+        </xsl:copy>
     </xsl:template>
 
     <xsl:template match="ul[@id='ilSubTab']/li/a" >
@@ -393,5 +393,35 @@
     <xsl:template match="a[contains(@onclick,'insert_iim')]" />
     <xsl:template match="a[contains(@onclick,'insert_src')]" />
     <xsl:template match="a[contains(@onclick,'insert_incl')]" />
+    <xsl:template match="a[contains(@onclick,'insert_sec')]" />
+
+    <!-- insert text -->
+    <xsl:template match="i[@class='mce-ico']" />
+
+    <!-- background of selection menus -->
+    <xsl:template match="div[@class='form-horizontal']" >
+        <xsl:copy>
+            <xsl:attribute name="style">background-color: #F0F0F0</xsl:attribute>
+            <xsl:apply-templates select="@*|node()" />
+        </xsl:copy>
+    </xsl:template>
+    <xsl:template match="div[@id='ilPageEditLegend']" >
+        <xsl:copy>
+            <xsl:attribute name="style">background-color: #F0F0F0</xsl:attribute>
+            <xsl:apply-templates select="@*|node()" />
+        </xsl:copy>
+    </xsl:template>
+    <xsl:template match="div[@id='subform_standard_type_File']" >
+        <xsl:copy>
+            <xsl:attribute name="style">background-color: #F0F0F0</xsl:attribute>
+            <xsl:apply-templates select="@*|node()" />
+        </xsl:copy>
+    </xsl:template>
+    <xsl:template match="div[@class='col-sm-9 il_file']" >
+        <xsl:copy>
+            <xsl:attribute name="style">background-color: #F0F0F0</xsl:attribute>
+            <xsl:apply-templates select="@*|node()" />
+        </xsl:copy>
+    </xsl:template>
 
 </xsl:stylesheet>
