@@ -15,7 +15,8 @@
     -->
 
     <xsl:template match="div[@id='left_nav']" />
-<!-- Reduce the visit card -->
+
+    <!-- Reduce the visit card -->
     <xsl:template match="div[./div/@class='ilProfile']">
         <xsl:copy>
             <xsl:copy-of select="@*" />
