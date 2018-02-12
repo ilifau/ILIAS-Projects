@@ -121,8 +121,10 @@
     <trans style="tutors" at="output" of="tpl.main.html" for="Modules/Glossary" with="reduced_glossary.xsl" debug=""/>
     <trans style="reduced" at="output" of="tpl.main.html" for="Modules/Glossary" with="reduced_glossary.xsl" debug=""/>
 
+    <!--
     <trans style="delos" at="output" of="Modules/LearningModule/tpl.page_new.html" with="delos_main.xsl" debug=""/>
-    <trans style="tutors" at="output" of="Modules/LearningModule/tpl.page_new.html" with="tutors_main.xsl" debug=""/>
+    --><trans style="tutors" at="output" of="Modules/LearningModule/tpl.page_new.html" with="tutors_main.xsl" next="true" debug=""/>
+    <trans style="tutors" at="output" of="Modules/LearningModule/tpl.page_new.html" with="reduced_main.xsl" debug=""/>
     <trans style="reduced" at="output" of="Modules/LearningModule/tpl.page_new.html" with="tutors_main.xsl" next="true" debug=""/>
     <trans style="reduced" at="output" of="Modules/LearningModule/tpl.page_new.html" with="reduced_main.xsl" debug=""/>
 

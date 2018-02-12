@@ -10,6 +10,11 @@
         <xsl:copy><xsl:apply-templates select="@*|node()" /></xsl:copy>
     </xsl:template>
 
+    <!-- hide left_nav -->
+    <xsl:template match="div[@id='left_nav']" />
+    <xsl:template match="ul[@id='ilTab']//li[@id='tab_sort_by_posts']"/>
+    <xsl:template match="ul[@id='ilTab']//li[@id='tab_order_by_date']"/>
+
     <!-- hide mail function topmenu, membergallery, publicprofile, settings in usersettings -->
     <xsl:template match="ul[@id='ilTopBarNav']/li[3]" />
     <xsl:template match="a[contains(@href,'ilmailmembersearchgui')]" />

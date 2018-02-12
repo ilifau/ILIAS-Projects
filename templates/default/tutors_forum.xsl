@@ -14,8 +14,11 @@
        Forum transformations
     -->
 
-    <!-- hide Tabs -->
+    <!-- hide Tabs
     <xsl:template match="ul[@id='ilTab']" />
+    -->
+    <xsl:template match="ul[@id='ilTab']//li[1]" />
+    <xsl:template match="li[@id='tab_frm_moderators']" />
 
     <!-- adjusting position of all topics button -->
     <xsl:template match="div[@id='tb-collapse-1']" >

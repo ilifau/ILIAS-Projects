@@ -95,8 +95,8 @@
     <!-- No locator, No tree view (Navigation and LM) -->
     <xsl:template match="ol[@class='breadcrumb hidden-print']" />
     <xsl:template match="a[@id='imgtree']"/>
-    <xsl:template match="div[@id='left_nav']" />
-
+    <!--<xsl:template match="div[@id='left_nav']" />
+-->
     <!-- Hide some tabs menus completely, identified by one tab -->
     <xsl:template match="ul[./li/@id='tab_personal_data']" />
     <xsl:template match="ul[./li/@id='tab_password']" />
@@ -115,7 +115,7 @@
     <!-- Show "ilTab" and hide some not needed -->
     <xsl:template match="ul[@id='ilTab']">
         <xsl:copy>
-            <xsl:attribute name="style">border: 0px;</xsl:attribute>
+            <xsl:attribute name="style">border: 0px; font-weight: 600</xsl:attribute>
             <xsl:apply-templates select="@*|node()" />
         </xsl:copy>
     </xsl:template>
@@ -127,10 +127,10 @@
     <xsl:template match="li[@id='tab_crs_unsubscribe']" />
     <xsl:template match="li[@id='nontab_members_view']" />
 
-    <!-- no need in forum -->
+    <!-- no need in forum
     <xsl:template match="li[@id='tab_sort_by_posts']" />
     <xsl:template match="li[@id='tab_order_by_date']" />
-
+-->
     <xsl:template match="div[@class='ilNewObjectSelector']" />
 
     <!-- change member view for tutors -->
@@ -308,6 +308,16 @@
             <xsl:attribute name="style">font-size: 130%; border-radius: 5px 5px 5px 5px;</xsl:attribute>
             <xsl:apply-templates select="@*|node()" />
         </xsl:copy>
+    </xsl:template>
+
+    <!-- hide toc in toc view -->
+    <xsl:template match="li[@id='tab_cont_toc']" />
+
+    <!-- changed toc view -->
+    <xsl:template match="li[@id='tab_content']/a" >
+        <a onclick="history.back();return false;" style="font-size: 130%; border-radius: 5px 5px 5px 5px; font-weight: 600">
+            <xsl:value-of select="php:function('ilSkinTransformer::getTxt','back')" />
+        </a>
     </xsl:template>
 
     <!-- hide Itemproperties -->
