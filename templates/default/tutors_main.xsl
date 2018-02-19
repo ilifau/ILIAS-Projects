@@ -40,7 +40,7 @@
     <!-- "Back" and "Overview" button beneath the user drop down -->
     <xsl:template match="ul[@id='ilTopBarNav']" >
         <xsl:copy>
-            <xsl:attribute name="style">background-color: #F0F0F0; </xsl:attribute>
+            <xsl:attribute name="style"></xsl:attribute>
             <xsl:apply-templates select="@*" />
             <!-- if user is logged in -->
             <xsl:if test="li[@id='userlog']">
@@ -124,8 +124,8 @@
     </xsl:template>
     <xsl:template match="li[@id='tab_view_content']" />
     <xsl:template match="li[@id='tab_info_short']" />
-    <!--    <xsl:template match="li[@id='tab_settings']" />
-    -->    <xsl:template match="li[@id='tab_meta_data']" />
+    <!--    <xsl:template match="li[@id='tab_settings']" /> -->
+    <xsl:template match="li[@id='tab_meta_data']" />
     <xsl:template match="li[@id='tab_export']" />
     <xsl:template match="li[@id='tab_crs_unsubscribe']" />
     <xsl:template match="li[@id='nontab_members_view']" />
@@ -133,9 +133,6 @@
     <!-- no need in forum -->
     <xsl:template match="li[@id='tab_sort_by_posts']" />
     <xsl:template match="li[@id='tab_order_by_date']" />
-
-    <!-- added for experts -->
-    <!--    <xsl:template match="div[@class='ilNewObjectSelector']" /> -->
 
     <!-- change member view for tutors -->
     <xsl:template match="form[contains(@action,'ilrepositorysearchgui')]" />
@@ -261,7 +258,6 @@
             <xsl:if test="not(../..//div[@class='ilc_media_caption_MediaCaption'])">
                 <xsl:attribute name="style">padding-left: 10px; padding-bottom: 10px</xsl:attribute>
             </xsl:if>
-
             <xsl:apply-templates select="@*|node()" />
         </xsl:copy>
     </xsl:template>
@@ -360,6 +356,24 @@
     <xsl:template match="li[@id='subtab_cont_lm_menu']" />
     <xsl:template match="li[@id='subtab_import']" />
     <xsl:template match="li[@id='subtab_obj_multilinguality']" />
+
+    <!-- adjust creating modul layout -->
+    <xsl:template match="div[@class='il_VAccordionHead']" />
+
+    <!-- extract new module creation -->
+    <xsl:template match="div[@class='ilNewObjectSelector']" >
+        <xsl:copy>
+            <ul id="ilTopBarNav" class="" style="">
+                <li>
+                <xsl:attribute name="style">float: right</xsl:attribute>
+                    <a >
+                        <xsl:attribute name="href"><xsl:value-of select="//a[@id='lm']/@href" /></xsl:attribute>
+                        <xsl:value-of select="php:function('ilSkinTransformer::getTxt','cntr_add_new_item')" />
+                    </a>
+                </li>
+            </ul>
+        </xsl:copy>
+    </xsl:template>
 
     <!-- hide experts LM settings in settings not needed -->
     <xsl:template match="li[@id='subtab_public_section']" />
