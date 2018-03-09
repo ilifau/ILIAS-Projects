@@ -421,6 +421,22 @@ class ilObjContentObjectGUI extends ilObjectGUI implements ilLinkCheckerGUIRowHa
 		//$ta->setInfo($lng->txt(""));
 		$this->form->addItem($ta);
 
+// fim: [app] add input for preview image
+		$pi = new ilImageFileInputGUI($lng->txt('preview'), 'preview_image');
+		$pi->setSuffixes(array('png', 'jpg', 'svg'));
+		$pi->setALlowDeletion(true);
+		$upload = $this->form->getFileUpload("preview_image");
+		if($upload["name"])
+		{
+			$pi->setPending($upload["name"]);
+		}
+		if ($image = ilObjLearningModule::getPreviewImageFile($this->object->getId()))
+		{
+			$pi->setImage($image);
+		}
+		$this->form->addItem($pi);
+// fim.
+
 		$lng->loadLanguageModule("rep");
 		$section = new ilFormSectionHeaderGUI();
 		$section->setTitle($this->lng->txt('rep_activation_availability'));
@@ -615,6 +631,29 @@ class ilObjContentObjectGUI extends ilObjectGUI implements ilLinkCheckerGUIRowHa
 				$ot->save();
 			}
 
+// fim: [app] save input for preview image
+			if (!$this->form->hasFileUpload("preview_image"))
+			{
+				if ($this->form->getItemByPostVar("preview_image")->getDeletionFlag())
+				{
+					ilObjLearningModule::deletePreviewImage($this->object->getId());
+				}
+			}
+			else
+			{
+				require_once('Services/Utilities/classes/class.ilUtil.php');
+				$directory = ilObjLearningModule::getPreviewImageDirectory($this->object->getId());
+				ilUtil::makeDirParents($directory);
+
+				$upload = $this->form->getFileUpload('preview_image');
+				$info = pathinfo($upload['name']);
+
+				// move uploaded file
+				$uploaded_file = $this->form->moveFileUpload($directory,
+					"preview_image", "preview.".$info['extension']);
+				chmod($uploaded_file, 0770);
+			}
+// fim.
 			$this->object->setTitle($_POST['title']);
 			$this->object->setDescription($_POST['description']);
 			$this->object->setLayout($_POST["lm_layout"]);

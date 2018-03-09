@@ -119,6 +119,9 @@ class ilAppService
 	{
 		global $ilAccess, $tree;
 
+		require_once('Modules/LearningModule/classes/class.ilObjLearningModule.php');
+		require_once('Services/Object/classes/class.ilObjectTranslation.php');
+
 		$root_id = 1;
 		require_once 'Services/User/classes/class.ilUserUtil.php';
 		if (ilUserUtil::getPersonalStartingPoint($this->userObj) == ilUserUtil::START_REPOSITORY_OBJ)
@@ -147,10 +150,18 @@ class ilAppService
 				switch ($node['type'])
 				{
 					case 'lm':
+						$ot = ilObjectTranslation::getInstance($node['obj_id']);
 						$basedir = $this->getIliasModuleOfflineDirectory($node['obj_id']);
+						$data = $this->getIliasModuleData($node['child'], $ot);
+						$preview_image = ilObjLearningModule::getPreviewImageUrl($node['obj_id']);
 						break;
 					case 'htlm':
 						$basedir = $this->getHtmlModuleOfflineDirectory($node['obj_id']);
+						$data = array(
+							'titles' => array('en' => $node['title']),
+							'descriptions' => array('en' => $node['description'])
+						);
+						$preview_image = "";
 				}
 				$files = $this->getWebspaceContents($basedir);
 				$sizes = $this->getFileSizes($basedir,$files);
@@ -160,12 +171,13 @@ class ilAppService
 				$modules[] = array(
 					'id' => $node['child'],
 					'type' => $node['type'] == 'lm' ? 'ilias' : 'html',
-					'title' => $node['title'],
-					'description' => $node['description'],
+					'title' => $data['titles'],
+					'description' => $data['descriptions'],
 					'icon' => ILIAS_HTTP_PATH . $icon,
 					'time' => $time->get(IL_CAL_DATETIME),
 					'timestamp' => $time->get(IL_CAL_UNIX),
-					'size' => sprintf('%.2f MB',$total)
+					'size' => sprintf('%.2f MB',$total),
+					'preview_image' => $preview_image
 				);
 			}
 		}
@@ -220,7 +232,38 @@ class ilAppService
 		{
 			return new ilDateTime(ilObject::_lookupLastUpdate($a_obj_id), IL_CAL_DATETIME);
 		}
+	}
 
+	/**
+	 * Get the translated titles of the ILIAS learning module
+	 * @param int $ref_id
+	 * @param ilObjectTranslation $ot
+	 * @return array
+	 */
+	protected function getIliasModuleData($ref_id, $ot)
+	{
+		global $ilUser;
+
+		$old_lang = $ilUser->getLanguage();
+
+		$ot_langs = $ot->getLanguages();
+		$titles = array();
+		$descriptions = array();
+		foreach ($ot_langs as $otl)
+		{
+			$lang = $otl["lang_code"];
+			$ilUser->setLanguage($lang);
+			$ilUser->setCurrentLanguage($lang);
+
+			$lm = new ilObjLearningModule($ref_id, true);
+			$titles[$lang] = $lm->getTitle();
+			$descriptions[$lang] = $lm->getDescription();
+		}
+
+		$ilUser->setLanguage($old_lang);
+		$ilUser->setCurrentLanguage($old_lang);
+
+		return array('titles' => $titles, 'descriptions' => $descriptions);
 	}
 
 	/**

@@ -25,6 +25,60 @@ class ilObjLearningModule extends ilObjContentObject
 		parent::ilObjContentObject($a_id, $a_call_by_reference);
 	}
 
+// fim: [app] functions for preview image
+	/**
+	 * Get the preview image directory
+	 * @param $obj_id
+	 * @return string
+	 */
+	public static function getPreviewImageDirectory($obj_id)
+	{
+		require_once('Services/Utilities/classes/class.ilUtil.php');
+		return ilUtil::getWebspaceDir()."/lm_data/lm_" .$obj_id;
+	}
+
+
+	/**
+	 * Get the path of a preview image file
+	 */
+	public static function getPreviewImageFile($obj_id)
+	{
+		$directory = self::getPreviewImageDirectory($obj_id);
+		foreach (glob($directory . '/preview.*') as $file)
+		{
+			return $file;
+		}
+
+		return "";
+	}
+
+	/**
+	 * Get the URL of a preview image fine
+	 */
+	public static function getPreviewImageUrl($obj_id)
+	{
+		$directory = self::getPreviewImageDirectory($obj_id);
+		foreach (glob($directory . '/preview.*') as $file)
+		{
+			return ILIAS_HTTP_PATH . '/data/'. CLIENT_ID . '/lm_data/lm_'. $obj_id .'/'. basename($file);
+		}
+
+		return "";
+	}
+
+	/**
+	 * Delete the preview image(s) of a learning module
+	 * @param $obj_id
+	 */
+	public static function deletePreviewImage($obj_id)
+	{
+		$directory = self::getPreviewImageDirectory($obj_id);
+		foreach (glob($directory . '/preview.*') as $file)
+		{
+			@unlink($file);
+		}
+	}
+// fim.
 }
 
 ?>
