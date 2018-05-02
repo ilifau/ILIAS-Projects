@@ -85,8 +85,9 @@ class ilLocatorGUI
 		{
 			$a_start = ROOT_FOLDER_ID;
 		}
-		
-		if ($a_ref_id > 0)
+// fim: changed > to < 
+		if ($a_ref_id < 0)
+// fim.
 		{
 			$path = $tree->getPathFull($a_ref_id,$a_start);
 
