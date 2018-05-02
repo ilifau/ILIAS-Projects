@@ -545,7 +545,7 @@ class ilObjQuestionPoolGUI extends ilObjectGUI
 					$type = $this->lng->txt("assKprimChoice");
 					break;
 				case LONG_MENU_QUESTION_IDENTIFIER:
-					$type = $this->lng->txt("longMenuQuestion");
+					$type = $this->lng->txt("assLongMenu");
 					break;
 				case SINGLE_CHOICE_QUESTION_IDENTIFIER:
 					$type = $this->lng->txt("assSingleChoice");
@@ -688,9 +688,10 @@ class ilObjQuestionPoolGUI extends ilObjectGUI
 				$contParser = new ilContObjParser($newObj, $_SESSION["qpl_import_xml_file"], $_SESSION["qpl_import_subdir"]);
 				$contParser->setQuestionMapping($qtiParser->getImportMapping());
 				$contParser->startParsing();
-			}
 
-			$newObj->fromXML($_SESSION["qpl_import_xml_file"]);
+				// #20494
+				$newObj->fromXML($_SESSION["qpl_import_xml_file"]);
+			}
 
 			// set another question pool name (if possible)
 			if( isset($_POST["qpl_new"]) && strlen($_POST["qpl_new"]) )

@@ -634,7 +634,10 @@ abstract class ilExplorerBaseGUI
 		$container_id = $this->getContainerId();
 		$container_outer_id = "il_expl2_jstree_cont_out_".$this->getId();
 
-		$tpl->addOnLoadCode($this->getOnLoadCode());
+		if (!$ilCtrl->isAsynch())
+		{
+			$tpl->addOnLoadCode($this->getOnLoadCode());
+		}
 
 		$etpl = new ilTemplate("tpl.explorer2.html", true, true, "Services/UIComponent/Explorer2");
 
@@ -735,7 +738,15 @@ abstract class ilExplorerBaseGUI
 		$target = $this->getNodeTarget($a_node);
 		if ($target != "")
 		{
-			$tpl->setVariable("TARGET", 'target="'.$target.'"');
+			$targetRelatedParams = array(
+				'target="' . $target . '"'
+			);
+
+			if ('_blank' === $target) {
+				$targetRelatedParams[] = 'rel="noopener"';
+			}
+
+			$tpl->setVariable('TARGET', implode(' ', $targetRelatedParams));
 		}
 		if (!$this->isNodeOnclickEnabled() || !$this->isNodeClickable($a_node))
 		{

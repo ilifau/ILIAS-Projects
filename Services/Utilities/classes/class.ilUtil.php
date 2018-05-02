@@ -204,6 +204,8 @@ class ilUtil
 		{
 			$vers = str_replace(" ", "-", $ilias->getSetting("ilias_version"));
 			$vers = "?vers=".str_replace(".", "-", $vers);
+			$skin_version = ilStyleDefinition::getCurrentSkinVersion();
+			$vers .= ($skin_version != '' ? str_replace(".", "-", '-' . $skin_version) : '');
 		}
 		return $filename . $vers;
 	}
@@ -1752,6 +1754,8 @@ class ilUtil
 	*/
 	public static function unzip($a_file, $overwrite = false, $a_flat = false)
 	{
+		global $ilLog;
+
 		if (!is_file($a_file))
 		{
 			return;
@@ -1826,7 +1830,23 @@ class ilUtil
 		ilUtil::execQuoted($unzip, $unzipcmd);
 
 		chdir($cdir);
-		
+
+		// remove all sym links
+		clearstatcache();			// prevent is_link from using cache
+		$dir_realpath = realpath($dir);
+		foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator($dir)) as $name => $f)
+		{
+			if (is_link($name))
+			{
+				$target = readlink($name);
+				if (substr($target, 0, strlen($dir_realpath)) != $dir_realpath)
+				{
+					unlink($name);
+					$ilLog->write("Remove symlink ".$name);
+				}
+			}
+		}
+
 		// if flat, get all files and move them to original directory
 		if ($a_flat)
 		{
@@ -3123,6 +3143,32 @@ class ilUtil
 		return $a_str;
 	}
 
+	/**
+	 * Prepare secure href attribute
+	 *
+	 * @param
+	 * @return
+	 */
+	function secureUrl($url)
+	{
+		// check if url is valid (absolute or relative)
+		if (filter_var($url, FILTER_VALIDATE_URL) === false &&
+			filter_var("http://".$url, FILTER_VALIDATE_URL) === false &&
+			filter_var("http:".$url, FILTER_VALIDATE_URL) === false &&
+			filter_var("http://de.de".$url, FILTER_VALIDATE_URL) === false &&
+			filter_var("http://de.de/".$url, FILTER_VALIDATE_URL) === false)
+		{
+			return "";
+		}
+		if (trim(strtolower(parse_url($url, PHP_URL_SCHEME))) == "javascript")
+		{
+			return "";
+		}
+		$url = htmlspecialchars($url, ENT_QUOTES);
+		return $url;
+	}
+
+
 
 	/**
 	* prepare a string for db writing (insert/update)
@@ -4105,16 +4151,14 @@ class ilUtil
 
 
 	/**
-	* move uploaded file
-	* 
-	* @static
-	* 
-	*/
+ 	 * move uploaded file
+	 * @return bool
+	 * @throws ilFileUtilsException
+	 */
 	public static function moveUploadedFile($a_file, $a_name, $a_target, $a_raise_errors = true,
 		$a_mode = "move_uploaded")
 	{
 		global $lng, $ilias;
-//echo "<br>ilUtli::moveuploadedFile($a_name)";
 
 		if (!is_file($a_file))
 		{
@@ -4153,6 +4197,8 @@ class ilUtil
 			{
 				ilUtil::sendInfo($vir[1], true);
 			}
+			include_once("./Services/Utilities/classes/class.ilFileUtils.php");
+			$a_target = ilFileUtils::getValidFilename($a_target);
 			switch ($a_mode)
 			{
 				case "rename":

@@ -47,6 +47,7 @@ define('AUTH_USER_INACTIVE', -601);
 define('AUTH_USER_TIME_LIMIT_EXCEEDED', -602);
 define('AUTH_USER_SIMULTANEOUS_LOGIN', -603);
 define('AUTH_CAPTCHA_INVALID', -604);
+define('AUTH_USER_INACTIVE_LOGIN_ATTEMPTS', -605);
 
 
 include_once './Services/Authentication/classes/class.ilAuthFactory.php';
@@ -799,18 +800,32 @@ class ilAuthUtils
 				return true;
 		}
 	}
+
+	/**
+	 * @return bool
+	 */
+	public static function isPasswordModificationHidden()
+	{
+		/** @var $ilSetting \ilSetting */
+		global $ilSetting;
+
+		if ($ilSetting->get('usr_settings_hide_password') || $ilSetting->get('usr_settings_disable_password')) {
+			return true;
+		}
+
+		return false;
+	}
 	
 	/**
 	 * Check if password modification is enabled
 	 * @param object $a_authmode
-	 * @return 
+	 * @return bool
 	 */
 	public static function isPasswordModificationEnabled($a_authmode)
 	{
 		global $ilSetting;
-		
-		if($ilSetting->get('usr_settings_hide_password') or $ilSetting->get('usr_settings_disable_password'))
-		{
+
+		if (self::isPasswordModificationHidden()) {
 			return false;
 		}
 		

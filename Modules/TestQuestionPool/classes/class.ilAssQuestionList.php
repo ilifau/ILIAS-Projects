@@ -104,6 +104,13 @@ class ilAssQuestionList implements ilTaxAssignedItemInfo
 	private $forcedQuestionIds = array();
 
 	/**
+	 * should object_data table be joined?
+	 * @var bool
+	 */
+	protected $join_obj_data = true;
+
+
+	/**
 	 * answer status domain for single questions
 	 */
 	const QUESTION_ANSWER_STATUS_NON_ANSWERED = 'nonAnswered';
@@ -277,6 +284,26 @@ class ilAssQuestionList implements ilTaxAssignedItemInfo
 	}
 
 	/**
+	 * Set if object data table should be joined
+	 *
+	 * @param bool $a_val join object_data	
+	 */
+	public function setJoinObjectData($a_val)
+	{
+		$this->join_obj_data = $a_val;
+	}
+	
+	/**
+	 * Get if object data table should be joined
+	 *
+	 * @return bool join object_data
+	 */
+	public function getJoinObjectData()
+	{
+		return $this->join_obj_data;
+	}
+	
+	/**
 	 * @param array $forcedQuestionIds
 	 */
 	public function setForcedQuestionIds($forcedQuestionIds)
@@ -336,8 +363,10 @@ class ilAssQuestionList implements ilTaxAssignedItemInfo
 					break;
 				
 				case 'parent_title':
-					
-					$expressions[] = $this->db->like('object_data.title', 'text', "%%$fieldValue%%");
+					if ($this->join_obj_data)
+					{
+						$expressions[] = $this->db->like('object_data.title', 'text', "%%$fieldValue%%");
+					}
 					break;
 			}
 		}
@@ -361,18 +390,18 @@ class ilAssQuestionList implements ilTaxAssignedItemInfo
 			foreach($taxNodes as $taxNode)
 			{
 				$forceBypass = false;
-				
-				$taxTree = new ilTaxonomyTree($taxId);
-				
-				$taxNodeAssignment = new ilTaxNodeAssignment(
-					$this->taxParentTypes[$taxId], $this->taxParentIds[$taxId], 'quest', $taxId
+
+				$taxItemsByTaxParent = $this->getTaxItems(
+					$this->taxParentTypes[$taxId], $this->taxParentIds[$taxId],
+						$taxId, $taxNode
 				);
 
-				$subNodes = $taxTree->getSubTreeIds($taxNode);
-				$subNodes[] = $taxNode;
+				$taxItemsByParent = $this->getTaxItems(
+					$this->parentObjType, $this->parentObjId,
+					$taxId, $taxNode
+				);
 
-				$taxItems = $taxNodeAssignment->getAssignmentsOfNode($subNodes);
-				
+				$taxItems = array_merge($taxItemsByTaxParent, $taxItemsByParent);
 				foreach($taxItems as $taxItem)
 				{
 					$questionIds[$taxItem['item_id']] = $taxItem['item_id'];
@@ -386,6 +415,27 @@ class ilAssQuestionList implements ilTaxAssignedItemInfo
 		}
 
 		return $expressions;
+	}
+
+	/**
+	 * @param string $parentType
+	 * @param int $parentObjId
+	 * @param int $taxId
+	 * @param int $taxNode
+	 * @return array
+	 */
+	protected function getTaxItems($parentType, $parentObjId, $taxId, $taxNode)
+	{
+		$taxTree = new ilTaxonomyTree($taxId);
+
+		$taxNodeAssignment   = new ilTaxNodeAssignment(
+			$parentType, $parentObjId, 'quest', $taxId
+		);
+
+		$subNodes            = $taxTree->getSubTreeIds($taxNode);
+		$subNodes[]          = $taxNode;
+
+		return $taxNodeAssignment->getAssignmentsOfNode($subNodes);
 	}
 
 	private function getQuestionInstanceTypeFilterExpression()
@@ -473,11 +523,14 @@ class ilAssQuestionList implements ilTaxAssignedItemInfo
 			INNER JOIN	qpl_qst_type
 			ON			qpl_qst_type.question_type_id = qpl_questions.question_type_fi
 		";
-		
-		$tableJoin .= "
-			INNER JOIN	object_data
-			ON			object_data.obj_id = qpl_questions.obj_fi
-		";
+
+		if ($this->join_obj_data)
+		{
+			$tableJoin .= "
+				INNER JOIN	object_data
+				ON			object_data.obj_id = qpl_questions.obj_fi
+			";
+		}
 		
 		if( $this->getAnswerStatusActiveId() )
 		{
@@ -528,9 +581,13 @@ class ilAssQuestionList implements ilTaxAssignedItemInfo
 			'qpl_questions.*',
 			'qpl_qst_type.type_tag',
 			'qpl_qst_type.plugin',
-			'qpl_questions.points max_points',
-			'object_data.title parent_title'
+			'qpl_questions.points max_points'
 		);
+
+		if ($this->join_obj_data)
+		{
+			$selectFields[] = 'object_data.title parent_title';
+		}
 
 		if( $this->getAnswerStatusActiveId() )
 		{
@@ -585,7 +642,7 @@ class ilAssQuestionList implements ilTaxAssignedItemInfo
 		$this->checkFilters();
 		
 		$query = $this->buildQuery();
-		
+
 		#vd($query);
 
 		$res = $this->db->query($query);
