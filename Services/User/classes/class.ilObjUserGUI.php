@@ -763,7 +763,7 @@ class ilObjUserGUI extends ilObjectGUI
 	public function updateObject()
 	{
 		global $tpl, $rbacsystem, $ilias, $ilUser, $ilSetting;
-		
+
 		// User folder
 		if($this->usrf_ref_id == USER_FOLDER_ID and !$rbacsystem->checkAccess('visible,read,write',$this->usrf_ref_id))
 		{
