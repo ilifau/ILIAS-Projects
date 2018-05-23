@@ -15438,3 +15438,13 @@ table.mceToolbar td {
     content: "";
   }
 }
+/* fim: size of header icon */
+a.navbar-brand img,
+#il_startup_logo img {
+  width: auto!important;
+}
+
+#ilMainMenuEntries {
+  padding-left: 100px!important;
+}
+/* fim. */
