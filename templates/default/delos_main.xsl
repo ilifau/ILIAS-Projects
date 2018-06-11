@@ -144,8 +144,9 @@
         </xsl:copy>
     </xsl:template>
 
-    <!-- don't use mediaelement player -->
+    <!-- don't use mediaelement player
     <xsl:template match="script[contains(@src,'mediaelement')]" />
+    -->
 
     <!-- fim #cf: linebreaks the text beneath the picture (not nice) -->
     <xsl:template match="div[@class='ilc_media_caption_MediaCaption']" >
