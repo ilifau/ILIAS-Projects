@@ -84,6 +84,10 @@ class ilDclCache {
 
 	public static function getCloneOf($id, $type) {
 		$type_cache = self::$clone_mapping[$type];
+
+// fau: fixDclCloning
+		$id = (int) $id;
+// fau.
 		if (!is_array($type_cache)) {
 			return false;
 		}
