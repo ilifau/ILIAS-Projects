@@ -33,7 +33,12 @@ class ilUserProfileIncompleteRequestTargetAdjustmentCase extends ilUserRequestTa
 
 		return (
 			strtolower($this->ctrl->getCmdClass()) == 'ilpersonalprofilegui' &&
-			in_array(strtolower($this->ctrl->getCmd()), array('savepersonaldata', 'showpersonaldata', 'showprofile'))
+			in_array(strtolower($this->ctrl->getCmd()), array(
+			    'savepersonaldata',
+                'showpersonaldata',
+                'showprofile',
+                'showpublicprofile',
+                'savepublicprofile'))
 		);
 	}
 
@@ -122,7 +127,7 @@ class ilUserProfileIncompleteRequestTargetAdjustmentCase extends ilUserRequestTa
 		{
 			$user_log->debug("Update last prompt date for user :".$this->user->getId());
 			$user_prompt_service = new ilUserProfilePromptService();
-			$user_prompt_service->data()->saveLastUserPrompt($this->user->getId());
+			$user_prompt_service->data()->saveLastUserPrompt((int) $this->user->getId());
 		}
 
 		$_GET['baseClass'] = 'ilpersonaldesktopgui';

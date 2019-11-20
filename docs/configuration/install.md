@@ -114,7 +114,7 @@ Please note that different configurations SHOULD be possible, but it might be ha
   * Server OS: Linux
   * Web Server: Apache 2.4 (mod_php, php-fpm)
   * Databases: MySQL/MariaDB 5.6 and 5.7 and Galera (experimental), PostgreSQL 9.x
-  * PHP: Version 7.0, 7.1 and 7.2 are supported
+  * PHP: Version 7.0, 7.1, 7.2 and 7.3 are supported
   * zip: 3.0+
   * unzip: 6.0+
   * Imagemagick: 6.8.9-9+
@@ -162,13 +162,13 @@ We RECOMMEND to clone from GitHub as this will offer some kind of autoupdate for
 <a name="git-clonecheckout"></a>
 ## Git Clone/Checkout
 
-To checkout the ILIAS release 5.2 in ```/var/www/html/ilias/``` use the following commands:
+To checkout the ILIAS release 5.4 in ```/var/www/html/ilias/``` use the following commands:
 
 ```
 cd /var/www/html/
 git clone https://github.com/ILIAS-eLearning/ILIAS.git ilias
 cd ilias
-git checkout release_5-2
+git checkout release_5-4
 chown www-data:www-data /var/www/html/ilias -R
 ```
 The files SHOULD be owned by your webserver user/group (e.g. ```www-data``` or ```apache```) the mode SHOULD be 644 for files and 755 for directories. 

@@ -12,39 +12,56 @@ use ILIAS\UI\Component;
  * Class Renderer
  * @package ILIAS\UI\Implementation\Component\Image
  */
-class Renderer extends AbstractComponentRenderer {
-	/**
-	 * @inheritdocs
-	 */
-	public function render(Component\Component $component, RendererInterface $default_renderer) {
-		/**
-		 * @var Component\Image\Image $component
-		 */
-		$this->checkComponent($component);
-		$tpl = $this->getTemplate("tpl.image.html", true, true);
+class Renderer extends AbstractComponentRenderer
+{
+    /**
+     * @inheritdocs
+     */
+    public function render(Component\Component $component, RendererInterface $default_renderer)
+    {
+        /**
+         * @var Component\Image\Image $component
+         */
+        $this->checkComponent($component);
+        $tpl = $this->getTemplate("tpl.image.html", true, true);
 
-		if($component->getAction()) {
-			$tpl->setCurrentBlock("action_begin");
-			$tpl->setVariable("HREF",$component->getAction());
-			$tpl->parseCurrentBlock();
-		}
+        $id = $this->bindJavaScript($component);
+        if (!empty($component->getAction())) {
+            $tpl->touchBlock("action_begin");
 
-		$tpl->setCurrentBlock($component->getType());
-		$tpl->setVariable("SOURCE",$component->getSource());
-		$tpl->setVariable("ALT",htmlspecialchars($component->getAlt()));
-		$tpl->parseCurrentBlock();
+            if (is_string($component->getAction())) {
+                $tpl->setCurrentBlock("with_href");
+                $tpl->setVariable("HREF", $component->getAction());
+                $tpl->parseCurrentBlock();
+            }
 
-		if($component->getAction()) {
-			$tpl->touchBlock("action_end");
-		}
+            if (is_array($component->getAction())) {
+                $tpl->setCurrentBlock("with_id");
+                $tpl->setVariable("ID", $id);
+                $tpl->parseCurrentBlock();
+            }
+        }
 
-		return $tpl->get();
-	}
+        $tpl->setCurrentBlock($component->getType());
+        $tpl->setVariable("SOURCE", $component->getSource());
+        $tpl->setVariable("ALT", htmlspecialchars($component->getAlt()));
+        if (empty($component->getAction()) && $id !== null) {
+            $tpl->setVariable("IMG_ID", " id='" . $id . "' ");
+        }
+        $tpl->parseCurrentBlock();
 
-	/**
-	 * @inheritdocs
-	 */
-	protected function getComponentInterfaceName() {
-		return [Component\Image\Image::class];
-	}
+        if (!empty($component->getAction())) {
+            $tpl->touchBlock("action_end");
+        }
+
+        return $tpl->get();
+    }
+
+    /**
+     * @inheritdocs
+     */
+    protected function getComponentInterfaceName()
+    {
+        return [Component\Image\Image::class];
+    }
 }

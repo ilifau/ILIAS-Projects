@@ -29,10 +29,15 @@ include_once("./Services/Certificate/classes/class.ilCertificate.php");
 * @author		Helmut Schottmüller <helmut.schottmueller@mac.com>
 * @version	$Id$
 * @ingroup Services
-* @ilCtrl_Calls: ilCertificateGUI: ilPropertyFormGUI          
+* @ilCtrl_Calls: ilCertificateGUI: ilPropertyFormGUI
 */
 class ilCertificateGUI
 {
+	/**
+	 * @var \ILIAS\Filesystem\Filesystem
+	 */
+	private $fileSystem;
+
 	/**
 	 * ilCertificate object reference
 	 * @var ilCertificate
@@ -73,7 +78,7 @@ class ilCertificateGUI
 	* @var object
 	*/
 	protected $lng;
-	
+
 	/**
 	* The reference ID of the object
 	*
@@ -147,12 +152,12 @@ class ilCertificateGUI
 	private $previewAction;
 
 	/**
-	 * @var ilCertificateThumbnailImageUpload|null 
+	 * @var ilCertificateThumbnailImageUpload|null
 	 */
 	private $thumbnailImageUpload;
 
 	/**
-	 * @var \ILIAS\FileUpload\FileUpload|null 
+	 * @var \ILIAS\FileUpload\FileUpload|null
 	 */
 	private $fileUpload;
 
@@ -207,7 +212,8 @@ class ilCertificateGUI
 		ilCertificateBackgroundImageUpload $upload = null,
 		ilCertificateTemplatePreviewAction $previewAction = null,
 		\ILIAS\FileUpload\FileUpload $fileUpload = null,
-		ilSetting $settings = null
+		ilSetting $settings = null,
+		\ILIAS\Filesystem\Filesystem $fileSystem = null
 	) {
 		global $DIC;
 
@@ -319,6 +325,11 @@ class ilCertificateGUI
 			$settings = new ilSetting('certificate');
 		}
 		$this->settings = $settings;
+
+		if (null === $fileSystem) {
+			$fileSystem = $DIC->filesystem()->web();
+		}
+		$this->fileSystem = $fileSystem;
 	}
 
 	/**
@@ -351,7 +362,7 @@ class ilCertificateGUI
 	{
 		return $cmd;
 	}
-	
+
 	/**
 	* Import a certificate from a ZIP archive
 	*/
@@ -359,7 +370,7 @@ class ilCertificateGUI
 	{
 		$this->certificateEditor();
 	}
-	
+
 	/**
 	* Creates a certificate preview
 	*/
@@ -389,22 +400,22 @@ class ilCertificateGUI
 		$this->certifcateObject->deleteBackgroundImage();
 		$this->certificateEditor();
 	}
-	
+
 	/**
 	* Deletes the certificate and all its data
 	*/
 	public function certificateDelete()
-	{		
+	{
 		// display confirmation message
 		$cgui = new ilConfirmationGUI();
 		$cgui->setFormAction($this->ctrl->getFormAction($this, "certificateEditor"));
 		$cgui->setHeaderText($this->lng->txt("certificate_confirm_deletion_text"));
 		$cgui->setCancel($this->lng->txt("no"), "certificateEditor");
 		$cgui->setConfirm($this->lng->txt("yes"), "certificateDeleteConfirm");
-		
+
 		$this->tpl->setContent($cgui->getHTML());
 	}
-	
+
 	/**
 	* Deletes the certificate and all its data
 	*/
@@ -416,7 +427,7 @@ class ilCertificateGUI
 		$this->deleteAction->delete($templateId, $this->objectId);
 		$this->ctrl->redirect($this, "certificateEditor");
 	}
-	
+
 	/**
 	* Saves the certificate
 	*/
@@ -530,36 +541,34 @@ class ilCertificateGUI
 
 				$templateValues = $this->placeholderDescriptionObject->getPlaceholderDescriptions();
 
-				$backgroundImagePath = $previousCertificateTemplate->getBackgroundImagePath();
-
-				if ($backgroundImagePath === '' && $backgroundImagePath !== null) {
-					$backgroundImagePath = ilObjCertificateSettingsAccess::getBackgroundImagePath(true);
-					$backgroundImagePath = str_replace('[CLIENT_WEB_DIR]', '', $backgroundImagePath);
-				}
-
-				$cardThumbnailImagePath = $previousCertificateTemplate->getThumbnailImagePath();
-
-				if ($_POST['background_delete']) {
-					$backgroundImagePath = '';
-				}
-
-				if ($_POST['certificate_card_thumbnail_image_delete']) {
-					$cardThumbnailImagePath = '';
-				}
-
-				if (count($_POST)) {
-					// handle the background upload
-					$temporaryFileName = $_FILES['background']['tmp_name'];
-					if (strlen($temporaryFileName)) {
-						try {
-							$backgroundImagePath = $this->backgroundImageUpload->uploadBackgroundImage($temporaryFileName, $nextVersion);
-						} catch (ilException $exception) {
-							$form->getFileUpload('background')->setAlert($this->lng->txt("certificate_error_upload_bgimage"));
-						}
+				// handle the background upload
+				$backgroundImagePath = '';
+				$temporaryFileName = $_FILES['background']['tmp_name'];
+				if (strlen($temporaryFileName)) {
+					try {
+						$backgroundImagePath = $this->backgroundImageUpload->uploadBackgroundImage($temporaryFileName, $nextVersion);
+					} catch (ilException $exception) {
+						$form->getFileUpload('background')->setAlert($this->lng->txt("certificate_error_upload_bgimage"));
 					}
+					if (false === $this->fileSystem->has($backgroundImagePath)) {
+						$form->getFileUpload('background')->setAlert($this->lng->txt("certificate_error_upload_bgimage"));
+						$backgroundImagePath = '';
+					}
+				}
+				if($backgroundImagePath === '') {
+					if ($_POST['background_delete']) {
+						$globalBackgroundImagePath = ilObjCertificateSettingsAccess::getBackgroundImagePath(true);
+						$backgroundImagePath = str_replace('[CLIENT_WEB_DIR]', '', $globalBackgroundImagePath);
+					} else {
+						$backgroundImagePath = $previousCertificateTemplate->getBackgroundImagePath();
+					}
+				}
 
-					$temporaryFileName = $_FILES['certificate_card_thumbnail_image']['tmp_name'];
-					if (strlen($temporaryFileName) && $this->fileUpload->hasUploads()) {
+				// handle the card thumbnail upload
+				$cardThumbnailImagePath = '';
+				$temporaryFileName = $_FILES['certificate_card_thumbnail_image']['tmp_name'];
+				if (strlen($temporaryFileName) && $this->fileUpload->hasUploads()) {
+					try {
 						if (false === $this->fileUpload->hasBeenProcessed()) {
 							$this->fileUpload->process();
 						}
@@ -580,7 +589,16 @@ class ilCertificateGUI
 
 							$cardThumbnailImagePath = $this->certificatePath . $cardThumbnailFileName;
 						}
+					} catch (ilException $exception) {
+						$form->getFileUpload('certificate_card_thumbnail_image')->setAlert($this->lng->txt("certificate_error_upload_ctimage"));
 					}
+					if (false === $this->fileSystem->has($cardThumbnailImagePath)) {
+						$form->getFileUpload('certificate_card_thumbnail_image')->setAlert($this->lng->txt("certificate_error_upload_ctimage"));
+                        $cardThumbnailImagePath = '';
+					}
+				}
+				if($cardThumbnailImagePath === '' && !$_POST['certificate_card_thumbnail_image_delete']) {
+					$cardThumbnailImagePath = $previousCertificateTemplate->getThumbnailImagePath();
 				}
 
 				$jsonEncodedTemplateValues = json_encode($templateValues);

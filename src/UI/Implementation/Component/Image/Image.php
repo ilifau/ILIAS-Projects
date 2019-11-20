@@ -6,115 +6,151 @@ namespace ILIAS\UI\Implementation\Component\Image;
 
 use ILIAS\UI\Component as C;
 use ILIAS\UI\Implementation\Component\ComponentHelper;
+use ILIAS\UI\Component\Signal;
+use ILIAS\UI\Implementation\Component\JavaScriptBindable;
+use ILIAS\UI\Implementation\Component\Triggerer;
 
 /**
  * Class Image
  * @package ILIAS\UI\Implementation\Component\Image
  */
-class Image implements C\Image\Image {
-	use ComponentHelper;
+class Image implements C\Image\Image
+{
+    use ComponentHelper;
+    use JavaScriptBindable;
+    use Triggerer;
 
-	/**
-	 * @var	string
-	 */
-	private $type;
+    /**
+     * @var	string
+     */
+    private $type;
 
-	/**
-	 * @var	string
-	 */
-	private  $src;
+    /**
+     * @var	string
+     */
+    private $src;
 
-	/**
-	 * @var	string
-	 */
-	private  $alt;
+    /**
+     * @var	string
+     */
+    private $alt;
 
-	/**
-	 * @var string
-	 */
-	protected $url = '';
+    /**
+     * @var string
+     */
+    protected $action = '';
 
-	/**
-	 * @var []
-	 */
-	private static $types = [
-			self::STANDARD,
-			self::RESPONSIVE
-	];
+    /**
+     * @var []
+     */
+    private static $types = [
+            self::STANDARD,
+            self::RESPONSIVE
+    ];
 
-	/**
-	 * @inheritdoc
-	 */
-	public function __construct($type, $source, $alt) {
-		$this->checkStringArg("src", $source);
-		$this->checkStringArg("alt", $alt);
-		$this->checkArgIsElement("type", $type, self::$types, "image type");
+    /**
+     * @inheritdoc
+     */
+    public function __construct($type, $source, $alt)
+    {
+        $this->checkStringArg("src", $source);
+        $this->checkStringArg("alt", $alt);
+        $this->checkArgIsElement("type", $type, self::$types, "image type");
 
-		$this->type = $type;
-		$this->src = $source;
-		$this->alt = $alt;
+        $this->type = $type;
+        $this->src = $source;
+        $this->alt = $alt;
+    }
 
-	}
+    /**
+     * @inheritdoc
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
 
-	/**
-	 * @inheritdoc
-	 */
-	public function getType() {
-		return $this->type;
-	}
+    /**
+     * @inheritdoc
+     */
+    public function withSource($source)
+    {
+        $this->checkStringArg("src", $source);
 
-	/**
-	 * @inheritdoc
-	 */
-	public function withSource($source){
-		$this->checkStringArg("src", $source);
+        $clone = clone $this;
+        $clone->src = $source;
+        return $clone;
+    }
 
-		$clone = clone $this;
-		$clone->src = $source;
-		return $clone;
-	}
+    /**
+     * @inheritdoc
+     */
+    public function getSource()
+    {
+        return $this->src;
+    }
 
-	/**
-	 * @inheritdoc
-	 */
-	public function getSource() {
-		return $this->src;
-	}
+    /**
+     * @inheritdoc
+     */
+    public function withAlt($alt)
+    {
+        $this->checkStringArg("alt", $alt);
 
-	/**
-	 * @inheritdoc
-	 */
-	public function withAlt($alt){
-		$this->checkStringArg("alt", $alt);
+        $clone = clone $this;
+        $clone->alt = $alt;
+        return $clone;
+    }
 
-		$clone = clone $this;
-		$clone->alt = $alt;
-		return $clone;
-	}
+    /**
+     * @inheritdoc
+     */
+    public function getAlt()
+    {
+        return $this->alt;
+    }
 
-	/**
-	 * @inheritdoc
-	 */
-	public function getAlt() {
-		return $this->alt;
-	}
+    /**
+     * @inheritdoc
+     */
+    public function withAction($action)
+    {
+        $this->checkStringOrSignalArg("action", $action);
+        $clone = clone $this;
+        if (is_string($action)) {
+            $clone->action = $action;
+        } else {
+            $clone->action = null;
+            $clone->setTriggeredSignal($action, "click");
+        }
 
-	/**
-	 * @inheritdoc
-	 */
-	public function withAction($url) {
-		$this->checkStringArg("url", $url);
+        return $clone;
+    }
 
-		$clone = clone $this;
-		$clone->url = $url;
+    /**
+     * @inheritdoc
+     */
+    public function getAction()
+    {
+        if ($this->action !== null) {
+            return $this->action;
+        }
+        return $this->getTriggeredSignalsFor("click");
+    }
 
-		return $clone;
-	}
+    /**
+     * @inheritdoc
+     */
+    public function withOnClick(Signal $signal)
+    {
+        return $this->withTriggeredSignal($signal, 'click');
+    }
 
-	/**
-	 * @inheritdoc
-	 */
-	public function getAction() {
-		return $this->url;
-	}
+    /**
+     * @inheritdoc
+     */
+    public function appendOnClick(Signal $signal)
+    {
+        return $this->appendTriggeredSignal($signal, 'click');
+    }
 }

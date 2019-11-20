@@ -294,12 +294,15 @@ class ilCalendarCategories
 		}
 
 		$this->setMode($a_mode);
-		if($a_use_cache)
+
+		// see comments in https://mantis.ilias.de/view.php?id=25254
+		if($a_use_cache && $this->getMode() != self::MODE_REPOSITORY_CONTAINER_ONLY)
 		{
 			// Read categories from cache
 			if($cats = ilCalendarCache::getInstance()->getEntry($this->user_id.':'.$a_mode.':categories:'.(int) $a_source_ref_id))
 			{
-				if($this->getMode() != self::MODE_CONSULTATION &&
+				if($this->getMode() != self::MODE_REPOSITORY &&
+				    $this->getMode() != self::MODE_CONSULTATION &&
 					$this->getMode() != self::MODE_PORTFOLIO_CONSULTATION)
 				{
 					$this->wakeup($cats);
@@ -1125,7 +1128,8 @@ class ilCalendarCategories
 	{
 		global $DIC;
 
-		$ilDB = $DIC['ilDB'];
+		$ilDB = $DIC->database();
+		$access = $DIC->access();
 		
 		$course_ids = array();
 		foreach($this->categories as $cat_id)
@@ -1136,7 +1140,7 @@ class ilCalendarCategories
 			}
 		}
 		
-		$query = "SELECT od2.obj_id sess_id, od1.obj_id crs_id,cat_id FROM object_data od1 ".
+		$query = "SELECT od2.obj_id sess_id, od1.obj_id crs_id,cat_id, or2.ref_id sess_ref_id FROM object_data od1 ".
 			"JOIN object_reference or1 ON od1.obj_id = or1.obj_id ".
 			"JOIN tree t ON or1.ref_id = t.parent ".
 			"JOIN object_reference or2 ON t.child = or2.ref_id ".
@@ -1152,6 +1156,12 @@ class ilCalendarCategories
 		$course_sessions = array();
 		while($row = $res->fetchRow(ilDBConstants::FETCHMODE_OBJECT))
 		{
+			if(
+				!$access->checkAccessOfUser($this->user_id,'read','',$row->sess_ref_id) ||
+				!$access->checkAccessOfUser($this->user_id,'visible','',$row->sess_ref_id)
+			) {
+				continue;
+			}
 			$cat_ids[] = $row->cat_id;
 			$course_sessions[$row->crs_id][$row->sess_id] = $row->cat_id;
 			$this->subitem_categories[] = $row->cat_id;

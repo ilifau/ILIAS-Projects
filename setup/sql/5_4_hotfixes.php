@@ -969,4 +969,220 @@ if( $ilDB->tableExists($tempTableName) )
 }
 
 ?>
+<#65>
+<?php
+
+if($ilDB->indexExistsByFields('read_event',array('usr_id')))
+{
+	$ilDB->dropIndexByFields('read_event',array('usr_id'));
+}
+$ilDB->addIndex('read_event', array('usr_id'), 'i1');
+
+?>
+<#66>
+<?php
+$ilCtrlStructureReader->getStructure();
+?>
+<#67>
+<?php
+$ilCtrlStructureReader->getStructure();
+?>
+<#68>
+<?php
+if(!$ilDB->tableExists('crs_timings_exceeded'))
+{
+	$ilDB->createTable('crs_timings_exceeded', array(
+		'user_id' => array(
+			'type' => 'integer',
+			'length' => 4,
+			'notnull' => true,
+			'default' => 0
+		),
+		'ref_id' => array(
+			'type' => 'integer',
+			'length' => 4,
+			'notnull' => true,
+			'default' => 0
+		)
+	,
+		'sent' => array(
+			'type' => 'integer',
+			'length' => 4,
+			'notnull' => true,
+			'default' => 0
+		)
+	));
+	$ilDB->addPrimaryKey('crs_timings_exceeded', array('user_id', 'ref_id'));
+}
+?>
+<#69>
+<?php
+if(!$ilDB->tableExists('crs_timings_started'))
+{
+	$ilDB->createTable('crs_timings_started', array(
+		'user_id' => array(
+			'type' => 'integer',
+			'length' => 4,
+			'notnull' => true,
+			'default' => 0
+		),
+		'ref_id' => array(
+			'type' => 'integer',
+			'length' => 4,
+			'notnull' => true,
+			'default' => 0
+		)
+	,
+		'sent' => array(
+			'type' => 'integer',
+			'length' => 4,
+			'notnull' => true,
+			'default' => 0
+		)
+	));
+	$ilDB->addPrimaryKey('crs_timings_started', array('user_id', 'ref_id'));
+}
+?>
+<#70>
+<?php
+$setting = new ilSetting();
+$idx = $setting->get('ilfrmposidx5', 0);
+if (!$idx) {
+	$ilDB->addIndex('frm_posts', ['pos_thr_fk', 'pos_date'], 'i5');
+	$setting->set('ilfrmposidx5', 1);
+}
+?>
+<#71>
+<?php
+$ilDB->modifyTableColumn('frm_notification', 'frm_id', array(
+	'type'    => 'integer',
+	'length'  => 8,
+	'notnull' => true,
+	'default' => 0
+));
+?>
+<#72>
+<?php
+$ilDB->modifyTableColumn('frm_notification', 'thread_id', array(
+	'type'    => 'integer',
+	'length'  => 8,
+	'notnull' => true,
+	'default' => 0
+));
+?>
+<#73>
+<?php
+$ilDB->modifyTableColumn('il_cert_template', 'version', array(
+    'type'    => 'integer',
+    'length'  => 8,
+    'notnull' => true,
+    'default' => 0
+));
+?>
+<#74>
+<?php
+$ilDB->addIndex('rbac_log', ['created'], 'i2');
+?>
+<#75>
+<?php
+	$ilCtrlStructureReader->getStructure();
+?>
+<#76>
+<?php
+$q = "SELECT prg_settings.obj_id FROM prg_settings"
+	."	JOIN object_reference prg_ref ON prg_settings.obj_id = prg_ref.obj_id"
+	."	JOIN tree ON parent = prg_ref.ref_id"
+	."	LEFT JOIN object_reference child_ref ON tree.child = child_ref.ref_id"
+	."	LEFT JOIN object_data child ON child_ref.obj_id = child.obj_id"
+	."	WHERE lp_mode = 2 AND prg_ref.deleted IS NULL AND child.obj_id IS NULL";
+$res = $ilDB->query($q);
+$to_adjust = [];
+while($rec = $ilDB->fetchAssoc($res)) {
+		$to_adjust[] = (int)$rec['obj_id'];
+}
+$ilDB->manipulate('UPDATE prg_settings SET lp_mode = 0 WHERE '.$ilDB->in('obj_id',$to_adjust,false,'integer'));
+$q = "SELECT prg_settings.obj_id FROM prg_settings"
+	."	JOIN object_reference prg_ref ON prg_settings.obj_id = prg_ref.obj_id"
+	."	JOIN tree ON parent = prg_ref.ref_id"
+	."	JOIN object_reference child_ref ON tree.child = child_ref.ref_id"
+	."	JOIN object_data child ON child_ref.obj_id = child.obj_id"
+	."	WHERE lp_mode = 2 AND prg_ref.deleted IS NULL AND child.type = 'prg'";
+$res = $ilDB->query($q);
+$to_adjust = [];
+while($rec = $ilDB->fetchAssoc($res)) {
+		$to_adjust[] = (int)$rec['obj_id'];
+}
+$ilDB->manipulate('UPDATE prg_settings SET lp_mode = 1 WHERE '.$ilDB->in('obj_id',$to_adjust,false,'integer'));
+?>
+<#77>
+<?php
+if ($ilDB->tableColumnExists("lng_data", "identifier")) {
+	$field = array(
+		'type'    => 'text',
+		'length'  => 200,
+		'notnull' => true,
+		'default' => ' '
+	);
+	$ilDB->modifyTableColumn("lng_data", "identifier", $field);
+}
+?>
+<#78>
+<?php
+if ($ilDB->tableColumnExists("lng_log", "identifier")) {
+	$field = array(
+		'type'    => 'text',
+		'length'  => 200,
+		'notnull' => true,
+		'default' => ' '
+	);
+	$ilDB->modifyTableColumn("lng_log", "identifier", $field);
+}
+?>
+<#79>
+<?php
+// Add new index
+if (!$ilDB->indexExistsByFields('object_data', ['owner'])) {
+    $ilDB->addIndex('object_data', ['owner'], 'i5');
+}
+?>
+<#80>
+<?php
+$ilCtrlStructureReader->getStructure();
+?>
+<#81>
+<?php
+$ilDB->manipulate("UPDATE il_cert_template SET background_image_path = " .
+    "REPLACE(" .
+        "background_image_path , " .
+        $ilDB->quote('//exercise/certificates//', 'text') . " , " .
+        "CONCAT( CONCAT(" . $ilDB->quote('/', 'text') . ",obj_id)," . $ilDB->quote('/', 'text') . ") ".
+    ") " .
+    "WHERE background_image_path LIKE " . $ilDB->quote('%//background%', 'text')
+);
+$ilDB->manipulate("UPDATE il_cert_template SET background_image_path = " .
+    "REPLACE(" .
+    "background_image_path , " .
+    $ilDB->quote('//course/certificates//', 'text') . " , " .
+    "CONCAT( CONCAT(" . $ilDB->quote('/', 'text') . ",obj_id)," . $ilDB->quote('/', 'text') . ") ".
+    ") " .
+    "WHERE background_image_path LIKE " . $ilDB->quote('%//background%', 'text')
+);
+$ilDB->manipulate("UPDATE il_cert_template SET background_image_path = " .
+    "REPLACE(" .
+    "background_image_path , " .
+    $ilDB->quote('//assessment/certificates//', 'text') . " , " .
+    "CONCAT( CONCAT(" . $ilDB->quote('/', 'text') . ",obj_id)," . $ilDB->quote('/', 'text') . ") ".
+    ") " .
+    "WHERE background_image_path LIKE " . $ilDB->quote('%//background%', 'text')
+);
+$ilDB->manipulate("UPDATE il_cert_template SET background_image_path = " .
+    "REPLACE(" .
+    "background_image_path , " .
+    $ilDB->quote('//certificates/scorm//', 'text') . " , " .
+    "CONCAT( CONCAT(" . $ilDB->quote('/', 'text') . ",obj_id)," . $ilDB->quote('/', 'text') . ") ".
+    ") " .
+    "WHERE background_image_path LIKE " . $ilDB->quote('%//background%', 'text')
+);
+?>
+
 
