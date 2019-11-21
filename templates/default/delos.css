@@ -14100,8 +14100,10 @@ span.bibl_text_inline_Emph {
 }
 .ilPlayerPreviewOverlay {
   position: relative;
-  width: 320px;
-  height: 240px;
+  /* fau: reducePlayerPreview */
+  width: 120px;
+  height: 90px;
+  /* fau. */
   cursor: pointer;
 }
 .ilPlayerPreviewDescription {
@@ -14110,7 +14112,9 @@ span.bibl_text_inline_Emph {
   position: absolute;
   width: 100%;
   color: #f0f0f0;
-  margin-top: -240px;
+  /* fau: reducePlayerPreview */
+  margin-top: -90px;
+  /* fau. */
   background: url("images/black60.png");
 }
 .ilPlayerPreviewOverlay img {
