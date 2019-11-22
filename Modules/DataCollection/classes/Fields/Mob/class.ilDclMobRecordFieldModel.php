@@ -49,7 +49,20 @@ class ilDclMobRecordFieldModel extends ilDclBaseRecordFieldModel {
 			// Check image/video
 			$format = ilObjMediaObject::getMimeType($file);
 
-			if ($format == 'image/jpeg') {
+// fau: importMediaField - always save a fullscreen view item
+            $mob->addMediaItem($media_item);
+            $media_item->setPurpose("Fullscreen");
+            $media_item->setFormat($format);
+            $media_item->setLocation($location);
+            $media_item->setLocationType("LocalFile");
+            $mob->update();
+
+            $media_item = new ilMediaItem();
+            $mob->addMediaItem($media_item);
+            $media_item->setPurpose("Standard");
+// fau.
+
+            if ($format == 'image/jpeg') {
 				list($width, $height, $type, $attr) = getimagesize($file);
 				$field = $this->getField();
 				$new_width = $field->getProperty(ilDclBaseFieldModel::PROP_WIDTH);
@@ -163,6 +176,88 @@ class ilDclMobRecordFieldModel extends ilDclBaseRecordFieldModel {
 		}
 		$this->setValue($value);
 	}
+
+// fau: importMediaField - import the media file
+    public function getValueFromExcel($excel, $row, $col) {
+        global $DIC;
+        $lng = $DIC['lng'];
+        $value = parent::getValueFromExcel($excel, $row, $col);
+
+
+        $import_dir = $this->getRecord()->getTable()->getCollectionObject()->getImportDirectory();
+        $import_file = $import_dir . "/" . trim($value);
+        if (strpos($import_file, '..') > 0  || !file_exists($import_file)) {
+            $warning = "(" . $row . ", " . ilDataCollectionImporter::getExcelCharForInteger($col + 1) . ") " . $lng->txt("file_not_found") . ": ". $import_file;
+
+            return array('warning' => $warning);
+        }
+
+        $mob = new ilObjMediaObject();
+        $mob->setTitle(basename($import_file));
+        $mob->create();
+        $mob_dir = ilObjMediaObject::_getDirectory($mob->getId());
+        if (!is_dir($mob_dir)) {
+            $mob->createDirectory();
+        }
+        $media_item = new ilMediaItem();
+        $mob->addMediaItem($media_item);
+        $media_item->setPurpose("Standard");
+
+        $file_name = ilUtil::getASCIIFilename(basename($import_file));
+        $file_name = str_replace(" ", "_", $file_name);
+        $file = $mob_dir . "/" . $file_name;
+        $location = $file_name;
+
+        copy($import_file, $file);
+        ilUtil::renameExecutables($mob_dir);
+        // Check image/video
+        $format = ilObjMediaObject::getMimeType($file);
+
+// fau: importMediaField - always save a fullscreen view item
+        $mob->addMediaItem($media_item);
+        $media_item->setPurpose("Fullscreen");
+        $media_item->setFormat($format);
+        $media_item->setLocation($location);
+        $media_item->setLocationType("LocalFile");
+        $mob->update();
+
+        $media_item = new ilMediaItem();
+        $mob->addMediaItem($media_item);
+        $media_item->setPurpose("Standard");
+// fau.
+
+        if ($format == 'image/jpeg') {
+            list($width, $height, $type, $attr) = getimagesize($file);
+            $field = $this->getField();
+            $new_width = $field->getProperty(ilDclBaseFieldModel::PROP_WIDTH);
+            $new_height = $field->getProperty(ilDclBaseFieldModel::PROP_HEIGHT);
+            if ($new_width || $new_height) {
+                //only resize if it is bigger, not if it is smaller
+                if ($new_height < $height && $new_width < $width) {
+                    //resize proportional
+                    if (!$new_height || !$new_width) {
+                        $format = ilObjMediaObject::getMimeType($file);
+                        $wh
+                            = ilObjMediaObject::_determineWidthHeight($format, "File", $file, "", true, false, $field->getProperty(ilDclBaseFieldModel::PROP_WIDTH), (int)$field->getProperty(ilDclBaseFieldModel::PROP_HEIGHT));
+                    } else {
+                        $wh['width'] = (int)$field->getProperty(ilDclBaseFieldModel::PROP_WIDTH);
+                        $wh['height'] = (int)$field->getProperty(ilDclBaseFieldModel::PROP_HEIGHT);
+                    }
+
+                    $location = ilObjMediaObject::_resizeImage($file, $wh['width'], $wh['height'], false);
+                }
+            }
+        }
+
+        ilObjMediaObject::_saveUsage($mob->getId(), "dcl:html", $this->getRecord()->getTable()->getCollectionObject()->getId());
+        $media_item->setFormat($format);
+        $media_item->setLocation($location);
+        $media_item->setLocationType("LocalFile");
+        $mob->update();
+
+        return $mob->getId();
+    }
+// fau.
 
 
 	public function afterClone() {

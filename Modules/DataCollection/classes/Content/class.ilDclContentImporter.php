@@ -31,6 +31,9 @@ class ilDclContentImporter {
 			ilDclDatatype::INPUTFORMAT_PLUGIN,
 			ilDclDataType::INPUTFORMAT_TEXT_SELECTION,
 			ilDclDatatype::INPUTFORMAT_DATE_SELECTION,
+// fau: importMediaField - add to allowed import formats
+            ilDclDatatype::INPUTFORMAT_MOB
+// fau.
 		);
 	protected $warnings;
 	/**
@@ -134,10 +137,22 @@ class ilDclContentImporter {
 								$value = '';
 							}
 
-							$field->checkValidity($value, $record->getId());
-							if (!$simulate) {
-								$record->setRecordFieldValue($field->getId(), $value);
-							}
+// fau: importMediaField - special treatment of mob fields
+							if ($field->getDatatypeId() == ilDclDatatype::INPUTFORMAT_MOB) {
+							    if ($simulate) {
+                                    $record->deleteMob($value);
+                                }
+							    else {
+                                    $record->setRecordFieldValue($field->getId(), $value, true);
+                                }
+                            }
+							else {
+                                $field->checkValidity($value, $record->getId());
+                                if (!$simulate) {
+                                    $record->setRecordFieldValue($field->getId(), $value);
+                                }
+                            }
+// fau.
 						}
 					} catch (ilDclInputException $e) {
 						$fields_failed++;

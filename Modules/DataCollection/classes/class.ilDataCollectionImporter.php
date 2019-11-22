@@ -58,7 +58,9 @@ class ilDataCollectionImporter extends ilXmlImporter {
 		while ($int > 0) {
 			$diff = $int % 26;
 			$char = $rng[$diff - 1] . $char;
-			$int -= $char;
+// fau: importMediaField - fix import warning
+			$int -= $diff;
+// fau.
 			$int /= 26;
 		}
 

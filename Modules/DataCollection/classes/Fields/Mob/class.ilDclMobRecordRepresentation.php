@@ -45,13 +45,20 @@ class ilDclMobRecordRepresentation extends ilDclFileuploadRecordRepresentation {
 			$width = (int)$field->getProperty(ilDclBaseFieldModel::PROP_WIDTH);
 			$height = (int)$field->getProperty(ilDclBaseFieldModel::PROP_HEIGHT);
 
-// fau: addMediaBasename
+// fau: displayMedia - add basename
 			$html = ilUtil::img(ilWACSignedPath::signFile($dir . "/" . $med->getLocation()), basename($med->getLocation()), $width, $height);
 // fau.
 			if ($is_linked_field && $has_view && $link) {
 				$this->ctrl->setParameterByClass('ilDclDetailedViewGUI', 'record_id', $this->getRecordField()->getRecord()->getId());
 				$html = '<a href="' . $this->ctrl->getLinkTargetByClass("ilDclDetailedViewGUI", 'renderRecord') . '">' . $html . '</a>';
 			}
+// fau: displayMedia - add fullscreen link
+			else if ($mob->hasFullscreenItem()) {
+                $full = $mob->getMediaItem('Fullscreen');
+			    $link = ilWACSignedPath::signFile($dir . "/" . $full->getLocation());
+                $html = '<a target="_blank" href="' . $link. '">' . $html . '</a>';
+            }
+// fau.
 		} else {
 			// Video/Audio
 			$mpl = new ilMediaPlayerGUI($med->getId(), '');
@@ -60,7 +67,7 @@ class ilDclMobRecordRepresentation extends ilDclFileuploadRecordRepresentation {
 			$mpl->setDisplayWidth((int)$field->getProperty(ilDclBaseFieldModel::PROP_WIDTH) . 'px');
 			$mpl->setDisplayHeight((int)$field->getProperty(ilDclBaseFieldModel::PROP_HEIGHT) . 'px');
 			$mpl->setVideoPreviewPic($mob->getVideoPreviewPic());
-// fau: addMediaBasename
+// fau: displayMedia - add basename
 			$mpl->setTitle(basename($mpl->getFile()));
 // fau.
 			$html = $mpl->getPreviewHtml();

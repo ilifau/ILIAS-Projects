@@ -109,30 +109,17 @@ class ilDclReferenceRecordFieldModel extends ilDclBaseRecordFieldModel {
 	 * @return int[]
 	 */
 	protected function getReferencesFromString($stringValues) {
-		$delimiter = strpos($stringValues, '; ') ? '; ' : ', ';
+// fau: transferReferences - allow only semicolons as delimiters
+		$delimiter = ';';
+
 		$slicedStrings = explode($delimiter, $stringValues);
 		$slicedReferences = array();
-		$resolved = 0;
-		for ($i = 0; $i < count($slicedStrings); $i++) {
-			//try to find a reference since the last resolved value separated by a comma.
-			// $i = 1; $resolved = 0; $string = "hello, world, gaga" -> try to match "hello, world".
-			$searchString = implode(array_slice($slicedStrings, $resolved, $i - $resolved + 1));
-			if ($ref = $this->getReferenceFromValue($searchString)) {
-				$slicedReferences[] = $ref;
-				$resolved = $i;
-				continue;
-			}
-
-			//try to find a reference with the current index.
-			// $i = 1; $resolved = 0; $string = "hello, world, gaga" -> try to match "world".
-			$searchString = $slicedStrings[$i];
-			if ($ref = $this->getReferenceFromValue($searchString)) {
-				$slicedReferences[] = $ref;
-				$resolved = $i;
-				continue;
-			}
-		}
-
+		foreach ($slicedStrings as $searchString) {
+            if ($ref = $this->getReferenceFromValue(trim($searchString))) {
+                $slicedReferences[] = $ref;
+            }
+        }
+// fau.
 		return $slicedReferences;
 	}
 
@@ -156,6 +143,20 @@ class ilDclReferenceRecordFieldModel extends ilDclBaseRecordFieldModel {
 			if ($record_value == $value) {
 				$record_id = $record->getId();
 			}
+// fau: transferReference - compare by numeric prefix
+			else {
+			    $record_matches = [];
+			    preg_match('/^[0-9\.]+/', $record_value, $record_matches);
+
+			    $value_matches = [];
+                preg_match('/^[0-9\.]+/', (string) $value, $value_matches);
+
+                if (!empty($record_matches[0]) && !empty($value_matches[0])
+                    && $record_matches[0] == $value_matches[0]) {
+                    $record_id = $record->getId();
+                }
+            }
+// fau.
 		}
 
 		return $record_id;

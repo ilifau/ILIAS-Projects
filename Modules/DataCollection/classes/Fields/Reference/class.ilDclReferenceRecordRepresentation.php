@@ -46,7 +46,9 @@ class ilDclReferenceRecordRepresentation extends ilDclBaseRecordRepresentation {
 						$html .= $ref_record->getRecordFieldHTML($field->getProperty(ilDclBaseFieldModel::PROP_REFERENCE));
 					}
 				} else {
-					$html .= $ref_record->getRecordFieldHTML($field->getProperty(ilDclBaseFieldModel::PROP_REFERENCE));
+// fau: displayReferences - shorten list
+					$html .= ilUtil::shortenText($ref_record->getRecordFieldHTML($field->getProperty(ilDclBaseFieldModel::PROP_REFERENCE)),20, true);
+// fau.
 				}
 			}
 			$html .= '<br>';

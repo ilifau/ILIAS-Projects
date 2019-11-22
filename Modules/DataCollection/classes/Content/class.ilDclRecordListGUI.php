@@ -221,6 +221,13 @@ class ilDclRecordListGUI {
 		$file->setRequired(true);
 		$form->addItem($file);
 
+// fau: importMediaFields - show media uload dir
+		$this->lng->loadLanguageModule('content');
+		$id = new ilNonEditableValueGUI($this->lng->txt('mob_upload_dir'));
+		$id->setValue($this->parent_obj->object->getImportDirectory());
+		$form->addItem($id);
+// fau.
+
 		$cb = new ilCheckboxInputGUI($this->lng->txt("dcl_simulate_import"), "simulate");
 		$cb->setInfo($this->lng->txt("dcl_simulate_info"));
 		$form->addItem($cb);

@@ -512,6 +512,13 @@ class ilObjDataCollection extends ilObject2 {
 
 
 	public function getStyleSheetId() { }
+
+// fau: importMediaField - specify the import directory
+    public function getImportDirectory()
+    {
+        return ilUtil::getDataDir()."/dcl_data"."/dcl_".$this->getId()."/import";
+    }
+// fau.
 }
 
 ?>

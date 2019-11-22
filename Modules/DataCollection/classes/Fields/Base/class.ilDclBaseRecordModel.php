@@ -309,14 +309,14 @@ class ilDclBaseRecordModel {
 		$this->last_edit_by = $last_edit_by;
 	}
 
-
+//fau: importMediaField - add parameter to omit parsing
 	/**
 	 * Set a field value
 	 *
 	 * @param int    $field_id
 	 * @param string $value
 	 */
-	public function setRecordFieldValue($field_id, $value) {
+	public function setRecordFieldValue($field_id, $value, $omit_parsing = false) {
 		$this->loadRecordFields();
 		if (ilDclStandardField::_isStandardField($field_id)) {
 			$this->setStandardField($field_id, $value);
@@ -324,9 +324,10 @@ class ilDclBaseRecordModel {
 			$this->loadTable();
 			$record_field = $this->recordfields[$field_id];
 
-			$this->recordfields[$field_id]->setValue($value);
+			$this->recordfields[$field_id]->setValue($value, $omit_parsing);
 		}
 	}
+// fau.
 
 
 	/**
@@ -815,18 +816,23 @@ class ilDclBaseRecordModel {
 		}
 	}
 
-
+// fau: fixDeleteMob - correct deletion of media object
 	/**
 	 * Delete MOB
 	 *
 	 * @param $obj_id
 	 */
 	public function deleteMob($obj_id) {
-		if (ilObject2::_lookupObjId($obj_id)) {
-			$mob = new ilObjMediaObject($obj_id);
-			$mob->delete();
+        global $DIC;
+        $ilDB = $DIC->database();
+
+		if (ilObject::_lookupType($obj_id) == 'mob') {
+            $ilDB->manipulate("DELETE FROM mob_usage WHERE usage_type='dcl:html' AND id = ". $ilDB->quote($obj_id, 'integer'));
+            $mob = new ilObjMediaObject($obj_id);
+            $mob->delete();
 		}
 	}
+// fau.
 
 
 	/**

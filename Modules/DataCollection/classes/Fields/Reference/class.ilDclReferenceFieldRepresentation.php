@@ -18,7 +18,11 @@ class ilDclReferenceFieldRepresentation extends ilDclBaseFieldRepresentation {
 			$input = new ilMultiSelectInputGUI($this->getField()->getTitle(), 'field_' . $this->getField()->getId());
 			$input->setWidth(100);
 			$input->setWidthUnit('%');
-		}
+// fau: displayReferences - increase input height
+            $input->setHeight(300);
+            $input->setHeightUnit('px');
+        }
+// fau.
 
 		$this->setupInputField($input, $this->getField());
 
