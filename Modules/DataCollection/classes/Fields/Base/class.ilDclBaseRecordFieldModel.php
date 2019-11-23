@@ -58,6 +58,12 @@ class ilDclBaseRecordFieldModel {
 	 */
 	protected $lng;
 
+// fau: add simulation flag
+    /**
+     * @var bool
+     */
+	protected $simulate = false;
+// fau.
 
 	/**
 	 * @param ilDclBaseRecordModel $record
@@ -437,5 +443,15 @@ class ilDclBaseRecordFieldModel {
 	public function setFieldRepresentation($field_representation) {
 		$this->field_representation = $field_representation;
 	}
+
+// fau: importMediaField - set simulation mode
+    /**
+     * Set the simulate mode
+     * @param bool $simulate
+     */
+	public function setSimulate($simulate) {
+	    $this->simulate = $simulate;
+    }
+// fau.
 }
 

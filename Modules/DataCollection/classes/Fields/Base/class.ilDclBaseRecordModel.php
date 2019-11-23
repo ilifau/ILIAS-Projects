@@ -346,21 +346,23 @@ class ilDclBaseRecordModel {
 		}
 	}
 
-
+// fau: importMediafield - add simulation parameter
 	/**
 	 * @param $excel ilExcel
 	 * @param $row
 	 * @param $col
 	 * @param $field ilDclBaseFieldModel
+     * @param $simulate
 	 *
 	 * @return array|string
 	 */
-	public function getRecordFieldValueFromExcel($excel, $row, $col, $field) {
+	public function getRecordFieldValueFromExcel($excel, $row, $col, $field, $simulate = false) {
 		$this->loadRecordFields();
 
+        $this->recordfields[$field->getId()]->setSimulate($simulate);
 		return $this->recordfields[$field->getId()]->getValueFromExcel($excel, $row, $col);
 	}
-
+// fau.
 
 	/**
 	 * @param $excel ilExcel

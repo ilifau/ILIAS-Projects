@@ -181,15 +181,22 @@ class ilDclMobRecordFieldModel extends ilDclBaseRecordFieldModel {
     public function getValueFromExcel($excel, $row, $col) {
         global $DIC;
         $lng = $DIC['lng'];
-        $value = parent::getValueFromExcel($excel, $row, $col);
+        $import_file_name = trim(parent::getValueFromExcel($excel, $row, $col));
 
+        if (empty($import_file_name)) {
+            return null;
+        }
 
         $import_dir = $this->getRecord()->getTable()->getCollectionObject()->getImportDirectory();
-        $import_file = $import_dir . "/" . trim($value);
+        $import_file = $import_dir . "/" . $import_file_name;
         if (strpos($import_file, '..') > 0  || !file_exists($import_file)) {
             $warning = "(" . $row . ", " . ilDataCollectionImporter::getExcelCharForInteger($col + 1) . ") " . $lng->txt("file_not_found") . ": ". $import_file;
 
             return array('warning' => $warning);
+        }
+
+        if ($this->simulate) {
+            return null;
         }
 
         $mob = new ilObjMediaObject();
@@ -253,6 +260,20 @@ class ilDclMobRecordFieldModel extends ilDclBaseRecordFieldModel {
         $media_item->setFormat($format);
         $media_item->setLocation($location);
         $media_item->setLocationType("LocalFile");
+
+        // FSX MediaPreview
+        include_once("./Services/MediaObjects/classes/class.ilFFmpeg.php");
+        if (ilFFmpeg::enabled() && ilFFmpeg::supportsImageExtraction($format)) {
+            $med = $mob->getMediaItem("Standard");
+            $mob_file = ilObjMediaObject::_getDirectory($mob->getId()) . "/" . $med->getLocation();
+            $a_target_dir = ilObjMediaObject::_getDirectory($mob->getId());
+            try {
+                $new_file = ilFFmpeg::extractImage($mob_file, "mob_vpreview.png", $a_target_dir, 1);
+            } catch (Exception $e) {
+                ilUtil::sendFailure($e->getMessage(), true);
+            }
+        }
+
         $mob->update();
 
         return $mob->getId();
