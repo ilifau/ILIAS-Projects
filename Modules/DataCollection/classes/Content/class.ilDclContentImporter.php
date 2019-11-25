@@ -14,10 +14,13 @@ class ilDclContentImporter {
 	//const SOAP_FUNCTION_NAME = 'exportDataCollectionContent';
 
 	const EXPORT_EXCEL = 'xlsx';
+
+// fau: increaseImportSize	- allow 200 records
 	/**
 	 * @var int
 	 */
-	protected $max_imports = 100;
+	protected $max_imports = 200;
+// fau.
 	/**
 	 * @var array
 	 */
@@ -130,8 +133,9 @@ class ilDclContentImporter {
 						if ($field->isStandardField()) {
 							$record->setStandardFieldValueFromExcel($excel, $i, $col, $field);
 						} else {
-							$value = $record->getRecordFieldValueFromExcel($excel, $i, $col, $field);
-
+// fau: importMediaField - add simulation parameter
+							$value = $record->getRecordFieldValueFromExcel($excel, $i, $col, $field, $simulate);
+// fau.
 							if (is_array($value) && isset($value['warning'])) {
 								$this->warnings[] = $value['warning'];
 								$value = '';
