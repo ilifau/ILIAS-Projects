@@ -518,7 +518,12 @@ class ilUserProfile
             
             switch ($p["input"]) {
                 case "login":
-                    if ((int) $ilSetting->get('allow_change_loginname') || self::$mode == self::MODE_REGISTRATION) {
+// kwab: regLogin - show message for generated username at registration form
+                    if (self::$mode == self::MODE_REGISTRATION) {
+                        $val = new ilNonEditableValueGUI($lng->txt('username'), 'username');
+                        $val->setValue($lng->txt('reg_login_is_generated'));
+                    } elseif ((int) $ilSetting->get('allow_change_loginname')) {
+// kwab.
                         $val = new ilTextInputGUI($lng->txt('username'), 'username');
                         if ($a_user) {
                             $val->setValue($a_user->getLogin());

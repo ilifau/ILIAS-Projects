@@ -72,6 +72,9 @@ class ilAccountRegistrationGUI
         $cmd = $this->ctrl->getCmd();
         switch ($cmd) {
             case 'saveForm':
+            // kwab: regLogin - fix redirection to login
+            case 'showLogin':
+            // kwab.
                 $tpl = $this->$cmd();
                 break;
             default:
@@ -347,7 +350,11 @@ class ilAccountRegistrationGUI
 
         // validate username
         $login_obj = $this->form->getItemByPostVar('username');
-        $login = $this->form->getInput("username");
+// kwab: regLogin - call generation of login
+        $login = $this->__generateLogin($this->form);
+        $_POST['username'] = $login;
+        $login_obj->setValue($login);
+// kwab.
         $captcha = $this->form->getItemByPostVar("captcha_code");
         if (!ilUtil::isLogin($login)) {
             $login_obj->setAlert($this->lng->txt("login_invalid"));
@@ -617,6 +624,33 @@ class ilAccountRegistrationGUI
         return $password;
     }
 
+    // fau: regCodes - new function __generateLogin
+
+    /**
+     * Generate a new login name based on the entered form values
+     * @param $a_form
+     * @return string
+     */
+    protected function __generateLogin($a_form)
+    {
+        $base_login = '';
+
+        $base_login = ilUtil::getASCIIFilename(strtolower($a_form->getInput('usr_firstname'))) . '.'
+            . ilUtil::getASCIIFilename(strtolower($a_form->getInput('usr_lastname')));
+
+        // append a number to get an unused login
+        $login = $base_login;
+        $i = 0;
+        while (ilObjUser::_loginExists($login)) {
+            $i++;
+            $login = $base_login . $i;
+        }
+
+        return $login;
+    }
+    // fau.
+
+
     protected function __distributeMails($password)
     {
 
@@ -669,6 +703,9 @@ class ilAccountRegistrationGUI
         $this->tpl->setVariable('TXT_PAGEHEADLINE', $this->lng->txt('registration'));
 
         $tpl->setVariable("TXT_WELCOME", $this->lng->txt("welcome") . ", " . $this->userObj->getTitle() . "!");
+        // kwab: regLogin  - show login  after registration
+        $tpl->setVariable("TXT_USERNAME", $this->lng->txt("reg_your_login_is") . ": <b>" . $this->userObj->getLogin() .'</b>');
+        // kwab.
         if (
             (
                 $this->registration_settings->getRegistrationType() == IL_REG_DIRECT ||
