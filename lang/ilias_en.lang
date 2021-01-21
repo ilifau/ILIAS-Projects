@@ -2502,6 +2502,7 @@ common#:#err_role_not_assignable#:#You cannot assign users to this role at this 
 common#:#err_session_expired#:#Your session is expired!
 common#:#err_wrong_header#:#Reason: Wrong header.
 common#:#err_wrong_login#:#Wrong Login or Password
+common#:#err_valid_login_account_creation_disabled#:#Authentication succeeded, but the creation of new user accounts is currently disabled. Please contact your system administrator.
 common#:#err_wrong_password#:#Wrong Password
 common#:#error_parser#:#Error starting the parser.
 common#:#error_recipient#:#Error Recipient
@@ -7106,6 +7107,7 @@ sahs#:#sahs_sco_objective#:#Objectives
 sahs#:#sahs_sequencing#:#Sequencing
 sahs#:#sahs_unit#:#SCO
 search#:#add_members_header#:#Add Members
+search#:#search_field#:#Search Input Field
 search#:#adv_md_search_title#:#Search in Extended Metadata
 search#:#append_results#:#Append results
 search#:#last_search_result#:#Last Search Result
@@ -8419,6 +8421,9 @@ rbac#:#cat_administrate_users#:#Administrate Local User Accounts
 rbac#:#edit_permission#:#Change Permissions
 rbac#:#edit_event#:#Edit Calendar
 book#:#book_set_cancel#:#Cancel Reservation
+book#:#reservation_deleted#:#Reservation deleted
+book#:#X_reservations_of#:#%s reservations of
+book#:#book_set_delete#:#Delete
 rbac#:#book_edit_permission#:#User can change permission settings for booking pool
 rbac#:#book_visible#:#Booking pool is visible
 rbac#:#book_read#:#User can book resources / objects in booking pool
@@ -10681,6 +10686,7 @@ rbac#:#rcat_visible#:#ECS Category is visible
 rbac#:#rcat_write#:#User can edit settings of ECS Category
 search#:#search_filter_by_type#:#Filter by Type
 search#:#search_off#:#Off
+search#:#search_on#:#On
 ecs#:#ecs_cmap_enable#:#Course Allocation
 ecs#:#ecs_cmap_def_cat#:#Default Category
 ecs#:#ecs_cmap_def_cat_info#:#Please enter the id of a category where all courses will be created that cannot be handled by other rules.
@@ -11925,6 +11931,8 @@ content#:#cont_auto_suspend_info#:#This option is for SCORM learning modules, wh
 administration#:#adm_captcha_anonymous_frm#:#Activate captcha for anonymous in forums. Please keep in mind that this may effect the accessibility of your installation.
 administration#:#adm_captcha_anonymous_auth#:#Activate captcha for anonymous in login form. Please keep in mind that this may effect the accessibility of your installation.
 administration#:#adm_captcha_anonymous_reg#:#Activate captcha for anonymous in registration form. Please keep in mind that this may effect the accessibility of your installation.
+administration#:#adm_auth_reg#:#Authentication Registration
+administration#:#adm_auth_login#:#Authentication Login
 administration#:#adm_captcha_anonymous_wiki#:#Activate captcha for anonymous in wikis. Please keep in mind that this may effect the accessibility of your installation.
 auth#:#auth_auth_settings#:#Settings
 book#:#book_reservation_failed_overbooked#:#The booking failed because the object is not available anymore.
@@ -14843,6 +14851,8 @@ crs#:#crs_lhist_objective_completed#:#Mastered $3$ in $1$.
 trac#:#trac_lhist_obj_completed_in#:#$1$ was completed in $2$.
 trac#:#trac_lhist_obj_completed#:#$1$ was completed.
 lhist#:#lhist_learning_history#:#Learning History
+mme#:#flush#:#Remove Lost Items
+mme#:#msg_subitem_flushed#:#Lost Items removed.
 mme#:#main#:#Main Menu
 mme#:#subtab_topitems#:#Top Items
 mme#:#subtab_subitems#:#Items
@@ -15488,6 +15498,9 @@ svy#:#svy_finish_survey#:#Finish survey '%1'
 pwsp#:#pwsp_enable_personal_resources#:#Enable personal resources
 file#:#personal_resources_disk_quota#:#Hard Disk Quota for Personal Resources
 file#:#personal_resources_disk_quota_info#:#Allows definition of a hard disk quota for each user account and each global role. This quota only affects files in the personal resources and in portfolios. As soon as a user exceeds the defined quota, ILIAS will prohibit the user to upload more files until the used disk space is again under quota.
+file#:#personal_workspace_disk_quota#:#Hard Disk Quota for Personal Workspace
+file#:#personal_workspace_quota_exceeded_warning#:#You have exceeded the disk quota for your personal workspace.
+file#:#personal_workspace_quota_status_legend#:#You are using %1$s of your available disk quota of %2$s (%3$d%%).
 common#:#personal_resources#:#Personal Resources
 file#:#personal_resources_quota_exceeded_warning#:#You have exceeded the disk quota for your personal resources.
 file#:#personal_resources_quota_status_legend#:#You are using %1$s of your available disk quota of %2$s (%3$d%%).

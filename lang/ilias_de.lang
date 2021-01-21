@@ -417,6 +417,8 @@ administration#:#adm_activate_db_benchmark#:#Messung aktivieren
 administration#:#adm_activate_db_benchmark_desc#:#Die Messung wird automatisch nach einem Server-Request beendet.
 administration#:#adm_add_settings_template#:#Vorlagen hinzufügen
 administration#:#adm_layout_and_navigation#:#Layout und Navigation
+administration#:#adm_auth_reg#:#Authentifizierung Registrierung
+administration#:#adm_auth_login#:#Authentifizierung Login
 administration#:#adm_db_bench_by_first_table#:#Aggregiert nach dem ersten Tabellennamen
 administration#:#adm_db_bench_chronological#:#Chronologisch
 administration#:#adm_db_bench_slowest_first#:#Langsamste zuerst
@@ -2039,6 +2041,9 @@ book#:#book_schedule_updated#:#Der Zeitplan wurde geändert.
 book#:#book_schedule_warning_edit#:#Es sind momentan keine Zeitpläne vorhanden. Um den Pool nutzen zu können, muss zuerst ein Zeitplan angelegt werden (oder der Typ des Buchungspools geändert werden).
 book#:#book_schedules#:#Zeitpläne
 book#:#book_set_cancel#:#Stornieren
+book#:#reservation_deleted#:#Reservierung gelöscht
+book#:#X_reservations_of#:#%s Reservierungen von
+book#:#book_set_delete#:#Löschen
 book#:#book_type_warning#:#Es sind momentan keine Buchungsobjekte vorhanden. Um den Pool nutzen zu können, müssen zuerst Buchungsobjekte angelegt werden.
 certificate#:#certificate_a4#:#A4 (297 mm x 210 mm)
 certificate#:#certificate_a4_landscape#:#A4 Quer (210 mm x 297 mm)
@@ -2955,6 +2960,7 @@ common#:#err_role_not_assignable#:#Der Rolle können an dieser Position keine Be
 common#:#err_session_expired#:#Ihre Session ist abgelaufen!
 common#:#err_wrong_header#:#Grund: Falscher Header
 common#:#err_wrong_login#:#Benutzername oder Passwort ungültig
+common#:#err_valid_login_account_creation_disabled#:#Die Authentifizierung war erfolgreich, jedoch ist die Erstellung neuer Benutzerkonten nicht aktiviert. Bitte wenden Sie Sich an Ihren Systemadministrator.
 common#:#err_wrong_password#:#Falsches Passwort
 common#:#error#:#Fehler
 common#:#error_parser#:#Fehler beim Starten des Parsers.
@@ -8492,6 +8498,7 @@ scormdebug#:#unknown#:#unbekannt
 search#:#add_members_header#:#Benutzer hinzufügen
 search#:#adv_md_search_title#:#Suche in den erweiterten Metadaten
 search#:#append_results#:#Ergebnisse anhängen
+search#:#search_field#:#Sucheingabefeld
 search#:#last_search_result#:#Letztes Suchergebnis
 search#:#lucene_activate_field#:#Suche aktivieren
 search#:#lucene_advanced_settings#:#Erweiterte Suche
@@ -10704,6 +10711,7 @@ rbac#:#rcat_visible#:#ECS-Kategorie ist sichtbar
 rbac#:#rcat_write#:#ECS-Kategorie bearbeiten
 search#:#search_filter_by_type#:#Typfilter
 search#:#search_off#:#Aus
+search#:#search_on#:#An
 ecs#:#ecs_cmap_enable#:#Kurszuordnung
 ecs#:#ecs_cmap_def_cat#:#Standard-Kategorie
 ecs#:#ecs_cmap_def_cat_info#:#Bitte geben Sie die Kategorie an, in welcher Kurse angelegt werde sollen, die über bestehende Regeln nicht zugeordnet werden können.
@@ -14060,7 +14068,7 @@ didactic#:#activate_local_didactic_template#:#Gültigkeitsbereich
 didactic#:#effective_form#:#Vorlage wirksam ab
 didactic#:#more_translations#:#Weitere Übersetzungen
 didactic#:#didactic_template_update_import#:#Aktualisierung Didaktischer Vorlagen
-didactic#:#didactic_template_update_import_info#:#Alle Eigenschaften werden gemäß des Imports angepasst. Objekte an denen diese Vorlage bereits angewandt wurde werden nicht verändert.
+didactic#:#didactic_template_update_import_info#:#Alle Eigenschaften werden gemäß der Importdatei angepasst. Objekte, die die Einstellungen dieser Vorlage bereits nutzen, werden nicht verändert.
 grp#:#grp_show_members#:#Mitgliedergalerie
 grp#:#grp_show_members_info#:#Alle Mitglieder können im Reiter "Mitglieder" die Mitgliedergalerie einsehen.
 didactic#:#didactic_cannot_delete_auto_generated#:#Das Löschen von automatisch generierten Didaktischen Vorlagen ist nicht erlaubt.
@@ -14825,6 +14833,8 @@ crs#:#crs_lhist_objective_completed#:#Bestanden $3$ in $1$.
 trac#:#trac_lhist_obj_completed_in#:#$1$ wurde abgeschlossen in $2$.
 trac#:#trac_lhist_obj_completed#:#$1$ wurde abgeschlossen.
 lhist#:#lhist_learning_history#:#Lernverlauf
+mme#:#flush#:#Verlorene Einträge löschen
+mme#:#msg_subitem_flushed#:#Verlorene Einträge wurden gelöscht.
 mme#:#main#:#Hauptmenü
 mme#:#subtab_topitems#:#Haupteinträge
 mme#:#subtab_subitems#:#Einträge
@@ -15356,7 +15366,7 @@ content#:#cont_StandardCenter#:#Standard Zentriert
 content#:#cont_Interaction#:#Interaktion
 content#:#cont_Background#:#Hintergrund
 dateplaner#:#cal_usr_info#:#Informationen zum Termin
-certificate#:#certificate_learning_progress_must_be_active#:#Nur Objekte mit eineme aktiven Lernfortschritt dürfen ausgewählt werden. Bei folgenden Objekten ist der Lernfortschritt nicht aktiv %s
+certificate#:#certificate_learning_progress_must_be_active#:#Nur Objekte mit aktivem Lernfortschritt dürfen ausgewählt werden. Bei folgenden Objekten ist der Lernfortschritt nicht aktiv: %s
 certificate#:#learning_progress_deactivated#:#Der Lernfortschritt für dieses Objekt ist deaktiviert. Zum Bearbeiten der Zertifikatsvorlage und zum Erhalten von Nutzerzertifikaten muss der Lernfortschritt aktiviert sein.
 exc#:#exc_tbl_action_open_submission#:#Abgaben öffnen
 exc#:#exc_copy_zip_error#:#Die Abgabe kann nicht geöffnet werden. Es ist ein Fehler beim Kopieren der Dateien aufgetreten.
@@ -15476,8 +15486,11 @@ svy#:#svy_status_finished#:#Beendet
 svy#:#svy_users_invited#:#Die Benutzer wurden eingeladen.
 svy#:#svy_finish_survey#:#Umfrage "%1" bearbeiten
 pwsp#:#pwsp_enable_personal_resources#:#Persönliche Ressourcen aktivieren
-file#:#personal_resources_disk_quota#:#Disk-Quota für den Persönliche Ressourcen aktivieren
-file#:#personal_resources_disk_quota_info#:#Erlaubt die Begrenzung des verfügbaren Plattenplatzes für jedes Benutzerkonto und jede globale Rolle. Dies betrifft nur Dateien in den persönliche Ressourcen und in Portfolios. Sobald ein Benutzer die definierte Disk-Quota erreicht, kann dieser keine weiteren Dateien mehr hochladen.
+file#:#personal_resources_disk_quota#:#Disk-Quota für Persönliche Ressourcen aktivieren
+file#:#personal_resources_disk_quota_info#:#Erlaubt die Begrenzung des verfügbaren Plattenplatzes für jedes Benutzerkonto und jede globale Rolle. Dies betrifft nur Dateien in den persönlichen Ressourcen und in Portfolios. Sobald ein Benutzer die definierte Disk-Quota erreicht, kann dieser keine weiteren Dateien mehr hochladen.
+file#:#personal_workspace_disk_quota#:#Strikte Disk-Quota für Persönlichen Arbeitsraum
+file#:#personal_workspace_quota_exceeded_warning#:#Sie haben den maximal verfügbaren Speicherplatz für Dateien im Persönlichen Arbeitsraum überschritten. Löschen Sie vorhandene Dateien, um Platz für neue Dateien zu schaffen.
+file#:#personal_workspace_quota_status_legend#:#Sie belegen %1$s Ihrer Disk-Quota von %2$s (%3$d%%).
 common#:#personal_resources#:#Persönliche Ressourcen
 file#:#personal_resources_quota_exceeded_warning#:#Sie haben den maximal verfügbaren Plattenplatz für Dateien in den Persönliche Ressourcen überschritten. Löschen Sie vorhandene Dateien, um freien Platz für neue Dateien zu schaffen.
 file#:#personal_resources_quota_status_legend#:#Sie belegen %1$s Ihrer Disk-Quota von %2$s (%3$d%%).
